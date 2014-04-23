@@ -86,7 +86,7 @@ public class MainActivity extends SimpleBaseGameActivity
 
 
 		/* Control analogico derecha. */
-		final AnalogOnScreenControl rightOnScreenControl = new AnalogOnScreenControl(CAMERA_WIDTH, CAMERA_HEIGHT, this.camera, this.mOnScreenControlBaseTextureRegion, this.mOnScreenControlKnobTextureRegion, 0.1f, this.getVertexBufferObjectManager(), new IAnalogOnScreenControlListener() {
+		final AnalogOnScreenControl rightOnScreenControl = new AnalogOnScreenControl(CAMERA_WIDTH, 0, this.camera, this.mOnScreenControlBaseTextureRegion, this.mOnScreenControlKnobTextureRegion, 0.1f, this.getVertexBufferObjectManager(), new IAnalogOnScreenControlListener() {
 			@Override
 			public void onControlChange(final BaseOnScreenControl pBaseOnScreenControl, final float pValueX, final float pValueY) {
 				//accion al mover el analog
