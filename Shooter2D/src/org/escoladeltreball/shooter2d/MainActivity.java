@@ -46,7 +46,7 @@ public class MainActivity extends SimpleBaseGameActivity
 	 */
 	public void checkCompatibilityMultiTouch(){
 		if(MultiTouch.isSupported(this)) {  
-			if(MultiTouch.isSupportedDistinct(this)) { 
+			if(!MultiTouch.isSupportedDistinct(this)) { 
 				Toast.makeText(this, "MultiTouch detected, but your device has problems distinguishing between fingers.", Toast.LENGTH_LONG).show();  
 			}  
 		} else {  
