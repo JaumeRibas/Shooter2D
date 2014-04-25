@@ -14,6 +14,8 @@ import org.andengine.entity.scene.background.Background;
 import org.andengine.extension.tmx.TMXTiledMap;
 import org.andengine.input.touch.controller.MultiTouch;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
+import org.escoladeltreball.shooter2d.entities.Player;
+import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
 
 import android.widget.Toast;
 
@@ -22,6 +24,7 @@ public class MainActivity extends SimpleBaseGameActivity
 	private Camera camera;
 	private UI ui;
 	private MapCreator mapCreator;
+	private PlayerLoader playerLoader;
 	private static final int CAMERA_WIDTH = 720;
 	private static final int CAMERA_HEIGHT = 480;
 
@@ -36,6 +39,7 @@ public class MainActivity extends SimpleBaseGameActivity
 		engineOptions.getTouchOptions().setNeedsMultiTouch(true);
 		this.ui = new UI();
 		this.mapCreator = new MapCreator();
+		this.playerLoader = new PlayerLoader();
 		return engineOptions;
 	}
 
@@ -43,6 +47,7 @@ public class MainActivity extends SimpleBaseGameActivity
 	protected void onCreateResources() throws IOException
 	{
 		this.ui.loadResources(this.getTextureManager(), this.getAssets());
+		this.playerLoader.loadResources(this.getTextureManager(), this.getAssets());
 	}
 
 	@Override
@@ -72,6 +77,8 @@ public class MainActivity extends SimpleBaseGameActivity
 		// Muestra el mapa en la pantalla
 		TMXTiledMap map = this.mapCreator.loadMap(getAssets(), getTextureManager(), getVertexBufferObjectManager());
 		scene.attachChild(map);
+		Player player = playerLoader.loadPlayer(camera,  getTextureManager(), getAssets(), getVertexBufferObjectManager());
+		scene.attachChild(player);
 		return scene;
 	}
 
