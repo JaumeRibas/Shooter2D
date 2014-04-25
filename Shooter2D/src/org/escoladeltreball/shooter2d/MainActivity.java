@@ -68,7 +68,7 @@ public class MainActivity extends SimpleBaseGameActivity
 			}
 		};
 		// Muestra los controles a la pantalla
-		scene.setChildScene(this.ui.createAnalogContols(this.camera, this.getVertexBufferObjectManager(), ejemploListener, ejemploListener));
+		scene.setChildScene(this.ui.createAnalogControls(this.camera, this.getVertexBufferObjectManager(), ejemploListener, ejemploListener));
 		// Muestra el mapa en la pantalla
 		TMXTiledMap map = this.mapCreator.loadMap(getAssets(), getTextureManager(), getVertexBufferObjectManager());
 		scene.attachChild(map);

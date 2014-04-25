@@ -42,7 +42,7 @@ public class UI {
 	 * @param rightAnalogControlListener un {@link IAnalogOnScreenControlListener} para el {@link AnalogOnScreenControl} derecho
 	 * @return un {@link AnalogOnScreenControl} con el otro {@link AnalogOnScreenControl} como su {@link Scene} hija
 	 */
-	public AnalogOnScreenControl createAnalogContols(Camera camera, VertexBufferObjectManager vertexBufferObjectManager, IAnalogOnScreenControlListener leftAnalogControlListener, IAnalogOnScreenControlListener rightAnalogControlListener) {
+	public AnalogOnScreenControl createAnalogControls(Camera camera, VertexBufferObjectManager vertexBufferObjectManager, IAnalogOnScreenControlListener leftAnalogControlListener, IAnalogOnScreenControlListener rightAnalogControlListener) {
 		/* Control analogico izquierda */
 		final AnalogOnScreenControl leftOnScreenControl = new AnalogOnScreenControl(0, 0, camera, this.analogControlBaseTextureRegion, this.analogControlKnobTextureRegion, 0.1f, vertexBufferObjectManager, leftAnalogControlListener);
 
