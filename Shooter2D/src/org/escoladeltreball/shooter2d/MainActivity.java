@@ -64,7 +64,7 @@ public class MainActivity extends SimpleBaseGameActivity
 				
 			}
 		};
-		scene.setChildScene(this.ui.createAnalogContollers(this.camera, this.getVertexBufferObjectManager(), ejemploListener, ejemploListener));
+		scene.setChildScene(this.ui.createAnalogContols(this.camera, this.getVertexBufferObjectManager(), ejemploListener, ejemploListener));
 		return scene;
 	}
 
