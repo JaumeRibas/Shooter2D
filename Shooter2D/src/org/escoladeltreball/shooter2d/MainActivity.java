@@ -11,6 +11,7 @@ import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.extension.tmx.TMXTiledMap;
 import org.andengine.input.touch.controller.MultiTouch;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 
@@ -20,6 +21,7 @@ public class MainActivity extends SimpleBaseGameActivity
 {
 	private Camera camera;
 	private UI ui;
+	private MapCreator mapCreator;
 	private static final int CAMERA_WIDTH = 720;
 	private static final int CAMERA_HEIGHT = 480;
 
@@ -33,6 +35,7 @@ public class MainActivity extends SimpleBaseGameActivity
 				new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera);
 		engineOptions.getTouchOptions().setNeedsMultiTouch(true);
 		this.ui = new UI();
+		this.mapCreator = new MapCreator();
 		return engineOptions;
 	}
 
@@ -64,7 +67,11 @@ public class MainActivity extends SimpleBaseGameActivity
 				
 			}
 		};
+		// Muestra los controles a la pantalla
 		scene.setChildScene(this.ui.createAnalogContols(this.camera, this.getVertexBufferObjectManager(), ejemploListener, ejemploListener));
+		// Muestra el mapa en la pantalla
+		TMXTiledMap map = this.mapCreator.loadMap(getAssets(), getTextureManager(), getVertexBufferObjectManager());
+		scene.attachChild(map);
 		return scene;
 	}
 
