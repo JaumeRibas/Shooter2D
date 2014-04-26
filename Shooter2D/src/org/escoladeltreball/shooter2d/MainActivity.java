@@ -27,7 +27,7 @@ public class MainActivity extends SimpleBaseGameActivity
 	private PlayerLoader playerLoader;
 	private static final int CAMERA_WIDTH = 720;
 	private static final int CAMERA_HEIGHT = 480;
-	private static Player player;
+	private Player player;
 
 
 	@Override
@@ -79,6 +79,8 @@ public class MainActivity extends SimpleBaseGameActivity
 		TMXTiledMap map = this.mapCreator.loadMap(getAssets(), getTextureManager(), getVertexBufferObjectManager());
 		scene.attachChild(map);
 		this.player = playerLoader.loadPlayer(camera,  getTextureManager(), getAssets(), getVertexBufferObjectManager());
+		// La camara sigue al jugador
+		this.camera.setChaseEntity(player);
 		scene.attachChild(player);
 		return scene;
 	}
