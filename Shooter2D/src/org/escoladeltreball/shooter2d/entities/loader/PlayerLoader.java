@@ -15,6 +15,13 @@ public class PlayerLoader extends EntityLoader {
 
 	private Player player;
 
+	/**
+	 * La clase PlayerLoader se encarga cargar los recursos del jugador y del propio jugador.
+	 * 
+	 * @author Carlos Serrano
+	 * @author Elvis Puertas
+	 * @author Jaume Ribas
+	 */
 	public Player loadPlayer(Camera camera, TextureManager textureManger,
 			AssetManager assets,
 			VertexBufferObjectManager vertexBufferObjectManager) {
@@ -33,7 +40,13 @@ public class PlayerLoader extends EntityLoader {
 		return this.player;
 
 	}
-
+	/**
+	 * Carga recursos relacionados con el jugador.
+	 * 
+	 * @param textureManger un TextureManager
+	 * @param assets un AssetManager
+	 * @throws IOException
+	 */
 	public TiledTextureRegion loadResources(TextureManager textureManger,
 			AssetManager assets) throws IOException {
 		return super.loadResources(textureManger, assets,
