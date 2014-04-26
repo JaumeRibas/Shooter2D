@@ -27,6 +27,7 @@ public class MainActivity extends SimpleBaseGameActivity
 	private PlayerLoader playerLoader;
 	private static final int CAMERA_WIDTH = 720;
 	private static final int CAMERA_HEIGHT = 480;
+	private static Player player;
 
 
 	@Override
@@ -63,7 +64,7 @@ public class MainActivity extends SimpleBaseGameActivity
 			@Override
 			public void onControlChange(BaseOnScreenControl pBaseOnScreenControl,
 					float pValueX, float pValueY) {
-				// TODO Auto-generated method stub			
+				player.setPosition(player.getX() + pValueX*10, player.getY() + pValueY*10);
 			}
 			
 			@Override
@@ -77,7 +78,7 @@ public class MainActivity extends SimpleBaseGameActivity
 		// Muestra el mapa en la pantalla
 		TMXTiledMap map = this.mapCreator.loadMap(getAssets(), getTextureManager(), getVertexBufferObjectManager());
 		scene.attachChild(map);
-		Player player = playerLoader.loadPlayer(camera,  getTextureManager(), getAssets(), getVertexBufferObjectManager());
+		this.player = playerLoader.loadPlayer(camera,  getTextureManager(), getAssets(), getVertexBufferObjectManager());
 		scene.attachChild(player);
 		return scene;
 	}
