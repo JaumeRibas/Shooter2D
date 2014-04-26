@@ -2,6 +2,7 @@ package org.escoladeltreball.shooter2d;
 
 import java.io.IOException;
 
+import org.andengine.engine.camera.BoundCamera;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
 import org.andengine.engine.camera.hud.controls.BaseOnScreenControl;
@@ -11,6 +12,7 @@ import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.extension.tmx.TMXLayer;
 import org.andengine.extension.tmx.TMXTiledMap;
 import org.andengine.input.touch.controller.MultiTouch;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
@@ -21,7 +23,7 @@ import android.widget.Toast;
 
 public class MainActivity extends SimpleBaseGameActivity
 {
-	private Camera camera;
+	private BoundCamera camera;
 	private UI ui;
 	private MapCreator mapCreator;
 	private PlayerLoader playerLoader;
@@ -34,7 +36,7 @@ public class MainActivity extends SimpleBaseGameActivity
 	public EngineOptions onCreateEngineOptions()
 	{
 		checkCompatibilityMultiTouch();
-		camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
+		camera = new BoundCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
 		EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED, 
 				new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera);
 		engineOptions.getTouchOptions().setNeedsMultiTouch(true);
@@ -79,6 +81,11 @@ public class MainActivity extends SimpleBaseGameActivity
 		TMXTiledMap map = this.mapCreator.loadMap(getAssets(), getTextureManager(), getVertexBufferObjectManager());
 		scene.attachChild(map);
 		this.player = playerLoader.loadPlayer(camera,  getTextureManager(), getAssets(), getVertexBufferObjectManager());
+		
+		// La camara no execede el tamaño del mapa
+        final TMXLayer tmxLayer = map.getTMXLayers().get(0);
+        this.camera.setBounds(0, 0, tmxLayer.getWidth(), tmxLayer.getHeight());
+        this.camera.setBoundsEnabled(true);
 		// La camara sigue al jugador
 		this.camera.setChaseEntity(player);
 		scene.attachChild(player);
