@@ -59,7 +59,7 @@ public class MainActivity extends SimpleBaseGameActivity
 	@Override
 	protected void onCreateResources() throws IOException
 	{
-		this.ui.loadResources(this.getTextureManager(), this.getAssets());
+		ResourceManager.getInstance().loadGameTextures(mEngine, this);
 		this.playerLoader.loadResources(this.getTextureManager(), this.getAssets());
 	}
 
@@ -97,7 +97,7 @@ public class MainActivity extends SimpleBaseGameActivity
 			scene.attachChild(rect);
 		}
 		
-		// La camara no execede el tamaño del mapa
+		// La camara no execede el tamaï¿½o del mapa
         final TMXLayer tmxLayer = map.getTMXLayers().get(0);
         this.camera.setBounds(0, 0, tmxLayer.getWidth(), tmxLayer.getHeight());
         this.camera.setBoundsEnabled(true);
