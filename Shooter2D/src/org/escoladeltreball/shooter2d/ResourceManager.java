@@ -1,12 +1,13 @@
 package org.escoladeltreball.shooter2d;
 
-import java.io.IOException;
-
 import org.andengine.engine.Engine;
-import org.andengine.opengl.texture.TextureOptions;
-import org.andengine.opengl.texture.bitmap.AssetBitmapTexture;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.atlas.bitmap.BuildableBitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.source.IBitmapTextureAtlasSource;
+import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtlasBuilder;
+import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder.TextureAtlasBuilderException;
 import org.andengine.opengl.texture.region.ITextureRegion;
-import org.andengine.opengl.texture.region.TextureRegionFactory;
 import org.andengine.util.debug.Debug;
 
 import android.content.Context;
@@ -28,6 +29,8 @@ public class ResourceManager {
 	public ITextureRegion analogControlBaseTextureRegion;
 	/** el centro del analog control */
 	public ITextureRegion analogControlKnobTextureRegion;
+	
+	//añadir aqui los recursos del juego
 	
 	private ResourceManager(){}
 	
@@ -51,22 +54,23 @@ public class ResourceManager {
 	 * @param context
 	 */
 	public synchronized void loadGameTextures(Engine engine, Context context) {
+		//Se usa el texture atlas porque es mas eficiente
+		BuildableBitmapTextureAtlas analogControlTextureAtlas = new BuildableBitmapTextureAtlas(engine.getTextureManager(), 250, 150);
 		
+		//la base del analog stick
+		this.analogControlBaseTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(analogControlTextureAtlas, context,  "gfx/onscreen_control_base.png");			
+		//el centro del analog stick
+		this.analogControlKnobTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(analogControlTextureAtlas, context,  "gfx/onscreen_control_knob.png");
+		
+		//cargar aqui el resto de texturas del juego
+
 		try {
-			//la base del analog stick
-			AssetBitmapTexture analogControlBaseTexture = new AssetBitmapTexture(engine.getTextureManager(), context.getAssets(), "gfx/onscreen_control_base.png", TextureOptions.BILINEAR);
-			this.analogControlBaseTextureRegion = TextureRegionFactory.extractFromTexture(analogControlBaseTexture);
-			analogControlBaseTexture.load();
-			
-			//el centro del analog stick
-			AssetBitmapTexture analogControlKnobTexture = new AssetBitmapTexture(engine.getTextureManager(), context.getAssets(), "gfx/onscreen_control_knob.png", TextureOptions.BILINEAR);
-			this.analogControlKnobTextureRegion = TextureRegionFactory.extractFromTexture(analogControlKnobTexture);
-			analogControlKnobTexture.load();
-			
-			
-		} catch (IOException e) {
+			analogControlTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1));
+			analogControlTextureAtlas.load();
+		} catch (TextureAtlasBuilderException e) {
 			Debug.e(e);
 		}
+
 	}
 	
 	/**
@@ -76,9 +80,12 @@ public class ResourceManager {
 	 * @param context
 	 */
 	public synchronized void unloadGameTextures(Engine engine, Context context) {
-		//la base del analog control
-		this.analogControlBaseTextureRegion.getTexture().unload();
-		//el centro del analog control
-		this.analogControlKnobTextureRegion.getTexture().unload();
+		//el atlas de las texturas del analog control
+		((BuildableBitmapTextureAtlas)this.analogControlBaseTextureRegion.getTexture()).unload();
+		
+		//descargar aqui las texturas
+		
+		//llamamos al garbage collector
+		System.gc();
 	}
 }
