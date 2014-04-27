@@ -20,6 +20,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 import org.escoladeltreball.shooter2d.entities.Player;
 import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
+import org.escoladeltreball.shooter2d.ui.UI;
 
 import android.widget.Toast;
 

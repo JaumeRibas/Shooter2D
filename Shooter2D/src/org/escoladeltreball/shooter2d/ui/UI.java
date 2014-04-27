@@ -1,4 +1,4 @@
-package org.escoladeltreball.shooter2d;
+package org.escoladeltreball.shooter2d.ui;
 
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
@@ -6,6 +6,7 @@ import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl.IAnalogOnS
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.escoladeltreball.shooter2d.ResourceManager;
 
 /**
  * La clase UI continene variables y metodos relacionados con la interfaz de usuario.
