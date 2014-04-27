@@ -1,17 +1,23 @@
 package org.escoladeltreball.shooter2d;
 
+import java.util.ArrayList;
+
+import org.andengine.entity.primitive.Rectangle;
 import org.andengine.extension.tmx.TMXLoader;
+import org.andengine.extension.tmx.TMXObject;
+import org.andengine.extension.tmx.TMXObjectGroup;
 import org.andengine.extension.tmx.TMXTiledMap;
 import org.andengine.extension.tmx.util.exception.TMXLoadException;
 import org.andengine.opengl.texture.TextureManager;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.andengine.util.adt.color.Color;
 import org.andengine.util.debug.Debug;
 
 import android.content.res.AssetManager;
 
 public class MapCreator {
-	
+
 	/**
 	 * Devuelve el mapa preparado para ser mostrado en la pantalla
 	 * @param assets
@@ -29,8 +35,29 @@ public class MapCreator {
 			Debug.e(e);
 		}
 		return mTMXTiledMap;
-		
-		
+	}
+
+/**
+ * Crea los rectangulos que no podrán ser atravesados
+ * @param map
+ * @param vbo
+ * @return
+ */
+	public ArrayList<Rectangle> createUnwalkableObjects(TMXTiledMap map, VertexBufferObjectManager vbo){
+		// Loop through the object groups
+		ArrayList<Rectangle> rectangles = new ArrayList<Rectangle>();
+		for(final TMXObjectGroup group: map.getTMXObjectGroups()) {
+			if(group.getTMXObjectGroupProperties().containsTMXProperty("wall", "true")){
+				// This is our "wall" layer. Create the boxes from it
+				for(final TMXObject object : group.getTMXObjects()) {
+					final Rectangle rect = new Rectangle((float)object.getX(), (float)object.getY(),(float)object.getWidth(), (float)object.getHeight(), vbo);
+					rect.setVisible(true);
+					rect.setColor(Color.RED);
+					rectangles.add(rect);
+				}
+			}
+		}
+		return rectangles;
 	}
 
 }
