@@ -13,8 +13,6 @@ import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
-import org.andengine.extension.physics.box2d.PhysicsFactory;
-import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.extension.tmx.TMXLayer;
 import org.andengine.extension.tmx.TMXTiledMap;
 import org.andengine.input.touch.controller.MultiTouch;
@@ -22,10 +20,6 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 import org.escoladeltreball.shooter2d.entities.Player;
 import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
-
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 import android.widget.Toast;
 
@@ -39,7 +33,6 @@ public class MainActivity extends SimpleBaseGameActivity
 	private static final int CAMERA_HEIGHT = 480;
 	private Player player;
 	private VertexBufferObjectManager vbo = new VertexBufferObjectManager();
-	private PhysicsWorld mPhysicsWorld;
 
 
 	@Override

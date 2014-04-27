@@ -3,8 +3,6 @@ package org.escoladeltreball.shooter2d;
 import java.util.ArrayList;
 
 import org.andengine.entity.primitive.Rectangle;
-import org.andengine.extension.physics.box2d.PhysicsFactory;
-import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.extension.tmx.TMXLoader;
 import org.andengine.extension.tmx.TMXObject;
 import org.andengine.extension.tmx.TMXObjectGroup;
@@ -16,14 +14,9 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.adt.color.Color;
 import org.andengine.util.debug.Debug;
 
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-
 import android.content.res.AssetManager;
 
 public class MapCreator {
-
-	private PhysicsWorld mPhysicsWorld;
 
 	/**
 	 * Devuelve el mapa preparado para ser mostrado en la pantalla
