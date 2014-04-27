@@ -22,6 +22,9 @@ import android.content.Context;
  * @author Jaume Ribas
  */
 public class ResourceManager {
+	private static final String CONTROL_KNOB_SPRITE = "gfx/onscreen_control_knob.png";
+	private static final String CONTROL_BASE_SPRITE = "gfx/onscreen_control_base.png";
+
 	/** la instancia unica */
 	public static ResourceManager instance;
 	
@@ -58,9 +61,9 @@ public class ResourceManager {
 		BuildableBitmapTextureAtlas analogControlTextureAtlas = new BuildableBitmapTextureAtlas(engine.getTextureManager(), 250, 150);
 		
 		//la base del analog stick
-		this.analogControlBaseTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(analogControlTextureAtlas, context,  "gfx/onscreen_control_base.png");			
+		this.analogControlBaseTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(analogControlTextureAtlas, context,  CONTROL_BASE_SPRITE);			
 		//el centro del analog stick
-		this.analogControlKnobTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(analogControlTextureAtlas, context,  "gfx/onscreen_control_knob.png");
+		this.analogControlKnobTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(analogControlTextureAtlas, context,  CONTROL_KNOB_SPRITE);
 		
 		//cargar aqui el resto de texturas del juego
 
