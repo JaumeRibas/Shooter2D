@@ -10,12 +10,31 @@ import org.escoladeltreball.shooter2d.ResourceManager;
 
 /**
  * La clase UI continene variables y metodos relacionados con la interfaz de usuario.
+ * Utiliza el patron singleton.
  * 
  * @author Carlos Serrano
  * @author Elvis Puertas
  * @author Jaume Ribas
  */
 public class UI {
+	
+	/** instancia unica */
+	private static UI instance;
+	
+	private UI(){}
+	
+	/**
+	 * Devuelve la unica instancia.
+	 * Si no existe la crea.
+	 * 
+	 * @return la unica instancia de UI
+	 */
+	public static UI getInstance() {
+		if (instance == null) {
+			instance = new UI();
+		}
+		return instance;
+	}
 	
 	/**
 	 * Este metodo crea dos {@link AnalogOnScreenControl} y los coloca a cada

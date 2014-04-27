@@ -27,7 +27,6 @@ import android.widget.Toast;
 public class MainActivity extends SimpleBaseGameActivity
 {
 	private BoundCamera camera;
-	private UI ui;
 	private MapCreator mapCreator;
 	private PlayerLoader playerLoader;
 	private static final int CAMERA_WIDTH = 720;
@@ -44,7 +43,6 @@ public class MainActivity extends SimpleBaseGameActivity
 		EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED, 
 				new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera);
 		engineOptions.getTouchOptions().setNeedsMultiTouch(true);
-		this.ui = new UI();
 		this.mapCreator = new MapCreator();
 		this.playerLoader = new PlayerLoader();
 		return engineOptions;
@@ -80,7 +78,7 @@ public class MainActivity extends SimpleBaseGameActivity
 			}
 		};
 		// Muestra los controles a la pantalla
-		scene.setChildScene(this.ui.createAnalogControls(this.camera, this.getVertexBufferObjectManager(), ejemploListener, ejemploListener));
+		scene.setChildScene(UI.getInstance().createAnalogControls(this.camera, this.getVertexBufferObjectManager(), ejemploListener, ejemploListener));
 		// Muestra el mapa en la pantalla
 		TMXTiledMap map = this.mapCreator.loadMap(getAssets(), getTextureManager(), getVertexBufferObjectManager());
 		scene.attachChild(map);
