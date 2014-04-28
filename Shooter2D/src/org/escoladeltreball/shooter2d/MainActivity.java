@@ -3,6 +3,8 @@ package org.escoladeltreball.shooter2d;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.andengine.audio.music.MusicFactory;
+import org.andengine.audio.sound.SoundFactory;
 import org.andengine.engine.camera.BoundCamera;
 import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
 import org.andengine.engine.camera.hud.controls.BaseOnScreenControl;
@@ -46,6 +48,8 @@ public class MainActivity extends SimpleBaseGameActivity
 		engineOptions.getTouchOptions().setNeedsMultiTouch(true);
 		this.mapCreator = new MapCreator();
 		this.playerLoader = new PlayerLoader();
+		engineOptions.getAudioOptions().setNeedsMusic(true);
+		engineOptions.getAudioOptions().setNeedsSound(true);
 		return engineOptions;
 	}
 

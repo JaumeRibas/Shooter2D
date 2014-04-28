@@ -1,5 +1,11 @@
 package org.escoladeltreball.shooter2d;
 
+import java.io.IOException;
+
+import org.andengine.audio.music.Music;
+import org.andengine.audio.music.MusicFactory;
+import org.andengine.audio.sound.Sound;
+import org.andengine.audio.sound.SoundFactory;
 import org.andengine.engine.Engine;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
@@ -27,16 +33,18 @@ public class ResourceManager {
 
 	/** la instancia unica */
 	public static ResourceManager instance;
-	
+
 	/** la base del analog conrol */
 	public ITextureRegion analogControlBaseTextureRegion;
 	/** el centro del analog control */
 	public ITextureRegion analogControlKnobTextureRegion;
-	
+	public Music music;
+	public Sound sound;
+
 	//añadir aqui los recursos del juego
-	
+
 	private ResourceManager(){}
-	
+
 	/**
 	 * Devuelve la unica instancia de ResourceManager.
 	 * Si no existe la crea.
@@ -49,7 +57,7 @@ public class ResourceManager {
 		}
 		return instance;
 	}
-	
+
 	/**
 	 * Carga las texturas del juego.
 	 * 
@@ -59,12 +67,12 @@ public class ResourceManager {
 	public synchronized void loadGameTextures(Engine engine, Context context) {
 		//Se usa el texture atlas porque es mas eficiente
 		BuildableBitmapTextureAtlas analogControlTextureAtlas = new BuildableBitmapTextureAtlas(engine.getTextureManager(), 250, 150);
-		
+
 		//la base del analog stick
 		this.analogControlBaseTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(analogControlTextureAtlas, context,  CONTROL_BASE_SPRITE);			
 		//el centro del analog stick
 		this.analogControlKnobTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(analogControlTextureAtlas, context,  CONTROL_KNOB_SPRITE);
-		
+
 		//cargar aqui el resto de texturas del juego
 
 		try {
@@ -75,7 +83,7 @@ public class ResourceManager {
 		}
 
 	}
-	
+
 	/**
 	 * 'Descarga' las texturas del juego.
 	 * 
@@ -85,10 +93,40 @@ public class ResourceManager {
 	public synchronized void unloadGameTextures(Engine engine, Context context) {
 		//el atlas de las texturas del analog control
 		((BuildableBitmapTextureAtlas)this.analogControlBaseTextureRegion.getTexture()).unload();
-		
+
 		//descargar aqui las texturas
-		
+
 		//llamamos al garbage collector
 		System.gc();
+	}
+
+	/**
+	 * Carga los sonidos del juego.
+	 * 
+	 * @param engine
+	 * @param context
+	 */
+	public synchronized void loadSounds(Engine engine, Context context){
+		SoundFactory.setAssetBasePath("sfx/");
+		try {
+			this.sound = SoundFactory.createSoundFromAsset(engine.getSoundManager(), context, "sound.mp3");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Carga la música del juego.
+	 * 
+	 * @param engine
+	 * @param context
+	 */
+	public synchronized void loadMusic(Engine engine, Context context){
+		MusicFactory.setAssetBasePath("sfx/");
+		try {
+			this.music = MusicFactory.createMusicFromAsset(engine.getMusicManager(), context, "music.mp3");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
