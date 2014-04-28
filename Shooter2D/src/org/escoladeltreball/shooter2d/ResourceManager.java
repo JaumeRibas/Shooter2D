@@ -1,7 +1,6 @@
 package org.escoladeltreball.shooter2d;
 
 import java.io.IOException;
-
 import org.andengine.audio.music.Music;
 import org.andengine.audio.music.MusicFactory;
 import org.andengine.audio.sound.Sound;
@@ -15,7 +14,6 @@ import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtla
 import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder.TextureAtlasBuilderException;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.util.debug.Debug;
-
 import android.content.Context;
 
 /**
@@ -38,7 +36,7 @@ public class ResourceManager {
 	public ITextureRegion analogControlBaseTextureRegion;
 	/** el centro del analog control */
 	public ITextureRegion analogControlKnobTextureRegion;
-	public Music music;
+	public Music musicIntro;
 	public Sound sound;
 
 	//añadir aqui los recursos del juego
@@ -124,7 +122,7 @@ public class ResourceManager {
 	public synchronized void loadMusic(Engine engine, Context context){
 		MusicFactory.setAssetBasePath("sfx/");
 		try {
-			this.music = MusicFactory.createMusicFromAsset(engine.getMusicManager(), context, "music.mp3");
+			this.musicIntro = MusicFactory.createMusicFromAsset(engine.getMusicManager(), context, "intro.mp3");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

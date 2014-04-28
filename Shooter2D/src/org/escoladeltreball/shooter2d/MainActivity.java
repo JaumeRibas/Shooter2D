@@ -47,6 +47,8 @@ public class MainActivity extends SimpleBaseGameActivity
 	protected void onCreateResources() throws IOException
 	{
 		ResourceManager.getInstance().loadGameTextures(mEngine, this);
+		ResourceManager.getInstance().loadMusic(mEngine, this);
+		ResourceManager.getInstance().musicIntro.play();
 		this.playerLoader.loadResources(this.getTextureManager(), this.getAssets());
 	}
 
@@ -77,5 +79,23 @@ public class MainActivity extends SimpleBaseGameActivity
 		} else {  
 			Toast.makeText(this, "Sorry your device does NOT support MultiTouch!", Toast.LENGTH_LONG).show();  
 		}  
+	}
+
+	@Override
+	public synchronized void onPauseGame() {
+		super.onPauseGame();
+		// Pausa la reproducción de la música en caso de estar reproduciendose
+		if(ResourceManager.getInstance().musicIntro != null && ResourceManager.getInstance().musicIntro.isPlaying()){
+			ResourceManager.getInstance().musicIntro.pause();
+		}
+	}
+
+	@Override
+	public synchronized void onResumeGame() {
+		super.onResumeGame();
+		// Reanuda la reproducción de la música
+		if(ResourceManager.getInstance().musicIntro != null){
+			ResourceManager.getInstance().musicIntro.play();
+		}
 	}
 }
