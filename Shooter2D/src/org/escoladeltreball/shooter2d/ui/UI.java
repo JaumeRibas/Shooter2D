@@ -2,11 +2,13 @@ package org.escoladeltreball.shooter2d.ui;
 
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
-import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl.IAnalogOnScreenControlListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.escoladeltreball.shooter2d.ResourceManager;
+import org.escoladeltreball.shooter2d.commands.CommandManager;
+import org.escoladeltreball.shooter2d.commands.interfaces.AnalogChangeCommand;
+import org.escoladeltreball.shooter2d.commands.interfaces.Command;
 
 /**
  * La clase UI continene variables y metodos relacionados con la interfaz de usuario.
@@ -20,6 +22,9 @@ public class UI {
 	
 	/** instancia unica */
 	private static UI instance;
+
+	private AnalogOnScreenControl leftAnalogControl;
+	private AnalogOnScreenControl rightAnalogControl;
 	
 	private UI(){}
 	
@@ -43,32 +48,135 @@ public class UI {
 	 * 
 	 * @param camera
 	 * @param vertexBufferObjectManager
-	 * @param leftAnalogControlListener un {@link IAnalogOnScreenControlListener} para el {@link AnalogOnScreenControl} izquierdo
-	 * @param rightAnalogControlListener un {@link IAnalogOnScreenControlListener} para el {@link AnalogOnScreenControl} derecho
+	 * @param leftAnalogChangeCommand el comando a ejecutar cuando se mueva el analog izquierdo
+	 * @param leftAnalogClickCommand el comando a ejecutar cuando se clique el analog izquierdo
+	 * @param rightAnalogChangeCommand el comando a ejecutar cuando se mueva el analog derecho
+	 * @param rightAnalogClickCommand el comando a ejecutar cuando se clique el analog derecho
 	 * @return un {@link AnalogOnScreenControl} con el otro {@link AnalogOnScreenControl} como su {@link Scene} hija
 	 */
-	public AnalogOnScreenControl createAnalogControls(Camera camera, VertexBufferObjectManager vertexBufferObjectManager, IAnalogOnScreenControlListener leftAnalogControlListener, IAnalogOnScreenControlListener rightAnalogControlListener) {
+	public AnalogOnScreenControl createAnalogControls(Camera camera, VertexBufferObjectManager vertexBufferObjectManager, AnalogChangeCommand leftAnalogChangeCommand, Command leftAnalogClickCommand, AnalogChangeCommand rightAnalogChangeCommand, Command rightAnalogClickCommand) {
+		
+		ConfigurableAnalogControlListener leftAnalogListener = new ConfigurableAnalogControlListener();
+		leftAnalogListener.setAnalogChangeCommand(leftAnalogChangeCommand == null? CommandManager.getDoNothingAnalogCommand(): leftAnalogChangeCommand);
+		leftAnalogListener.setAnalogClickCommand(leftAnalogClickCommand == null? CommandManager.getDoNothingCommand() : leftAnalogClickCommand);
+		ConfigurableAnalogControlListener rightAnalogListener = new ConfigurableAnalogControlListener();
+		rightAnalogListener.setAnalogChangeCommand(rightAnalogChangeCommand == null? CommandManager.getDoNothingAnalogCommand() : rightAnalogChangeCommand);
+		rightAnalogListener.setAnalogClickCommand(rightAnalogClickCommand == null? CommandManager.getDoNothingCommand() : rightAnalogClickCommand);
+		
 		/* Control analogico izquierda */
-		final AnalogOnScreenControl leftOnScreenControl = new AnalogOnScreenControl(0, 0, camera, ResourceManager.getInstance().analogControlBaseTextureRegion, ResourceManager.getInstance().analogControlKnobTextureRegion, 0.1f, vertexBufferObjectManager, leftAnalogControlListener);
+		leftAnalogControl = new AnalogOnScreenControl(0, 0, camera, ResourceManager.getInstance().analogControlBaseTextureRegion, ResourceManager.getInstance().analogControlKnobTextureRegion, 0.1f, vertexBufferObjectManager, leftAnalogListener);
 
 		{
-			final Sprite controlBase = leftOnScreenControl.getControlBase();
+			final Sprite controlBase = leftAnalogControl.getControlBase();
 			controlBase.setAlpha(0.5f);
 			controlBase.setOffsetCenter(0, 0);
 		}
 
 
 		/* Control analogico derecha. */
-		final AnalogOnScreenControl rightOnScreenControl = new AnalogOnScreenControl(camera.getWidth(), 0, camera, ResourceManager.getInstance().analogControlBaseTextureRegion, ResourceManager.getInstance().analogControlKnobTextureRegion, 0.1f, vertexBufferObjectManager, rightAnalogControlListener);
+		rightAnalogControl = new AnalogOnScreenControl(camera.getWidth(), 0, camera, ResourceManager.getInstance().analogControlBaseTextureRegion, ResourceManager.getInstance().analogControlKnobTextureRegion, 0.1f, vertexBufferObjectManager, rightAnalogListener);
 
 		{
-			final Sprite controlBase = rightOnScreenControl.getControlBase();
+			final Sprite controlBase = rightAnalogControl.getControlBase();
 			controlBase.setOffsetCenter(1, 0);
 			controlBase.setAlpha(0.5f);
 	
-			leftOnScreenControl.setChildScene(rightOnScreenControl);
+			leftAnalogControl.setChildScene(rightAnalogControl);
 		}
 		
-		return leftOnScreenControl;
+		return leftAnalogControl;
+	}
+	
+	/**
+	 * Este metodo crea dos {@link AnalogOnScreenControl} y los coloca a cada
+	 * lado de la camara en la parte inferior. Devuelve un {@link AnalogOnScreenControl}
+	 * con el otro {@link AnalogOnScreenControl} como su {@link Scene} hija.
+	 * 
+	 * @param camera
+	 * @param vertexBufferObjectManager
+	 * @return
+	 */
+	public AnalogOnScreenControl createAnalogControls(Camera camera, VertexBufferObjectManager vertexBufferObjectManager) {
+		return createAnalogControls(camera, vertexBufferObjectManager, null, null, null, null);
+	}
+	
+	/**
+	 * Devuelve el comando que se ejecuta al mover
+	 * el analog izquierdo
+	 * 
+	 * @return un objeto {@link AnalogChangeCommand}
+	 */
+	public AnalogChangeCommand getLeftAnalogChangeCommand(){
+		return ((ConfigurableAnalogControlListener)this.leftAnalogControl.getOnScreenControlListener()).getAnalogChangeCommand();
+	}
+	
+	/**
+	 * Setea un comando que se ejecutará al mover
+	 * el analog izquierdo
+	 * 
+	 * @param analogChangeCommand un objeto {@link AnalogChangeCommand}
+	 */
+	public void setLeftAnalogChangeCommand(AnalogChangeCommand analogChangeCommand) {
+		((ConfigurableAnalogControlListener)this.leftAnalogControl.getOnScreenControlListener()).setAnalogChangeCommand(analogChangeCommand);
+	}
+	
+	/**
+	 * Devuelve el comando que se ejecuta al mover
+	 * el analog derecho
+	 * 
+	 * @return un objeto {@link AnalogChangeCommand}
+	 */
+	public AnalogChangeCommand getRightAnalogChangeCommand(){
+		return ((ConfigurableAnalogControlListener)this.rightAnalogControl.getOnScreenControlListener()).getAnalogChangeCommand();
+	}
+	
+	/**
+	 * Setea un comando que se ejecutará al mover
+	 * el analog derecho
+	 * 
+	 * @param analogChangeCommand un objeto {@link AnalogChangeCommand}
+	 */
+	public void setRightAnalogChangeCommand() {
+		((ConfigurableAnalogControlListener)this.rightAnalogControl.getOnScreenControlListener()).getAnalogChangeCommand();
+	}
+	
+	/**
+	 * Devuelve el comando que se ejecuta al clicar
+	 * el analog izquierdo
+	 * 
+	 * @return un objeto {@link Command}
+	 */
+	public Command getLeftAnalogClickCommand(){
+		return ((ConfigurableAnalogControlListener)this.leftAnalogControl.getOnScreenControlListener()).getAnalogClickCommand();
+	}
+	
+	/**
+	 * Setea un comando que se ejecutará al clicar
+	 * el analog izquierdo
+	 * 
+	 * @param analogClickCommand un objeto {@link Command}
+	 */
+	public void setLeftAnalogClickCommand(Command analogClickCommand) {
+		((ConfigurableAnalogControlListener)this.leftAnalogControl.getOnScreenControlListener()).setAnalogClickCommand(analogClickCommand);
+	}
+	
+	/**
+	 * Devuelve el comando que se ejecuta al clicar
+	 * el analog derecho
+	 * 
+	 * @return un objeto {@link Command}
+	 */
+	public Command getRightAnalogClickCommand(){
+		return ((ConfigurableAnalogControlListener)this.rightAnalogControl.getOnScreenControlListener()).getAnalogClickCommand();
+	}
+	
+	/**
+	 * Setea un comando que se ejecutará al clicar
+	 * el analog derecho
+	 * 
+	 * @param analogClickCommand un objeto {@link Command}
+	 */
+	public void setRightAnalogClickCommand() {
+		((ConfigurableAnalogControlListener)this.rightAnalogControl.getOnScreenControlListener()).getAnalogClickCommand();
 	}
 }

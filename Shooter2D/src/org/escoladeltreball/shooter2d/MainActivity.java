@@ -18,6 +18,7 @@ import org.andengine.extension.tmx.TMXTiledMap;
 import org.andengine.input.touch.controller.MultiTouch;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
+import org.escoladeltreball.shooter2d.commands.CommandManager;
 import org.escoladeltreball.shooter2d.entities.Player;
 import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
 import org.escoladeltreball.shooter2d.ui.UI;
@@ -60,25 +61,8 @@ public class MainActivity extends SimpleBaseGameActivity
 	{
 		Scene scene = new Scene();
 		scene.setBackground(new Background(0.09804f, 0.6274f, 0.8784f));
-		//este listener es un ejemplo. Habria que crear clases a parte que extendieran de IAnalogOnScreenControlListener y se comunicaran con el personaje.
-		//Como mínimo dos, una para el analog izquierdo y otra para el derecho,
-		//pero se pueden crear más para distintas configuraciones de controles.
-		IAnalogOnScreenControlListener ejemploListener = new IAnalogOnScreenControlListener() {
-			
-			@Override
-			public void onControlChange(BaseOnScreenControl pBaseOnScreenControl,
-					float pValueX, float pValueY) {
-				player.setPosition(player.getX() + pValueX*10, player.getY() + pValueY*10);
-			}
-			
-			@Override
-			public void onControlClick(AnalogOnScreenControl pAnalogOnScreenControl) {
-				// TODO Auto-generated method stub
-				
-			}
-		};
-		// Muestra los controles a la pantalla
-		scene.setChildScene(UI.getInstance().createAnalogControls(this.camera, this.getVertexBufferObjectManager(), ejemploListener, ejemploListener));
+		// Añade los controles con commandos a la escena 
+		scene.setChildScene(UI.getInstance().createAnalogControls(this.camera, this.getVertexBufferObjectManager(), CommandManager.getSetPlayerVelocity(), CommandManager.getDoNothingCommand(), CommandManager.getDoNothingAnalogCommand(), CommandManager.getDoNothingCommand()));
 		// Muestra el mapa en la pantalla
 		TMXTiledMap map = this.mapCreator.loadMap(getAssets(), getTextureManager(), getVertexBufferObjectManager());
 		scene.attachChild(map);
@@ -89,7 +73,7 @@ public class MainActivity extends SimpleBaseGameActivity
 			scene.attachChild(rect);
 		}
 		
-		// La camara no execede el tama�o del mapa
+		// La camara no execede el tamaño del mapa
         final TMXLayer tmxLayer = map.getTMXLayers().get(0);
         this.camera.setBounds(0, 0, tmxLayer.getWidth(), tmxLayer.getHeight());
         this.camera.setBoundsEnabled(true);
