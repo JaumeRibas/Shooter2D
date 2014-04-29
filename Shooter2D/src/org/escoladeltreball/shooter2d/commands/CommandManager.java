@@ -2,6 +2,7 @@ package org.escoladeltreball.shooter2d.commands;
 
 import org.escoladeltreball.shooter2d.commands.interfaces.AnalogChangeCommand;
 import org.escoladeltreball.shooter2d.commands.interfaces.Command;
+import org.escoladeltreball.shooter2d.entities.Player;
 
 
 /**
@@ -17,9 +18,9 @@ public class CommandManager {
 	
 	private static SetPlayerVelocity setPlayerVelocity;
 
-	public static AnalogChangeCommand getSetPlayerVelocity() {
+	public static AnalogChangeCommand getSetPlayerVelocity(Player player) {
 		if (setPlayerVelocity == null) {
-			setPlayerVelocity = new SetPlayerVelocity();
+			setPlayerVelocity = new SetPlayerVelocity(player);
 		}
 		return setPlayerVelocity;
 	}
