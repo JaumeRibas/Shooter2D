@@ -1,6 +1,7 @@
 package org.escoladeltreball.shooter2d;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.andengine.engine.Engine;
 import org.andengine.engine.FixedStepEngine;
@@ -17,7 +18,9 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.ui.activity.BaseGameActivity;
 import org.escoladeltreball.shooter2d.commands.CommandManager;
 import org.escoladeltreball.shooter2d.entities.Player;
+import org.escoladeltreball.shooter2d.entities.Zombie;
 import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
+import org.escoladeltreball.shooter2d.entities.loader.ZombieLoader;
 import org.escoladeltreball.shooter2d.ui.UI;
 
 import android.widget.Toast;
@@ -34,6 +37,8 @@ public class MainActivity extends BaseGameActivity
 	public static final int STEPS_PER_SECOND = 60;
 	public FixedStepPhysicsWorld mPhysicsWorld;
 	private Player player;
+	private ZombieLoader zombieLoader;
+	private ArrayList<Zombie> zombies;
 	private VertexBufferObjectManager vbo = new VertexBufferObjectManager();
 
 	
@@ -57,6 +62,8 @@ public class MainActivity extends BaseGameActivity
 		engineOptions.getAudioOptions().setNeedsSound(true);
 		this.mapCreator = new MapCreator();
 		this.playerLoader = new PlayerLoader();
+		this.zombieLoader = new ZombieLoader();
+		this.zombies = new ArrayList<Zombie>();
 		return engineOptions;
 	}
 
@@ -90,7 +97,6 @@ public class MainActivity extends BaseGameActivity
 	public void onPopulateScene(Scene pScene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws IOException {
 		
 		this.mPhysicsWorld = new FixedStepPhysicsWorld(STEPS_PER_SECOND, new Vector2(0f, 0), false, 0, 0);
-		
 		pOnPopulateSceneCallback.onPopulateSceneFinished();
 	}
 

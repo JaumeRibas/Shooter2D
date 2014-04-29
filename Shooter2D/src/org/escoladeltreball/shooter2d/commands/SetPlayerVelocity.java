@@ -1,5 +1,6 @@
 package org.escoladeltreball.shooter2d.commands;
 
+import org.andengine.util.math.MathUtils;
 import org.escoladeltreball.shooter2d.commands.interfaces.AnalogChangeCommand;
 import org.escoladeltreball.shooter2d.entities.Player;
 
@@ -13,6 +14,8 @@ import org.escoladeltreball.shooter2d.entities.Player;
 public class SetPlayerVelocity implements AnalogChangeCommand {
 
 	private Player player;
+	public int SPEED = 10;
+	private boolean isWalking = false;
 	
 	public SetPlayerVelocity(Player player) {
 		this.player = player;
@@ -22,7 +25,19 @@ public class SetPlayerVelocity implements AnalogChangeCommand {
 	public void execute(float pValueX, float pValueY) {
 		//cambiar la velocidad del jugador
 		//cambiar este codigo
-		this.player.setPosition(this.player.getX() + pValueX, this.player.getY() + pValueY);
+		if(pValueX != 0 && pValueY != 0){
+			if(!this.isWalking){
+				this.player.animate(200);
+				this.isWalking = true;
+			}			
+			this.player.setRotation(MathUtils.radToDeg((float)Math.atan2(pValueX, pValueY)));
+			this.player.setPosition(this.player.getX() + pValueX * 10, this.player.getY() + pValueY  * 10);	
+		} else {
+			this.player.stopAnimation();
+			this.player.setCurrentTileIndex(0);
+			this.isWalking = false;
+		}
+		
 	}
 
 }
