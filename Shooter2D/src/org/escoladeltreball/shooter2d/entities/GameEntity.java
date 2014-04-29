@@ -5,7 +5,7 @@ import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 /**
- * La clase Abstracta GameEntity gestiona la carga gráfica de la entidad y las
+ * La clase Abstracta GameEntity gestiona la carga grï¿½fica de la entidad y las
  * acciones comunes de todas las entidades, el jugador y los distintos
  * monstruos.
  * 

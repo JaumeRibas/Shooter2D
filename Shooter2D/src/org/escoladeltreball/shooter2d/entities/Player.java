@@ -1,12 +1,10 @@
 package org.escoladeltreball.shooter2d.entities;
 
-import java.io.IOException;
-
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 /**
- * La clase Player es una GameEntity que controlará el jugador.
+ * La clase Player es una GameEntity que controlarï¿½ el jugador.
  * 
  * @author Carlos Serrano
  * @author Elvis Puertas
@@ -17,8 +15,8 @@ public class Player extends GameEntity {
 	/**
 	 * Constructor del Player.
 	 * 
-	 * @param pX an integer posición horizontal del Player
-	 * @param pY an integer posición vertical del Player
+	 * @param pX an integer posiciï¿½n horizontal del Player
+	 * @param pY an integer posiciï¿½n vertical del Player
 	 * @param pTiledTextureRegion a ITiledTextureRegion
 	 * @param pVertexBufferObjectManager a VertexBufferObjectManager
 	 */
@@ -27,3 +25,4 @@ public class Player extends GameEntity {
 		super(pX, pY, pTiledTextureRegion, pVertexBufferObjectManager);
 	}
 }
+
