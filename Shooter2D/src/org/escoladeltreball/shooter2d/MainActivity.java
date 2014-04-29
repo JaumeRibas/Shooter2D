@@ -1,38 +1,28 @@
 package org.escoladeltreball.shooter2d;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
-import org.andengine.audio.music.MusicFactory;
-import org.andengine.audio.sound.SoundFactory;
 import org.andengine.engine.Engine;
 import org.andengine.engine.FixedStepEngine;
 import org.andengine.engine.camera.BoundCamera;
-import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
-import org.andengine.engine.camera.hud.controls.BaseOnScreenControl;
-import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl.IAnalogOnScreenControlListener;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.WakeLockOptions;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
-import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
-import org.andengine.extension.tmx.TMXLayer;
-import org.andengine.extension.tmx.TMXTiledMap;
 import org.andengine.input.touch.controller.MultiTouch;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.ui.activity.BaseGameActivity;
-import org.andengine.ui.activity.SimpleBaseGameActivity;
 import org.escoladeltreball.shooter2d.commands.CommandManager;
 import org.escoladeltreball.shooter2d.entities.Player;
 import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
 import org.escoladeltreball.shooter2d.ui.UI;
 
-import com.badlogic.gdx.math.Vector2;
-
 import android.widget.Toast;
+
+import com.badlogic.gdx.math.Vector2;
 
 public class MainActivity extends BaseGameActivity
 {
@@ -74,6 +64,8 @@ public class MainActivity extends BaseGameActivity
 	public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws IOException
 	{
 		ResourceManager.getInstance().loadGameTextures(mEngine, this);
+		ResourceManager.getInstance().loadMusic(mEngine, this);
+		ResourceManager.getInstance().musicIntro.play();
 		this.playerLoader.loadResources(this.getTextureManager(), this.getAssets());
 		pOnCreateResourcesCallback.onCreateResourcesFinished();
 	}
@@ -87,18 +79,7 @@ public class MainActivity extends BaseGameActivity
 		// Añade los controles con commandos a la escena 
 		scene.setChildScene(UI.getInstance().createAnalogControls(this.camera, this.getVertexBufferObjectManager(), CommandManager.getSetPlayerVelocity(this.player), CommandManager.getDoNothingCommand(), CommandManager.getDoNothingAnalogCommand(), CommandManager.getDoNothingCommand()));
 		// Muestra el mapa en la pantalla
-		TMXTiledMap map = this.mapCreator.loadMap(getAssets(), getTextureManager(), getVertexBufferObjectManager());
-		scene.attachChild(map);
-		// Muentra sobre el mapa rectangulos que son areas de colision
-		ArrayList<Rectangle> rectangles = mapCreator.createUnwalkableObjects(map, vbo);
-		for (Rectangle rect : rectangles){
-			scene.attachChild(rect);
-		}
-		
-		// La camara no execede el tamaño del mapa
-        final TMXLayer tmxLayer = map.getTMXLayers().get(0);
-        this.camera.setBounds(0, 0, tmxLayer.getWidth(), tmxLayer.getHeight());
-        this.camera.setBoundsEnabled(true);
+		scene = this.mapCreator.loadMap(getAssets(), getTextureManager(), getVertexBufferObjectManager(), scene, this.camera);
 		// La camara sigue al jugador
 		this.camera.setChaseEntity(player);
 		scene.attachChild(player);
@@ -124,5 +105,23 @@ public class MainActivity extends BaseGameActivity
 		} else {  
 			Toast.makeText(this, "Sorry your device does NOT support MultiTouch!", Toast.LENGTH_LONG).show();  
 		}  
+	}
+
+	@Override
+	public synchronized void onPauseGame() {
+		super.onPauseGame();
+		// Pausa la reproducción de la música en caso de estar reproduciendose
+		if(ResourceManager.getInstance().musicIntro != null && ResourceManager.getInstance().musicIntro.isPlaying()){
+			ResourceManager.getInstance().musicIntro.pause();
+		}
+	}
+
+	@Override
+	public synchronized void onResumeGame() {
+		super.onResumeGame();
+		// Reanuda la reproducción de la música
+		if(ResourceManager.getInstance().musicIntro != null){
+			ResourceManager.getInstance().musicIntro.play();
+		}
 	}
 }
