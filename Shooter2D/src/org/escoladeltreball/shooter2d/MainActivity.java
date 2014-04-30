@@ -90,6 +90,11 @@ public class MainActivity extends BaseGameActivity
 		// La camara sigue al jugador
 		this.camera.setChaseEntity(player);
 		scene.attachChild(player);
+		this.zombies.add(zombieLoader.loadZombie(camera, 50, 100, this.getTextureManager(), this.getAssets(), vbo, player));
+		this.zombies.add(zombieLoader.loadZombie(camera, 50, 300, this.getTextureManager(), this.getAssets(), this.vbo, player));
+		for(Zombie zombie : this.zombies){
+			scene.attachChild(zombie);
+		}
 		pOnCreateSceneCallback.onCreateSceneFinished(scene);
 	}
 	

@@ -19,6 +19,8 @@ public class Zombie extends GameEntity {
 
 	private float attackCooldown = 3;
 	private float attackCooldownTimer;
+	
+	private boolean isWalking = false;
 
 	/**
 	 * Constructor del Zombie.
@@ -41,6 +43,10 @@ public class Zombie extends GameEntity {
 	}
 
 	public void walk() {
+		if(!this.isWalking){
+			this.isWalking = true;
+			this.animate(400);
+		}
 		float zombieX = this.getX();
 		float zombieY = this.getY();
 
@@ -77,6 +83,8 @@ public class Zombie extends GameEntity {
 	}
 
 	private void attack() {
+		this.isWalking = false;
+		this.setCurrentTileIndex(0);
 		if (this.attackCooldownTimer == 0) {
 			this.player.setRotation(this.player.getRotation() + 90);
 			this.resetCooldown();
