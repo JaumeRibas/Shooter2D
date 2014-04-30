@@ -20,9 +20,9 @@ public class CommandManager {
 	
 	private static SetPlayerVelocity setPlayerVelocity;
 
-	public static AnalogChangeCommand getSetPlayerVelocity(Body playerBody) {
+	public static AnalogChangeCommand getSetPlayerVelocity(Player player, Body playerBody) {
 		if (setPlayerVelocity == null) {
-			setPlayerVelocity = new SetPlayerVelocity(playerBody);
+			setPlayerVelocity = new SetPlayerVelocity(player, playerBody);
 		}
 		return setPlayerVelocity;
 	}

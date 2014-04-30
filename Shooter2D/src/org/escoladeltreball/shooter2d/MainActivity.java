@@ -1,6 +1,7 @@
 package org.escoladeltreball.shooter2d;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.andengine.engine.Engine;
 import org.andengine.engine.FixedStepEngine;
@@ -21,13 +22,16 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.ui.activity.BaseGameActivity;
 import org.escoladeltreball.shooter2d.commands.CommandManager;
 import org.escoladeltreball.shooter2d.entities.Player;
+import org.escoladeltreball.shooter2d.entities.Zombie;
 import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
+import org.escoladeltreball.shooter2d.entities.loader.ZombieLoader;
 import org.escoladeltreball.shooter2d.ui.UI;
 
 import android.widget.Toast;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -56,7 +60,8 @@ public class MainActivity extends BaseGameActivity
 	public Body wallBody;
 	private Player player;
 	private Body playerBody;
-	
+	private ZombieLoader zombieLoader;
+	private ArrayList<Zombie> zombies;
 	private VertexBufferObjectManager vbo = new VertexBufferObjectManager();
 	private Scene scene;
 
@@ -81,6 +86,8 @@ public class MainActivity extends BaseGameActivity
 		engineOptions.getAudioOptions().setNeedsSound(true);
 		this.mapCreator = new MapCreator();
 		this.playerLoader = new PlayerLoader();
+		this.zombieLoader = new ZombieLoader();
+		this.zombies = new ArrayList<Zombie>();
 		return engineOptions;
 	}
 
@@ -105,6 +112,11 @@ public class MainActivity extends BaseGameActivity
 		// La camara sigue al jugador
 		this.camera.setChaseEntity(player);
 		scene.attachChild(player);
+		this.zombies.add(zombieLoader.loadZombie(camera, 50, 100, this.getTextureManager(), this.getAssets(), vbo, player));
+		this.zombies.add(zombieLoader.loadZombie(camera, 50, 300, this.getTextureManager(), this.getAssets(), this.vbo, player));
+		for(Zombie zombie : this.zombies){
+			scene.attachChild(zombie);
+		}
 		pOnCreateSceneCallback.onCreateSceneFinished(scene);
 	}
 	
@@ -119,7 +131,7 @@ public class MainActivity extends BaseGameActivity
 		this.wallBody = PhysicsFactory.createBoxBody(this.mPhysicsWorld, wall, BodyType.StaticBody, fixtureDef);
 		this.scene.attachChild(wall);
 		
-		this.playerBody = PhysicsFactory.createCircleBody(this.mPhysicsWorld, this.player, BodyType.DynamicBody, fixtureDef);
+		this.playerBody = PhysicsFactory.createCircleBody(this.mPhysicsWorld, new Rectangle(0, 0, 10f, 10f, this.getVertexBufferObjectManager()), BodyType.DynamicBody, fixtureDef);
 		this.playerBody.setLinearDamping(0.4f);
 		this.playerBody.setAngularDamping(0.6f);
 		this.mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(this.player, this.playerBody));
@@ -167,7 +179,7 @@ public class MainActivity extends BaseGameActivity
 			}
 		});
 		// Añade los controles con commandos a la escena 
-		scene.setChildScene(UI.getInstance().createAnalogControls(this.camera, this.getVertexBufferObjectManager(), CommandManager.getSetPlayerVelocity(this.playerBody), CommandManager.getDoNothingCommand(), CommandManager.getDoNothingAnalogCommand(), CommandManager.getDoNothingCommand()));
+		scene.setChildScene(UI.getInstance().createAnalogControls(this.camera, this.getVertexBufferObjectManager(), CommandManager.getSetPlayerVelocity(this.player, this.playerBody), CommandManager.getDoNothingCommand(), CommandManager.getDoNothingAnalogCommand(), CommandManager.getDoNothingCommand()));
 		pOnPopulateSceneCallback.onPopulateSceneFinished();
 	}
 
