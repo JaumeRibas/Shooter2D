@@ -3,6 +3,8 @@ package org.escoladeltreball.shooter2d.commands;
 import org.escoladeltreball.shooter2d.commands.interfaces.AnalogChangeCommand;
 import org.escoladeltreball.shooter2d.entities.Player;
 
+import com.badlogic.gdx.physics.box2d.Body;
+
 /**
  * Cambia la velocidad dirección y sentido del movimiento del jugador
  * 
@@ -12,17 +14,16 @@ import org.escoladeltreball.shooter2d.entities.Player;
  */
 public class SetPlayerVelocity implements AnalogChangeCommand {
 
-	private Player player;
+	private Body playerBody;
 	
-	public SetPlayerVelocity(Player player) {
-		this.player = player;
+	public SetPlayerVelocity(Body playerBody) {
+		this.playerBody = playerBody;
 	}
 
 	@Override
 	public void execute(float pValueX, float pValueY) {
-		//cambiar la velocidad del jugador
-		//cambiar este codigo
-		this.player.setPosition(this.player.getX() + pValueX, this.player.getY() + pValueY);
+		System.out.println("setting velocity");
+		this.playerBody.setLinearVelocity(pValueX * 3, pValueY * 3);
 	}
 
 }

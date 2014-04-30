@@ -5,13 +5,17 @@ import java.io.IOException;
 import org.andengine.engine.Engine;
 import org.andengine.engine.FixedStepEngine;
 import org.andengine.engine.camera.BoundCamera;
+import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.WakeLockOptions;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
+import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
+import org.andengine.extension.physics.box2d.PhysicsConnector;
+import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.input.touch.controller.MultiTouch;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.ui.activity.BaseGameActivity;
@@ -23,6 +27,13 @@ import org.escoladeltreball.shooter2d.ui.UI;
 import android.widget.Toast;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 public class MainActivity extends BaseGameActivity
 {
@@ -32,9 +43,22 @@ public class MainActivity extends BaseGameActivity
 	public static final int CAMERA_WIDTH = 720;
 	public static final int CAMERA_HEIGHT = 480;
 	public static final int STEPS_PER_SECOND = 60;
+	/** se usa al crear el FixedStepPhysicsWorld */
+	private static final int VELOCITY_INTERACTIONS = 8;
+	/** se usa al crear el FixedStepPhysicsWorld */
+	private static final int POSITION_INTERACTIONS = 3;
+	
+	private static final float WALL_DENSITY = 0;
+	private static final float WALL_ELASTICITY = 0.1f;
+	private static final float WALL_FRICTION = 0.5f;
+	
 	public FixedStepPhysicsWorld mPhysicsWorld;
+	public Body wallBody;
 	private Player player;
+	private Body playerBody;
+	
 	private VertexBufferObjectManager vbo = new VertexBufferObjectManager();
+	private Scene scene;
 
 	
 	@Override
@@ -73,11 +97,9 @@ public class MainActivity extends BaseGameActivity
 	@Override
 	public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback)
 	{
-		Scene scene = new Scene();
+		this.scene = new Scene();
 		scene.setBackground(new Background(0.09804f, 0.6274f, 0.8784f));
 		this.player = playerLoader.loadPlayer(camera,  getTextureManager(), getAssets(), getVertexBufferObjectManager());
-		// Añade los controles con commandos a la escena 
-		scene.setChildScene(UI.getInstance().createAnalogControls(this.camera, this.getVertexBufferObjectManager(), CommandManager.getSetPlayerVelocity(this.player), CommandManager.getDoNothingCommand(), CommandManager.getDoNothingAnalogCommand(), CommandManager.getDoNothingCommand()));
 		// Muestra el mapa en la pantalla
 		scene = this.mapCreator.loadMap(getAssets(), getTextureManager(), getVertexBufferObjectManager(), scene, this.camera);
 		// La camara sigue al jugador
@@ -89,8 +111,63 @@ public class MainActivity extends BaseGameActivity
 	@Override
 	public void onPopulateScene(Scene pScene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws IOException {
 		
-		this.mPhysicsWorld = new FixedStepPhysicsWorld(STEPS_PER_SECOND, new Vector2(0f, 0), false, 0, 0);
+		this.mPhysicsWorld = new FixedStepPhysicsWorld(STEPS_PER_SECOND, new Vector2(0f, 0), false, VELOCITY_INTERACTIONS, POSITION_INTERACTIONS);
+		this.scene.registerUpdateHandler(mPhysicsWorld);
+		FixtureDef fixtureDef = PhysicsFactory.createFixtureDef(WALL_DENSITY, WALL_ELASTICITY, WALL_FRICTION);
+		Rectangle wall = new Rectangle(CAMERA_WIDTH / 2f, CAMERA_HEIGHT/2f, 150f, 150f, this.getVertexBufferObjectManager());
+		wall.setColor(1.0f, 0f, 0f);
+		this.wallBody = PhysicsFactory.createBoxBody(this.mPhysicsWorld, wall, BodyType.StaticBody, fixtureDef);
+		this.scene.attachChild(wall);
 		
+		this.playerBody = PhysicsFactory.createCircleBody(this.mPhysicsWorld, this.player, BodyType.DynamicBody, fixtureDef);
+		this.playerBody.setLinearDamping(0.4f);
+		this.playerBody.setAngularDamping(0.6f);
+		this.mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(this.player, this.playerBody));
+		this.mPhysicsWorld.setContactListener(new ContactListener() {
+			
+			@Override
+			public void preSolve(Contact contact, Manifold oldManifold) {
+
+			}
+			
+			@Override
+			public void postSolve(Contact contact, ContactImpulse impulse) {
+//				float maxImpulse = 0;
+//				for (float normalImpulse : impulse.getNormalImpulses()) {
+//					if (normalImpulse > maxImpulse) {
+//						maxImpulse = normalImpulse;
+//					} 
+//				}
+//				playerBody.applyLinearImpulse();
+			}
+			
+			@Override
+			public void endContact(Contact contact) {
+
+			}
+			
+			@Override
+			public void beginContact(Contact contact) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		this.scene.registerUpdateHandler(new IUpdateHandler() {
+			
+			@Override
+			public void reset() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onUpdate(float pSecondsElapsed) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		// Añade los controles con commandos a la escena 
+		scene.setChildScene(UI.getInstance().createAnalogControls(this.camera, this.getVertexBufferObjectManager(), CommandManager.getSetPlayerVelocity(this.playerBody), CommandManager.getDoNothingCommand(), CommandManager.getDoNothingAnalogCommand(), CommandManager.getDoNothingCommand()));
 		pOnPopulateSceneCallback.onPopulateSceneFinished();
 	}
 
@@ -123,5 +200,23 @@ public class MainActivity extends BaseGameActivity
 		if(ResourceManager.getInstance().musicIntro != null){
 			ResourceManager.getInstance().musicIntro.play();
 		}
+	}	
+	
+	public boolean isBodyContacted(Body pBody, Contact pContact) {
+		if (pContact.getFixtureA().getBody().equals(pBody) || pContact.getFixtureB().getBody().equals(pBody)) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean areBodiesContacted(Body pBody1, Body pBody2, Contact pContact) {
+		if (pContact.getFixtureA().getBody().equals(pBody1) || 
+				pContact.getFixtureB().getBody().equals(pBody1)){
+			if (pContact.getFixtureA().getBody().equals(pBody2) || 
+					pContact.getFixtureB().getBody().equals(pBody2)) {
+				return true;				
+			}
+		}
+		return false;
 	}
 }

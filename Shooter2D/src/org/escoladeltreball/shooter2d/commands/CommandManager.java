@@ -4,6 +4,8 @@ import org.escoladeltreball.shooter2d.commands.interfaces.AnalogChangeCommand;
 import org.escoladeltreball.shooter2d.commands.interfaces.Command;
 import org.escoladeltreball.shooter2d.entities.Player;
 
+import com.badlogic.gdx.physics.box2d.Body;
+
 
 /**
  * Esta clase contiene y sirve los comandos del juego.
@@ -18,9 +20,9 @@ public class CommandManager {
 	
 	private static SetPlayerVelocity setPlayerVelocity;
 
-	public static AnalogChangeCommand getSetPlayerVelocity(Player player) {
+	public static AnalogChangeCommand getSetPlayerVelocity(Body playerBody) {
 		if (setPlayerVelocity == null) {
-			setPlayerVelocity = new SetPlayerVelocity(player);
+			setPlayerVelocity = new SetPlayerVelocity(playerBody);
 		}
 		return setPlayerVelocity;
 	}
