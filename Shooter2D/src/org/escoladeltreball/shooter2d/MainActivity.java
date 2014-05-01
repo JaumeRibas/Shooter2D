@@ -41,12 +41,12 @@ public class MainActivity extends BaseGameActivity
 	private ArrayList<Zombie> zombies;
 	private VertexBufferObjectManager vbo = new VertexBufferObjectManager();
 
-	
+
 	@Override
 	public Engine onCreateEngine(final EngineOptions pEngineOptions) {
 		return new FixedStepEngine(pEngineOptions, STEPS_PER_SECOND);
 	}
-	
+
 	@Override
 	public EngineOptions onCreateEngineOptions()
 	{
@@ -97,10 +97,10 @@ public class MainActivity extends BaseGameActivity
 		}
 		pOnCreateSceneCallback.onCreateSceneFinished(scene);
 	}
-	
+
 	@Override
 	public void onPopulateScene(Scene pScene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws IOException {
-		
+
 		this.mPhysicsWorld = new FixedStepPhysicsWorld(STEPS_PER_SECOND, new Vector2(0f, 0), false, 0, 0);
 		pOnPopulateSceneCallback.onPopulateSceneFinished();
 	}
@@ -121,18 +121,23 @@ public class MainActivity extends BaseGameActivity
 	@Override
 	public synchronized void onPauseGame() {
 		super.onPauseGame();
-		// Pausa la reproducción de la música en caso de estar reproduciendose
-		if(ResourceManager.getInstance().musicIntro != null && ResourceManager.getInstance().musicIntro.isPlaying()){
-			ResourceManager.getInstance().musicIntro.pause();
+		if (this.isGameLoaded()){
+			// Pausa la reproducción de la música en caso de estar reproduciendose
+			if(ResourceManager.getInstance().musicIntro != null && ResourceManager.getInstance().musicIntro.isPlaying()){
+				ResourceManager.getInstance().musicIntro.pause();
+			}
 		}
 	}
 
 	@Override
 	public synchronized void onResumeGame() {
 		super.onResumeGame();
-		// Reanuda la reproducción de la música
-		if(ResourceManager.getInstance().musicIntro != null){
-			ResourceManager.getInstance().musicIntro.play();
+	    System.gc();
+		if (this.isGameLoaded()){
+			// Reanuda la reproducción de la música
+			if(ResourceManager.getInstance().musicIntro != null){
+				ResourceManager.getInstance().musicIntro.play();
+			}
 		}
 	}
 }
