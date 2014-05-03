@@ -6,7 +6,7 @@ import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.escoladeltreball.shooter2d.ResourceManager;
-import org.escoladeltreball.shooter2d.commands.CommandManager;
+import org.escoladeltreball.shooter2d.commands.CommandFactory;
 import org.escoladeltreball.shooter2d.commands.interfaces.AnalogChangeCommand;
 import org.escoladeltreball.shooter2d.commands.interfaces.Command;
 
@@ -57,11 +57,11 @@ public class UI {
 	public AnalogOnScreenControl createAnalogControls(Camera camera, VertexBufferObjectManager vertexBufferObjectManager, AnalogChangeCommand leftAnalogChangeCommand, Command leftAnalogClickCommand, AnalogChangeCommand rightAnalogChangeCommand, Command rightAnalogClickCommand) {
 		
 		ConfigurableAnalogControlListener leftAnalogListener = new ConfigurableAnalogControlListener();
-		leftAnalogListener.setAnalogChangeCommand(leftAnalogChangeCommand == null? CommandManager.getDoNothingAnalogCommand(): leftAnalogChangeCommand);
-		leftAnalogListener.setAnalogClickCommand(leftAnalogClickCommand == null? CommandManager.getDoNothingCommand() : leftAnalogClickCommand);
+		leftAnalogListener.setAnalogChangeCommand(leftAnalogChangeCommand == null? CommandFactory.getDoNothingAnalogCommand(): leftAnalogChangeCommand);
+		leftAnalogListener.setAnalogClickCommand(leftAnalogClickCommand == null? CommandFactory.getDoNothingCommand() : leftAnalogClickCommand);
 		ConfigurableAnalogControlListener rightAnalogListener = new ConfigurableAnalogControlListener();
-		rightAnalogListener.setAnalogChangeCommand(rightAnalogChangeCommand == null? CommandManager.getDoNothingAnalogCommand() : rightAnalogChangeCommand);
-		rightAnalogListener.setAnalogClickCommand(rightAnalogClickCommand == null? CommandManager.getDoNothingCommand() : rightAnalogClickCommand);
+		rightAnalogListener.setAnalogChangeCommand(rightAnalogChangeCommand == null? CommandFactory.getDoNothingAnalogCommand() : rightAnalogChangeCommand);
+		rightAnalogListener.setAnalogClickCommand(rightAnalogClickCommand == null? CommandFactory.getDoNothingCommand() : rightAnalogClickCommand);
 		
 		/* Control analogico izquierda */
 		leftAnalogControl = new AnalogOnScreenControl(0, 0, camera, ResourceManager.getInstance().analogControlBaseTextureRegion, ResourceManager.getInstance().analogControlKnobTextureRegion, 0.1f, vertexBufferObjectManager, leftAnalogListener);

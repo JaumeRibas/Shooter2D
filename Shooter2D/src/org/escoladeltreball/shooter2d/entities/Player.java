@@ -2,6 +2,7 @@ package org.escoladeltreball.shooter2d.entities;
 
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.escoladeltreball.shooter2d.physics.BodyFactory;
 
 import com.badlogic.gdx.physics.box2d.Body;
 
@@ -29,7 +30,7 @@ public class Player extends ActorEntity {
 	public Player(float pX, float pY, ITiledTextureRegion pTiledTextureRegion,
 			VertexBufferObjectManager pVertexBufferObjectManager) {
 		super(pX, pY, pTiledTextureRegion, pVertexBufferObjectManager);
-		Body body = null;
+		Body body = BodyFactory.createHumanBody(pX, pY);
 		this.setBody(body);
 	}
 }

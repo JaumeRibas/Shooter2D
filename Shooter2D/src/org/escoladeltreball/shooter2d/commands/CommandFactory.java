@@ -14,17 +14,16 @@ import com.badlogic.gdx.physics.box2d.Body;
  * @author Elvis Puertas
  * @author Jaume Ribas
  */
-public class CommandManager {
+public class CommandFactory {
 	
 	private static DoNothing doNothingInstance;
-	
-	private static SetPlayerVelocity setPlayerVelocity;
+	private static SetPlayerVelocityAndOrientation setPlayerVelocityInstance;
 
-	public static AnalogChangeCommand getSetPlayerVelocity(Player player, Body playerBody) {
-		if (setPlayerVelocity == null) {
-			setPlayerVelocity = new SetPlayerVelocity(player, playerBody);
+	public static AnalogChangeCommand getSetPlayerVelocity(Player player) {
+		if (setPlayerVelocityInstance == null) {
+			setPlayerVelocityInstance = new SetPlayerVelocityAndOrientation(player);
 		}
-		return setPlayerVelocity;
+		return setPlayerVelocityInstance;
 	}
 
 	public static AnalogChangeCommand getDoNothingAnalogCommand() {

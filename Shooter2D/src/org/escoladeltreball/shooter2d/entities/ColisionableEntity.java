@@ -1,7 +1,9 @@
 package org.escoladeltreball.shooter2d.entities;
 
+import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.escoladeltreball.shooter2d.MainActivity;
 
 import com.badlogic.gdx.physics.box2d.Body;
 
@@ -29,6 +31,7 @@ public abstract class ColisionableEntity extends GameEntity {
 
 	public void setBody(Body body) {
 		this.body = body;
+		MainActivity.mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(this, this.body));
 	}
 
 }
