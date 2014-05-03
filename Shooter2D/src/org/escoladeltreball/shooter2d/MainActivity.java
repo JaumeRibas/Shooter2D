@@ -14,7 +14,6 @@ import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.input.touch.controller.MultiTouch;
-import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.ui.activity.BaseGameActivity;
 import org.escoladeltreball.shooter2d.commands.CommandFactory;
 import org.escoladeltreball.shooter2d.entities.Player;
@@ -54,12 +53,12 @@ public class MainActivity extends BaseGameActivity
 	private ArrayList<Zombie> zombies;
 	private Scene scene;
 
-	
+
 	@Override
 	public Engine onCreateEngine(final EngineOptions pEngineOptions) {
 		return new FixedStepEngine(pEngineOptions, STEPS_PER_SECOND);
 	}
-	
+
 	@Override
 	public EngineOptions onCreateEngineOptions()
 	{
@@ -97,7 +96,7 @@ public class MainActivity extends BaseGameActivity
 		scene.setBackground(new Background(0.09804f, 0.6274f, 0.8784f));
 		pOnCreateSceneCallback.onCreateSceneFinished(scene);
 	}
-	
+
 	@Override
 	public void onPopulateScene(Scene pScene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws IOException {
 		
@@ -136,18 +135,23 @@ public class MainActivity extends BaseGameActivity
 	@Override
 	public synchronized void onPauseGame() {
 		super.onPauseGame();
-		// Pausa la reproducción de la música en caso de estar reproduciendose
-		if(ResourceManager.getInstance().musicIntro != null && ResourceManager.getInstance().musicIntro.isPlaying()){
-			ResourceManager.getInstance().musicIntro.pause();
+		if (this.isGameLoaded()){
+			// Pausa la reproducción de la música en caso de estar reproduciendose
+			if(ResourceManager.getInstance().musicIntro != null && ResourceManager.getInstance().musicIntro.isPlaying()){
+				ResourceManager.getInstance().musicIntro.pause();
+			}
 		}
 	}
 
 	@Override
 	public synchronized void onResumeGame() {
 		super.onResumeGame();
-		// Reanuda la reproducción de la música
-		if(ResourceManager.getInstance().musicIntro != null){
-			ResourceManager.getInstance().musicIntro.play();
+	    System.gc();
+		if (this.isGameLoaded()){
+			// Reanuda la reproducción de la música
+			if(ResourceManager.getInstance().musicIntro != null){
+				ResourceManager.getInstance().musicIntro.play();
+			}
 		}
 	}	
 	
