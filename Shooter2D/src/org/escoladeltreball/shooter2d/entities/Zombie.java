@@ -81,7 +81,7 @@ public class Zombie extends ActorEntity implements Walking, Attacking,
 			float yStep = yDistance / distance;
 			// Calculo de rotación
 			//float rotationAngle = (float) Math.sin(yStep); se usa?
-			this.getBody().setTransform(this.getBody().getPosition(), (float) Math.atan2(xStep, yStep));
+			this.getBody().setTransform(this.getBody().getPosition(), (float) Math.atan2(-xStep, yStep));
 			// Calculo de la velocidad
 			this.getBody().setLinearVelocity(xStep * this.speed, yStep * this.speed);
 		}
