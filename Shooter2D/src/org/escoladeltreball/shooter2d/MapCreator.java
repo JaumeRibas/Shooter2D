@@ -14,6 +14,8 @@ import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.adt.color.Color;
 import org.andengine.util.debug.Debug;
+import org.escoladeltreball.shooter2d.physics.BodyFactory;
+
 import android.content.res.AssetManager;
 
 public class MapCreator {
@@ -37,7 +39,7 @@ public class MapCreator {
 		scene.attachChild(mTMXTiledMap);
 
 		// Muestra sobre el mapa rectangulos que son areas de colision
-		createUnwalkableObjects(mTMXTiledMap, vbo, scene);
+		createUnwalkableObjects(mTMXTiledMap, scene, vbo);
 
 		// La camara no execede el tamaño del mapa
 		final TMXLayer tmxLayer = mTMXTiledMap.getTMXLayers().get(0);
@@ -49,10 +51,9 @@ public class MapCreator {
 	/**
 	 * Crea los rectangulos que no podrán ser atravesados y los añade a la scene
 	 * @param map
-	 * @param vbo
 	 * @return
 	 */
-	public void createUnwalkableObjects(TMXTiledMap map, VertexBufferObjectManager vbo, Scene scene){
+	public void createUnwalkableObjects(TMXTiledMap map, Scene scene, VertexBufferObjectManager vbo){
 		// Loop through the object groups
 		for(final TMXObjectGroup group: map.getTMXObjectGroups()) {
 			if(group.getTMXObjectGroupProperties().containsTMXProperty("wall", "true")){
@@ -63,6 +64,7 @@ public class MapCreator {
 					rect.setVisible(true);
 					rect.setColor(Color.RED);
 					scene.attachChild(rect);
+					BodyFactory.createRectangleWallBody(object.getX()+(object.getWidth()/2), object.getY()+(object.getHeight()/2), object.getWidth(), object.getHeight());
 				}
 			}
 		}

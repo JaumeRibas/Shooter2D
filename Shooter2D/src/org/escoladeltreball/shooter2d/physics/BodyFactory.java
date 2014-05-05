@@ -17,7 +17,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
  */
 public class BodyFactory {
 	
-	private static final float HUMAN_BODY_RADIUS = 0;
+	private static final float HUMAN_BODY_RADIUS = 17;
+	private static final float HUMAN_BODY_LINEAR_DAMPING = 1f;
 
 	/**
 	 * Crea un {@link Body} para el {@link Player},
@@ -29,10 +30,12 @@ public class BodyFactory {
 	 * @return un {@link Body}
 	 */
 	public static Body createHumanBody(float positionX, float positionY) {
-		return PhysicsFactory.createCircleBody(MainActivity.mPhysicsWorld, positionX, positionY, HUMAN_BODY_RADIUS, BodyType.DynamicBody, FixtureFactory.getFleshFixture());
+		Body humanBody = PhysicsFactory.createCircleBody(MainActivity.mPhysicsWorld, positionX, positionY, HUMAN_BODY_RADIUS, BodyType.DynamicBody, FixtureFactory.getFleshFixture());
+		humanBody.setLinearDamping(HUMAN_BODY_LINEAR_DAMPING);
+		return humanBody;
 	}
 	
-//	public static Body createWallBody(float positionX, float positionY, Entity entity) {
-//		return PhysicsFactory.createBoxBody(MainActivity.mPhysicsWorld, positionX, positionY, entity, BodyType.StaticBody, FixtureFactory.getWallFixture());
-//	}
+	public static Body createRectangleWallBody(float positionX, float positionY, float width, float height) {
+		return PhysicsFactory.createBoxBody(MainActivity.mPhysicsWorld, positionX, positionY, width, height, BodyType.StaticBody, FixtureFactory.getWallFixture());
+	}
 }
