@@ -42,10 +42,6 @@ public class MainActivity extends BaseGameActivity
 	/** se usa al crear el FixedStepPhysicsWorld */
 	private static final int POSITION_INTERACTIONS = 3;
 	
-	private static final float WALL_DENSITY = 0;
-	private static final float WALL_ELASTICITY = 0.1f;
-	private static final float WALL_FRICTION = 0.5f;
-	
 	public static FixedStepPhysicsWorld mPhysicsWorld;
 	public Body wallBody;
 	private Player player;

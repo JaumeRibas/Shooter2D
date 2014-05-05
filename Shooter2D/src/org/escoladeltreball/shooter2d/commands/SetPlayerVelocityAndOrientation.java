@@ -35,7 +35,7 @@ public class SetPlayerVelocityAndOrientation implements AnalogChangeCommand {
 			this.player.getBody().setTransform(this.player.getBody().getPosition(), (float)Math.atan2(-pValueX, pValueY));
 			//obtine la dirección a la que mira el body jugador suponiendo que al crearlo miraba hacia arriba (0,1)
 			Vector2 playerVector = this.player.getBody().getWorldVector(Vector2Pool.obtain(0, 1));
-			this.player.getBody().setLinearVelocity(playerVector.x * SPEED, playerVector.y * SPEED);
+			this.player.getBody().setLinearVelocity(pValueX * SPEED, pValueY * SPEED);
 		} else {
 			this.player.stopAnimation();
 			this.player.setCurrentTileIndex(0);

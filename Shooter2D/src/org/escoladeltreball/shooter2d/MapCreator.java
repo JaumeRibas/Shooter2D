@@ -1,7 +1,6 @@
 package org.escoladeltreball.shooter2d;
 
 import org.andengine.engine.camera.BoundCamera;
-import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.extension.tmx.TMXLayer;
 import org.andengine.extension.tmx.TMXLoader;
@@ -12,8 +11,9 @@ import org.andengine.extension.tmx.util.exception.TMXLoadException;
 import org.andengine.opengl.texture.TextureManager;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
-import org.andengine.util.adt.color.Color;
 import org.andengine.util.debug.Debug;
+import org.escoladeltreball.shooter2d.physics.BodyFactory;
+
 import android.content.res.AssetManager;
 
 public class MapCreator {
@@ -37,7 +37,7 @@ public class MapCreator {
 		scene.attachChild(mTMXTiledMap);
 
 		// Muestra sobre el mapa rectangulos que son areas de colision
-		createUnwalkableObjects(mTMXTiledMap, vbo, scene);
+		createUnwalkableObjects(mTMXTiledMap);
 
 		// La camara no execede el tamaño del mapa
 		final TMXLayer tmxLayer = mTMXTiledMap.getTMXLayers().get(0);
@@ -49,20 +49,15 @@ public class MapCreator {
 	/**
 	 * Crea los rectangulos que no podrán ser atravesados y los añade a la scene
 	 * @param map
-	 * @param vbo
 	 * @return
 	 */
-	public void createUnwalkableObjects(TMXTiledMap map, VertexBufferObjectManager vbo, Scene scene){
+	public void createUnwalkableObjects(TMXTiledMap map){
 		// Loop through the object groups
 		for(final TMXObjectGroup group: map.getTMXObjectGroups()) {
 			if(group.getTMXObjectGroupProperties().containsTMXProperty("wall", "true")){
 				// This is our "wall" layer. Create the boxes from it
 				for(final TMXObject object : group.getTMXObjects()) {
-					final Rectangle rect = new Rectangle(object.getX()+(object.getWidth()/2), object.getY()+(object.getHeight()/2), object.getWidth(), object.getHeight(), vbo);
-					rect.setOffsetCenter(0.5f, 0.5f);
-					rect.setVisible(true);
-					rect.setColor(Color.RED);
-					scene.attachChild(rect);
+					BodyFactory.createRectangleWallBody(object.getX()+(object.getWidth()/2), object.getY()+(object.getHeight()/2), object.getWidth(), object.getHeight());
 				}
 			}
 		}
