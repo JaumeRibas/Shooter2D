@@ -44,10 +44,10 @@ public class SplashScreenActivity extends SimpleBaseGameActivity {
 	private BitmapTextureAtlas mBitmapTextureAtlas;
 	private ITextureRegion mFaceTextureRegion;
 	
-	private static final int SPLASH_DURATION = 1;
+	private static final int SPLASH_DURATION = 3;
 	private static final float SPLASH_SCALE_FROM = 0.6f;
 	private static final String IMAGE = "splash.png";
-	private static final Class FOLLOWING_ACTIVITY = MainActivity.class;	
+	private static final Class<MenuActivity> FOLLOWING_ACTIVITY = MenuActivity.class;	
 
 	// ===========================================================
 	// Methods for/from SuperClass/Interfaces
@@ -72,11 +72,11 @@ public class SplashScreenActivity extends SimpleBaseGameActivity {
 		final Scene scene = new Scene();
 		scene.setBackground(new Background(0,0,0));
 
-		/* Añade la imagen en el centro de la pantalla. */
+		/* AÃ±aade la imagen en el centro de la pantalla. */
 		final int centerX = (int) (CAMERA_WIDTH / 2);
 		final int centerY = (int) (CAMERA_HEIGHT / 2);
 
-		/* Crea y añade la imagen a la scene. */
+		/* Crea y aÃ±aade la imagen a la scene. */
 		final Sprite splashimage = new Sprite(centerX, centerY, this.mFaceTextureRegion, this.mEngine.getVertexBufferObjectManager());
 	
 		SequenceEntityModifier animation = new SequenceEntityModifier(

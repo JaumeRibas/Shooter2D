@@ -77,11 +77,9 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 			float xStep = xDistance / distance;
 			float yStep = yDistance / distance;
 			// Rotación
-			this.setRotation(MathUtils.radToDeg((float) Math
-					.atan2(xStep, yStep)));
-			// Reposicionamiento			
-			this.setPosition(this.getX() + (xStep * this.speed), this.getY()
-					+ (yStep * this.speed));
+			this.getBody().setTransform(this.getBody().getPosition(), (float) Math.atan2(-xStep, yStep));
+			// Calculo de la velocidad
+			this.getBody().setLinearVelocity(xStep * this.speed, yStep * this.speed);
 		}
 	}
 
