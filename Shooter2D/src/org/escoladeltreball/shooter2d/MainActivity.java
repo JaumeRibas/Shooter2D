@@ -60,6 +60,7 @@ public class MainActivity extends BaseGameActivity
 	{
 		checkCompatibilityMultiTouch();
 		camera = new BoundCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
+		camera.setHUD(UI.getHUD());
 		EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED, 
 				new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera);
 		engineOptions.getRenderOptions().setDithering(true);
@@ -98,7 +99,7 @@ public class MainActivity extends BaseGameActivity
 		
 		mPhysicsWorld = new FixedStepPhysicsWorld(STEPS_PER_SECOND, new Vector2(0f, 0), false, VELOCITY_INTERACTIONS, POSITION_INTERACTIONS);
 		this.scene.registerUpdateHandler(mPhysicsWorld);
-		
+		mPhysicsWorld.setContactListener(GameContactListener.getInstance());
 		this.player = playerLoader.loadPlayer(camera,  getTextureManager(), getAssets(), getVertexBufferObjectManager());
 		// Muestra el mapa en la pantalla
 		scene = this.mapCreator.loadMap(getAssets(), getTextureManager(), getVertexBufferObjectManager(), scene, this.camera);
@@ -111,7 +112,7 @@ public class MainActivity extends BaseGameActivity
 			scene.attachChild(zombie);
 		}
 		// Añade los controles con commandos a la escena 
-		scene.setChildScene(UI.getInstance().createAnalogControls(this.camera, this.getVertexBufferObjectManager(), CommandFactory.getSetPlayerVelocity(this.player), CommandFactory.getDoNothingCommand(), CommandFactory.getDoNothingAnalogCommand(), CommandFactory.getDoNothingCommand()));
+		UI.getInstance().createAnalogControls(this.camera, this.getVertexBufferObjectManager(), CommandFactory.getSetPlayerVelocity(this.player), CommandFactory.getDoNothingCommand(), CommandFactory.getDoNothingAnalogCommand(), CommandFactory.getDoNothingCommand());
 		pOnPopulateSceneCallback.onPopulateSceneFinished();
 	}
 
