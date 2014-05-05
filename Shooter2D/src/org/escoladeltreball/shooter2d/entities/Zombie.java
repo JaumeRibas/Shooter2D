@@ -3,7 +3,6 @@ package org.escoladeltreball.shooter2d.entities;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.adt.color.Color;
-import org.andengine.util.math.MathUtils;
 import org.escoladeltreball.shooter2d.constants.HPConstants;
 import org.escoladeltreball.shooter2d.entities.interfaces.Attacking;
 import org.escoladeltreball.shooter2d.entities.interfaces.Targeting;
@@ -22,8 +21,6 @@ import com.badlogic.gdx.physics.box2d.Body;
  */
 public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 
-	private ActorEntity target;
-	
 	private float speed = 0.5f;
 
 	private static final float ZOMBIE_ATTACK_COOLDOWN = 3;
@@ -47,12 +44,13 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 	public Zombie(float pX, float pY, ITiledTextureRegion pTiledTextureRegion,
 			VertexBufferObjectManager pVertexBufferObjectManager, Player player) {
 		super(pX, pY, pTiledTextureRegion, pVertexBufferObjectManager);
-		this.target = player;
+
+		super.setTarget(player);
 		this.attackCooldownTimer = Zombie.ZOMBIE_ATTACK_COOLDOWN;
 		Body body = BodyFactory.createHumanBody(pX, pY);
 		this.setBody(body);
 		this.setColor(Color.GREEN);
-		
+
 		this.setMaxHealthPoints(HPConstants.ZOMBIE_HEALTH);
 		this.setHealthpoints(HPConstants.ZOMBIE_HEALTH);
 	}
@@ -62,40 +60,51 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 	 */
 	public void walk() {
 		if (this.getTarget() != null) {
-			
+
 			// Inicia la animación si no ha empezado.
 			if (!this.isWalking) {
 				this.isWalking = true;
 				this.animate(400);
 			}
 			// Distancias en referencia al Zombie, catetos
-			float xDistance = this.getXDistance(target);
-			float yDistance = this.getYDistance(target);
+			float xDistance = this.getXDistance(super.getTarget());
+			float yDistance = this.getYDistance(super.getTarget());
 			// Distancia recta, hipotenusa
-			float distance = this.getDistance(target);
+			float distance = this.getDistance(super.getTarget());
 			// Calculo de seno y coseno
 			float xStep = xDistance / distance;
 			float yStep = yDistance / distance;
 			// Rotación
-			this.getBody().setTransform(this.getBody().getPosition(), (float) Math.atan2(-xStep, yStep));
+			this.getBody().setTransform(this.getBody().getPosition(),
+					(float) Math.atan2(-xStep, yStep));
 			// Calculo de la velocidad
-			this.getBody().setLinearVelocity(xStep * this.speed, yStep * this.speed);
+			this.getBody().setLinearVelocity(xStep * this.speed,
+					yStep * this.speed);
 		}
 	}
 
 	/**
-	 * Makes the zombie attack.
+	 * Hace atacar al zombie.
 	 */
 	public void attack() {
 		this.isWalking = false;
 		this.setCurrentTileIndex(0);
-		if (this.attackCooldownTimer == 0) {
-			this.target.hurt(HPConstants.ZOMBIE_STRENGH);
-			this.target.setColor(Color.RED);
+		if (this.attackCooldownTimer == 0
+				&& super.getTarget() instanceof ActorEntity) {
+			ActorEntity actorEntity = (ActorEntity) super.getTarget();
+			
+			actorEntity.hurt(HPConstants.ZOMBIE_STRENGH);
+			super.getTarget().setColor(Color.RED);
 			this.resetCooldown();
 		}
 	}
 
+	/**
+	 * Actualiza el timer de cooldown.
+	 * 
+	 * @param pSecondsElapsed
+	 *            el tiempo pasado entre la actualización anterior y esta.
+	 */
 	@Override
 	public void manageCooldown(float pSecondsElapsed) {
 		this.attackCooldownTimer -= pSecondsElapsed;
@@ -104,15 +113,24 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 		}
 	}
 
+	/**
+	 * Reestablece el cooldown.
+	 */
 	@Override
 	public void resetCooldown() {
 		this.attackCooldownTimer = Zombie.ZOMBIE_ATTACK_COOLDOWN;
 	}
 
+	/**
+	 * El zombie realiza una acción.
+	 * 
+	 * @param pSecondsElapsed
+	 *            el tiempo pasado entre la actualización anterior y esta.
+	 */
 	@Override
 	protected void onManagedUpdate(float pSecondsElapsed) {
-		
-		if (this.collidesWith(target)) {
+
+		if (this.collidesWith(super.getTarget())) {
 			this.attack();
 		} else {
 			this.walk();
@@ -120,13 +138,5 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 
 		this.manageCooldown(pSecondsElapsed);
 		super.onManagedUpdate(pSecondsElapsed);
-	}
-
-	public ActorEntity getTarget() {
-		return target;
-	}
-
-	public void setTarget(ActorEntity target) {
-		this.target = target;
 	}
 }
