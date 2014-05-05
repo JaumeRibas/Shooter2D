@@ -48,4 +48,10 @@ public class Player extends ActorEntity {
 		super.hurt(strengh);
 		System.out.println("PLAYER HEALTH: " + getHealthpoints() + "/" + getMaxHealthPoints());
 	}
+
+	@Override
+	public void collidesWith(ColisionableEntity colisionableEntity) {
+		// TODO Auto-generated method stub
+		
+	}
 }

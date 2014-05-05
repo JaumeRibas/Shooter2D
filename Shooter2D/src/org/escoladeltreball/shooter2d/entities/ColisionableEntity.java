@@ -34,6 +34,14 @@ public abstract class ColisionableEntity extends GameEntity {
 	public void setBody(Body body) {
 		this.body = body;
 		MainActivity.mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(this, this.body));
+		this.body.setUserData(this);
 	}
+	
+	/**
+	 * Se llama cuando {@link ColisionableEntity} colisiona con otra.
+	 * 
+	 * @param colisionableEntity la otra {@link ColisionableEntity} entity con la que ha chocado
+	 */
+	public abstract void collidesWith(ColisionableEntity colisionableEntity);
 
 }
