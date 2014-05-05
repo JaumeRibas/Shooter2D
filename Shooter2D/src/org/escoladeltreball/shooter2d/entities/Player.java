@@ -2,6 +2,7 @@ package org.escoladeltreball.shooter2d.entities;
 
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.escoladeltreball.shooter2d.constants.HPConstants;
 import org.escoladeltreball.shooter2d.physics.BodyFactory;
 
 import com.badlogic.gdx.physics.box2d.Body;
@@ -32,6 +33,20 @@ public class Player extends ActorEntity {
 		super(pX, pY, pTiledTextureRegion, pVertexBufferObjectManager);
 		Body body = BodyFactory.createHumanBody(pX, pY);
 		this.setBody(body);
+
+		 this.setMaxHealthPoints(HPConstants.HUMAN_HEALTH);
+		 this.setHealthpoints(HPConstants.HUMAN_HEALTH);
+	}
+	
+	/**
+	 * Realiza las acciones que el jugador realiza cuando es herido.
+	 * 
+	 * @param strengh un integer, la fuerza del ataque recibido enemigo.
+	 */
+	@Override
+	public void hurt(int strengh){
+		super.hurt(strengh);
+		System.out.println("PLAYER HEALTH: " + getHealthpoints() + "/" + getMaxHealthPoints());
 	}
 
 	@Override

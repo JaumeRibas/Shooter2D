@@ -25,6 +25,8 @@ public abstract class ColisionableEntity extends GameEntity {
 		super(pX, pY, pTiledTextureRegion, pVertexBufferObjectManager);
 	}
 
+	// GETTERS AND SETTERS
+	
 	public Body getBody() {
 		return body;
 	}

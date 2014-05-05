@@ -11,12 +11,43 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
  * @author Elvis Puertas
  * @author Jaume Ribas
  */
+
 public abstract class ActorEntity extends ColisionableEntity {
+	
+	private int healthpoints = 1;
+	private int maxHealthPoints = 1;
 
 	public ActorEntity(float pX, float pY,
 			ITiledTextureRegion pTiledTextureRegion,
 			VertexBufferObjectManager pVertexBufferObjectManager) {
 		super(pX, pY, pTiledTextureRegion, pVertexBufferObjectManager);
+	}
+
+	/**
+	 * Realiza las acciones que el actor realiza cuando es herido.
+	 * 
+	 * @param strengh a integer, la fuerza del ataque recibido.
+	 */
+	public void hurt(int strengh){
+		this.setHealthpoints(this.getHealthpoints() - strengh);
+	}
+	
+	// GETTERS AND SETTERS
+	
+	public int getHealthpoints() {
+		return healthpoints;
+	}
+
+	public void setHealthpoints(int healthpoints) {
+		this.healthpoints = healthpoints;
+	}
+
+	public int getMaxHealthPoints() {
+		return maxHealthPoints;
+	}
+
+	public void setMaxHealthPoints(int maxHealthPoints) {
+		this.maxHealthPoints = maxHealthPoints;
 	}
 
 }

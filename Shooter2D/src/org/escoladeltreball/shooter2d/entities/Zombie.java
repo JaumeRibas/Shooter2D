@@ -4,6 +4,7 @@ import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.adt.color.Color;
 import org.andengine.util.math.MathUtils;
+import org.escoladeltreball.shooter2d.constants.HPConstants;
 import org.escoladeltreball.shooter2d.entities.interfaces.Attacking;
 import org.escoladeltreball.shooter2d.entities.interfaces.Targeting;
 import org.escoladeltreball.shooter2d.entities.interfaces.Walking;
@@ -21,7 +22,7 @@ import com.badlogic.gdx.physics.box2d.Body;
  */
 public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 
-	private GameEntity target;
+	private ActorEntity target;
 	
 	private float speed = 0.5f;
 
@@ -51,6 +52,9 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 		Body body = BodyFactory.createHumanBody(pX, pY);
 		this.setBody(body);
 		this.setColor(Color.GREEN);
+		
+		this.setMaxHealthPoints(HPConstants.ZOMBIE_HEALTH);
+		this.setHealthpoints(HPConstants.ZOMBIE_HEALTH);
 	}
 
 	/**
@@ -86,11 +90,9 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 		this.isWalking = false;
 		this.setCurrentTileIndex(0);
 		if (this.attackCooldownTimer == 0) {
-			// PLACEHOLDER ACTION TO ATTACK
-			this.target.setRotation(this.target.getRotation() + 90);
+			this.target.hurt(HPConstants.ZOMBIE_STRENGH);
 			this.target.setColor(Color.RED);
 			this.resetCooldown();
-			System.out.println("ZOMBIE ATACANDO!");
 		}
 	}
 
@@ -114,11 +116,11 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 		super.onManagedUpdate(pSecondsElapsed);
 	}
 
-	public GameEntity getTarget() {
+	public ActorEntity getTarget() {
 		return target;
 	}
 
-	public void setTarget(GameEntity target) {
+	public void setTarget(ActorEntity target) {
 		this.target = target;
 	}
 

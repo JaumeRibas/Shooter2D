@@ -4,7 +4,7 @@ import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.escoladeltreball.shooter2d.entities.interfaces.Targeting;
 
-public abstract class IAEntity extends ActorEntity implements Targeting{
+public abstract class IAEntity extends ActorEntity implements Targeting {
 
 	private GameEntity target;
 	
@@ -13,6 +13,8 @@ public abstract class IAEntity extends ActorEntity implements Targeting{
 			VertexBufferObjectManager pVertexBufferObjectManager) {
 		super(pX, pY, pTiledTextureRegion, pVertexBufferObjectManager);
 	}
+	
+	// GETTERS AND SETTERS
 	
 	public GameEntity getTarget() {
 		return target;
