@@ -7,7 +7,6 @@ import org.andengine.util.math.MathUtils;
 import org.escoladeltreball.shooter2d.entities.interfaces.Attacking;
 import org.escoladeltreball.shooter2d.entities.interfaces.Targeting;
 import org.escoladeltreball.shooter2d.entities.interfaces.Walking;
-import org.escoladeltreball.shooter2d.physics.BodyFactory;
 
 import com.badlogic.gdx.physics.box2d.Body;
 
@@ -19,15 +18,14 @@ import com.badlogic.gdx.physics.box2d.Body;
  * @author Elvis Puertas
  * @author Jaume Ribas
  */
-public class Zombie extends ActorEntity implements Walking, Attacking,
-		Targeting {
+public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 
 	private GameEntity target;
-
+	
 	private float speed = 0.5f;
 
-	private float attackCooldown = 3;
-	private float attackCooldownTimer;
+	private static final float ZOMBIE_ATTACK_COOLDOWN = 3;
+	private float attackCooldownTimer = 0;
 
 	private boolean isWalking = false;
 
@@ -48,8 +46,8 @@ public class Zombie extends ActorEntity implements Walking, Attacking,
 			VertexBufferObjectManager pVertexBufferObjectManager, Player player) {
 		super(pX, pY, pTiledTextureRegion, pVertexBufferObjectManager);
 		this.target = player;
-		this.attackCooldownTimer = this.attackCooldown;
-		Body body = BodyFactory.createHumanBody(pX, pY);
+		this.attackCooldownTimer = Zombie.ZOMBIE_ATTACK_COOLDOWN;
+		Body body = null;
 		this.setBody(body);
 		this.setColor(Color.GREEN);
 	}
@@ -59,31 +57,26 @@ public class Zombie extends ActorEntity implements Walking, Attacking,
 	 */
 	public void walk() {
 		if (this.getTarget() != null) {
+			
 			// Inicia la animación si no ha empezado.
 			if (!this.isWalking) {
 				this.isWalking = true;
 				this.animate(400);
 			}
-			float zombieX = this.getX();
-			float zombieY = this.getY();
-
-			float playerX = target.getX();
-			float playerY = target.getY();
-
 			// Distancias en referencia al Zombie, catetos
-			float xDistance = playerX - zombieX;
-			float yDistance = playerY - zombieY;
+			float xDistance = this.getXDistance(target);
+			float yDistance = this.getYDistance(target);
 			// Distancia recta, hipotenusa
-			float distance = (float) Math.sqrt(Math.pow(xDistance, 2)
-					+ Math.pow(yDistance, 2));
+			float distance = this.getDistance(target);
 			// Calculo de seno y coseno
 			float xStep = xDistance / distance;
 			float yStep = yDistance / distance;
-			// Calculo de rotación
-			//float rotationAngle = (float) Math.sin(yStep); se usa?
-			this.getBody().setTransform(this.getBody().getPosition(), (float) Math.atan2(-xStep, yStep));
-			// Calculo de la velocidad
-			this.getBody().setLinearVelocity(xStep * this.speed, yStep * this.speed);
+			// Rotación
+			this.setRotation(MathUtils.radToDeg((float) Math
+					.atan2(xStep, yStep)));
+			// Reposicionamiento			
+			this.setPosition(this.getX() + (xStep * this.speed), this.getY()
+					+ (yStep * this.speed));
 		}
 	}
 
@@ -112,11 +105,12 @@ public class Zombie extends ActorEntity implements Walking, Attacking,
 
 	@Override
 	public void resetCooldown() {
-		this.attackCooldownTimer = this.attackCooldown;
+		this.attackCooldownTimer = Zombie.ZOMBIE_ATTACK_COOLDOWN;
 	}
 
 	@Override
 	protected void onManagedUpdate(float pSecondsElapsed) {
+		
 		if (this.collidesWith(target)) {
 			this.attack();
 		} else {
