@@ -109,13 +109,7 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 
 	@Override
 	protected void onManagedUpdate(float pSecondsElapsed) {
-		
-		if (this.collidesWith(target)) {
-			this.attack();
-		} else {
-			this.walk();
-		}
-
+		this.walk();
 		this.manageCooldown(pSecondsElapsed);
 		super.onManagedUpdate(pSecondsElapsed);
 	}
@@ -126,5 +120,12 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 
 	public void setTarget(GameEntity target) {
 		this.target = target;
+	}
+
+	@Override
+	public void collidesWith(ColisionableEntity colisionableEntity) {
+		if (colisionableEntity == this.target) {
+			this.attack();
+		}		
 	}
 }

@@ -1,6 +1,7 @@
 package org.escoladeltreball.shooter2d.ui;
 
 import org.andengine.engine.camera.Camera;
+import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
@@ -22,6 +23,9 @@ public class UI {
 	
 	/** instancia unica */
 	private static UI instance;
+	
+	/** instancia unica de HUD */
+	private static HUD hud;
 
 	private AnalogOnScreenControl leftAnalogControl;
 	private AnalogOnScreenControl rightAnalogControl;
@@ -54,7 +58,7 @@ public class UI {
 	 * @param rightAnalogClickCommand el comando a ejecutar cuando se clique el analog derecho
 	 * @return un {@link AnalogOnScreenControl} con el otro {@link AnalogOnScreenControl} como su {@link Scene} hija
 	 */
-	public AnalogOnScreenControl createAnalogControls(Camera camera, VertexBufferObjectManager vertexBufferObjectManager, AnalogChangeCommand leftAnalogChangeCommand, Command leftAnalogClickCommand, AnalogChangeCommand rightAnalogChangeCommand, Command rightAnalogClickCommand) {
+	public void createAnalogControls(Camera camera, VertexBufferObjectManager vertexBufferObjectManager, AnalogChangeCommand leftAnalogChangeCommand, Command leftAnalogClickCommand, AnalogChangeCommand rightAnalogChangeCommand, Command rightAnalogClickCommand) {
 		
 		ConfigurableAnalogControlListener leftAnalogListener = new ConfigurableAnalogControlListener();
 		leftAnalogListener.setAnalogChangeCommand(leftAnalogChangeCommand == null? CommandFactory.getDoNothingAnalogCommand(): leftAnalogChangeCommand);
@@ -84,7 +88,7 @@ public class UI {
 			leftAnalogControl.setChildScene(rightAnalogControl);
 		}
 		
-		return leftAnalogControl;
+		hud.setChildScene(leftAnalogControl);
 	}
 	
 	/**
@@ -96,8 +100,8 @@ public class UI {
 	 * @param vertexBufferObjectManager
 	 * @return
 	 */
-	public AnalogOnScreenControl createAnalogControls(Camera camera, VertexBufferObjectManager vertexBufferObjectManager) {
-		return createAnalogControls(camera, vertexBufferObjectManager, null, null, null, null);
+	public void createAnalogControls(Camera camera, VertexBufferObjectManager vertexBufferObjectManager) {
+		createAnalogControls(camera, vertexBufferObjectManager, null, null, null, null);
 	}
 	
 	/**
@@ -178,5 +182,12 @@ public class UI {
 	 */
 	public void setRightAnalogClickCommand() {
 		((ConfigurableAnalogControlListener)this.rightAnalogControl.getOnScreenControlListener()).getAnalogClickCommand();
+	}
+
+	public static HUD getHUD() {
+		if (hud == null) {
+			hud = new HUD();
+		}
+		return hud;
 	}
 }

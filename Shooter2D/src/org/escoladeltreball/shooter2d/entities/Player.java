@@ -33,4 +33,10 @@ public class Player extends ActorEntity {
 		Body body = BodyFactory.createHumanBody(pX, pY);
 		this.setBody(body);
 	}
+
+	@Override
+	public void collidesWith(ColisionableEntity colisionableEntity) {
+		// TODO Auto-generated method stub
+		
+	}
 }
