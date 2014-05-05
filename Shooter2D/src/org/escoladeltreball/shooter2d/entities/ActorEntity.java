@@ -23,6 +23,17 @@ public abstract class ActorEntity extends ColisionableEntity {
 		super(pX, pY, pTiledTextureRegion, pVertexBufferObjectManager);
 	}
 
+	/**
+	 * Realiza las acciones que el actor realiza cuando es herido.
+	 * 
+	 * @param strengh a integer, la fuerza del ataque recibido.
+	 */
+	public void hurt(int strengh){
+		this.setHealthpoints(this.getHealthpoints() - strengh);
+	}
+	
+	// GETTERS AND SETTERS
+	
 	public int getHealthpoints() {
 		return healthpoints;
 	}
@@ -37,10 +48,6 @@ public abstract class ActorEntity extends ColisionableEntity {
 
 	public void setMaxHealthPoints(int maxHealthPoints) {
 		this.maxHealthPoints = maxHealthPoints;
-	}
-	
-	public void hurt(int strengh){
-		this.setHealthpoints(this.getHealthpoints() - strengh);
 	}
 
 }

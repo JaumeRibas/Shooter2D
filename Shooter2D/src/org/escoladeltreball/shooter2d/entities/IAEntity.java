@@ -14,6 +14,8 @@ public abstract class IAEntity extends ActorEntity implements Targeting {
 		super(pX, pY, pTiledTextureRegion, pVertexBufferObjectManager);
 	}
 	
+	// GETTERS AND SETTERS
+	
 	public GameEntity getTarget() {
 		return target;
 	}

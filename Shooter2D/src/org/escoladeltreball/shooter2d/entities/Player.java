@@ -38,6 +38,11 @@ public class Player extends ActorEntity {
 		 this.setHealthpoints(HPConstants.HUMAN_HEALTH);
 	}
 	
+	/**
+	 * Realiza las acciones que el jugador realiza cuando es herido.
+	 * 
+	 * @param strengh un integer, la fuerza del ataque recibido enemigo.
+	 */
 	@Override
 	public void hurt(int strengh){
 		super.hurt(strengh);
