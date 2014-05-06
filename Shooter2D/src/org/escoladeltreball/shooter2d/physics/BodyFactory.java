@@ -19,7 +19,8 @@ public class BodyFactory {
 	
 	private static final float HUMAN_BODY_RADIUS = 17;
 	private static final float HUMAN_BODY_LINEAR_DAMPING = 1f;
-
+	
+	public static final String WALL_USER_DATA = "wall";
 	/**
 	 * Crea un {@link Body} para el {@link Player},
 	 * los {@link Zombie}s y otras {@link ColisionableEntity}s
@@ -35,7 +36,20 @@ public class BodyFactory {
 		return humanBody;
 	}
 	
+	
+	/**
+	 * Crea un {@link Body} para las paredes rectangulares.
+	 * Este {@link Body} tiene com userData {@link BodyFactory#WALL_USER_DATA}.
+	 * 
+	 * @param positionX
+	 * @param positionY
+	 * @param width
+	 * @param height
+	 * @return el {@link Body}
+	 */
 	public static Body createRectangleWallBody(float positionX, float positionY, float width, float height) {
-		return PhysicsFactory.createBoxBody(MainActivity.mPhysicsWorld, positionX, positionY, width, height, BodyType.StaticBody, FixtureFactory.getWallFixture());
+		Body wall = PhysicsFactory.createBoxBody(MainActivity.mPhysicsWorld, positionX, positionY, width, height, BodyType.StaticBody, FixtureFactory.getWallFixture());
+		wall.setUserData(WALL_USER_DATA);
+		return wall;
 	}
 }
