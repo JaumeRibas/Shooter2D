@@ -37,12 +37,12 @@ public class MainActivity extends BaseGameActivity
 	public static final int CAMERA_WIDTH = 720;
 	public static final int CAMERA_HEIGHT = 480;
 	public static final int STEPS_PER_SECOND = 60;
-	
+
 	/** se usa al crear el FixedStepPhysicsWorld */
 	private static final int VELOCITY_INTERACTIONS = 8;
 	/** se usa al crear el FixedStepPhysicsWorld */
 	private static final int POSITION_INTERACTIONS = 3;
-	
+
 	public static FixedStepPhysicsWorld mPhysicsWorld;
 	public Body wallBody;
 	private Player player;
@@ -97,7 +97,7 @@ public class MainActivity extends BaseGameActivity
 
 	@Override
 	public void onPopulateScene(Scene pScene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws IOException {
-		
+
 		mPhysicsWorld = new FixedStepPhysicsWorld(STEPS_PER_SECOND, new Vector2(0f, 0), false, VELOCITY_INTERACTIONS, POSITION_INTERACTIONS);
 		this.scene.registerUpdateHandler(mPhysicsWorld);
 		mPhysicsWorld.setContactListener(GameContactListener.getInstance());
@@ -144,7 +144,7 @@ public class MainActivity extends BaseGameActivity
 	@Override
 	public synchronized void onResumeGame() {
 		super.onResumeGame();
-	    System.gc();
+		System.gc();
 		if (this.isGameLoaded()){
 			// Reanuda la reproducción de la música
 			if(ResourceManager.getInstance().musicIntro != null){
@@ -152,14 +152,14 @@ public class MainActivity extends BaseGameActivity
 			}
 		}
 	}	
-	
+
 	public boolean isBodyContacted(Body pBody, Contact pContact) {
 		if (pContact.getFixtureA().getBody().equals(pBody) || pContact.getFixtureB().getBody().equals(pBody)) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	public boolean areBodiesContacted(Body pBody1, Body pBody2, Contact pContact) {
 		if (pContact.getFixtureA().getBody().equals(pBody1) || 
 				pContact.getFixtureB().getBody().equals(pBody1)){
@@ -169,5 +169,13 @@ public class MainActivity extends BaseGameActivity
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Mueve la aplicación a segundo plano al pulsar el botón atrás
+	 */
+	@Override
+	public void onBackPressed() {
+		moveTaskToBack(true);
 	}
 }
