@@ -23,6 +23,10 @@ import org.escoladeltreball.shooter2d.entities.loader.ZombieLoader;
 import org.escoladeltreball.shooter2d.physics.GameContactListener;
 import org.escoladeltreball.shooter2d.ui.UI;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.os.Bundle;
 import android.widget.Toast;
 
 import com.badlogic.gdx.math.Vector2;
@@ -49,6 +53,7 @@ public class MainActivity extends BaseGameActivity
 	private ZombieLoader zombieLoader;
 	private ArrayList<Zombie> zombies;
 	private Scene scene;
+	private boolean isGameSaved;
 
 
 	@Override
@@ -59,22 +64,27 @@ public class MainActivity extends BaseGameActivity
 	@Override
 	public EngineOptions onCreateEngineOptions()
 	{
-		checkCompatibilityMultiTouch();
-		camera = new BoundCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-		camera.setHUD(UI.getHUD());
-		EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED, 
-				new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera);
-		engineOptions.getRenderOptions().setDithering(true);
-		engineOptions.getRenderOptions().getConfigChooserOptions().setRequestedMultiSampling(true);
-		engineOptions.setWakeLockOptions(WakeLockOptions.SCREEN_ON);
-		engineOptions.getTouchOptions().setNeedsMultiTouch(true);
-		engineOptions.getAudioOptions().setNeedsMusic(true);
-		engineOptions.getAudioOptions().setNeedsSound(true);
-		this.mapCreator = new MapCreator();
-		this.playerLoader = new PlayerLoader();
-		this.zombieLoader = new ZombieLoader();
-		this.zombies = new ArrayList<Zombie>();
-		return engineOptions;
+		if (this.isGameSaved)
+			loadGame();
+		else {
+			checkCompatibilityMultiTouch();
+			camera = new BoundCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
+			camera.setHUD(UI.getHUD());
+			EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED, 
+					new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera);
+			engineOptions.getRenderOptions().setDithering(true);
+			engineOptions.getRenderOptions().getConfigChooserOptions().setRequestedMultiSampling(true);
+			engineOptions.setWakeLockOptions(WakeLockOptions.SCREEN_ON);
+			engineOptions.getTouchOptions().setNeedsMultiTouch(true);
+			engineOptions.getAudioOptions().setNeedsMusic(true);
+			engineOptions.getAudioOptions().setNeedsSound(true);
+			this.mapCreator = new MapCreator();
+			this.playerLoader = new PlayerLoader();
+			this.zombieLoader = new ZombieLoader();
+			this.zombies = new ArrayList<Zombie>();
+			return engineOptions;
+		}
+		return null;
 	}
 
 	@Override
@@ -139,6 +149,7 @@ public class MainActivity extends BaseGameActivity
 				ResourceManager.getInstance().musicIntro.pause();
 			}
 		}
+		saveGame();
 	}
 
 	@Override
@@ -177,5 +188,35 @@ public class MainActivity extends BaseGameActivity
 	@Override
 	public void onBackPressed() {
 		moveTaskToBack(true);
+		saveGame();
+	}
+
+	public void saveGame(){
+		// Prepara el archivo sharedPreferences
+		SharedPreferences settings = getSharedPreferences("dbJuego", Context.MODE_PRIVATE);
+		// Escribe datos
+		Editor edit = settings.edit();
+		edit.putFloat("posXPlayer", player.getX());
+		edit.putFloat("posYPlayer", player.getY());
+		edit.apply(); 
+		this.isGameSaved = true;
+	}
+
+	public void loadGame(){
+		// Prepara el archivo sharedPreferences
+		SharedPreferences settings = getSharedPreferences("dbJuego", Context.MODE_PRIVATE);
+		// Lee datos
+		float x = settings.getFloat("posXPlayer", 50);
+		float y = settings.getFloat("posYPlayer", 50);
+		if (! (x >= 0 || y >= 0) ){
+			player.setX(x); 
+			player.setY(y); 
+		}
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
+		loadGame();
 	}
 }
