@@ -1,4 +1,4 @@
-package org.escoladeltreball.shooter2d;
+package org.escoladeltreball.shooter2d.physics;
 
 import org.escoladeltreball.shooter2d.entities.ColisionableEntity;
 
@@ -14,12 +14,12 @@ public class GameContactListener implements ContactListener {
 
 	@Override
 	public void beginContact(Contact contact) {
-		Object objectA = contact.getFixtureA().getBody().getUserData();
-		Object objectB = contact.getFixtureB().getBody().getUserData();
-		if (objectA instanceof ColisionableEntity && objectB instanceof ColisionableEntity) {
-			((ColisionableEntity)objectA).collidesWith((ColisionableEntity)objectB);
-			((ColisionableEntity)objectB).collidesWith((ColisionableEntity)objectA);
-		}
+		Body bodyA = contact.getFixtureA().getBody();
+		Body bodyB = contact.getFixtureB().getBody();
+		if (bodyA.getUserData() instanceof ColisionableEntity) 
+			((ColisionableEntity)bodyA.getUserData()).collidesWith(bodyB);
+		if (bodyB.getUserData() instanceof ColisionableEntity) 
+			((ColisionableEntity)bodyB.getUserData()).collidesWith(bodyA);
 	}
 
 	@Override

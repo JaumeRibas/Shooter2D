@@ -1,11 +1,7 @@
 package org.escoladeltreball.shooter2d.commands;
 
-import org.andengine.extension.physics.box2d.util.Vector2Pool;
-import org.andengine.util.math.MathUtils;
 import org.escoladeltreball.shooter2d.commands.interfaces.AnalogChangeCommand;
 import org.escoladeltreball.shooter2d.entities.Player;
-
-import com.badlogic.gdx.math.Vector2;
 
 /**
  * Cambia la velocidad dirección y sentido del movimiento del jugador
@@ -33,9 +29,8 @@ public class SetPlayerVelocityAndOrientation implements AnalogChangeCommand {
 				this.isWalking = true;
 			}			
 			this.player.getBody().setTransform(this.player.getBody().getPosition(), (float)Math.atan2(-pValueX, pValueY));
-			//obtine la dirección a la que mira el body jugador suponiendo que al crearlo miraba hacia arriba (0,1)
-			Vector2 playerVector = this.player.getBody().getWorldVector(Vector2Pool.obtain(0, 1));
 			this.player.getBody().setLinearVelocity(pValueX * SPEED, pValueY * SPEED);
+			System.out.println("hola");
 		} else {
 			this.player.stopAnimation();
 			this.player.setCurrentTileIndex(0);

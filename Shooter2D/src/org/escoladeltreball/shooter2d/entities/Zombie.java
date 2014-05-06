@@ -132,8 +132,9 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 	}
 
 	@Override
-	public void collidesWith(ColisionableEntity colisionableEntity) {
-		if (colisionableEntity == super.getTarget()) {
+	public void collidesWith(Body otherBody) {
+		Object userData = otherBody.getUserData();
+		if (userData == super.getTarget()) {
 			this.attack();
 		}
 	}

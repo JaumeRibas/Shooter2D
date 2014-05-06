@@ -38,10 +38,10 @@ public abstract class ColisionableEntity extends GameEntity {
 	}
 	
 	/**
-	 * Se llama cuando {@link ColisionableEntity} colisiona con otra.
+	 * Se llama cuando esta {@link ColisionableEntity} colisiona con un {@link Body}.
 	 * 
-	 * @param colisionableEntity la otra {@link ColisionableEntity} entity con la que ha chocado
+	 * @param otherBody el {@link Body} con el que ha chocado
 	 */
-	public abstract void collidesWith(ColisionableEntity colisionableEntity);
+	public abstract void collidesWith(Body otherBody);
 
 }

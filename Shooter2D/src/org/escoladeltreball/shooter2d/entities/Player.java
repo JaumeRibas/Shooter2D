@@ -50,7 +50,7 @@ public class Player extends ActorEntity {
 	}
 
 	@Override
-	public void collidesWith(ColisionableEntity colisionableEntity) {
+	public void collidesWith(Body otherBody) {
 		// TODO Auto-generated method stub
 		
 	}
