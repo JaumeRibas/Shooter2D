@@ -20,6 +20,7 @@ import org.escoladeltreball.shooter2d.entities.Player;
 import org.escoladeltreball.shooter2d.entities.Zombie;
 import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
 import org.escoladeltreball.shooter2d.entities.loader.ZombieLoader;
+import org.escoladeltreball.shooter2d.physics.GameContactListener;
 import org.escoladeltreball.shooter2d.ui.UI;
 
 import android.widget.Toast;
