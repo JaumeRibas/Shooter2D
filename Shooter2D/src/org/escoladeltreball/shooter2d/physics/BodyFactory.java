@@ -20,10 +20,13 @@ public class BodyFactory {
 	private static final float HUMAN_BODY_RADIUS = 17;
 	private static final float HUMAN_BODY_LINEAR_DAMPING = 1f;
 	
+	private static final float BULLET_BODY_RADIUS = 2;
+	private static final float BULLET_BODY_LINEAR_DAMPING = 1f;
+
 	public static final String WALL_USER_DATA = "wall";
 	/**
 	 * Crea un {@link Body} para el {@link Player},
-	 * los {@link Zombie}s y otras {@link ColisionableEntity}s
+	 * los {@link Zombie}s y otras {@link ColisionableEntity}
 	 * que tengan un cuerpo humano.
 	 * 
 	 * @param positionX
@@ -34,6 +37,19 @@ public class BodyFactory {
 		Body humanBody = PhysicsFactory.createCircleBody(MainActivity.mPhysicsWorld, positionX, positionY, HUMAN_BODY_RADIUS, BodyType.DynamicBody, FixtureFactory.getFleshFixture());
 		humanBody.setLinearDamping(HUMAN_BODY_LINEAR_DAMPING);
 		return humanBody;
+	}
+	
+	/**
+	 * Crea un {@link Body} para las balas.
+	 * 
+	 * @param positionX
+	 * @param positionY
+	 * @return el {@link Body}
+	 */
+	public static Body createBulletBody(float positionX, float positionY) {
+		Body bulletBody = PhysicsFactory.createCircleBody(MainActivity.mPhysicsWorld, positionX, positionY, BULLET_BODY_RADIUS, BodyType.DynamicBody, FixtureFactory.getFleshFixture());
+		bulletBody.setLinearDamping(BULLET_BODY_LINEAR_DAMPING);
+		return bulletBody;
 	}
 	
 	
@@ -47,6 +63,7 @@ public class BodyFactory {
 	 * @param height
 	 * @return el {@link Body}
 	 */
+	
 	public static Body createRectangleWallBody(float positionX, float positionY, float width, float height) {
 		Body wall = PhysicsFactory.createBoxBody(MainActivity.mPhysicsWorld, positionX, positionY, width, height, BodyType.StaticBody, FixtureFactory.getWallFixture());
 		wall.setUserData(WALL_USER_DATA);

@@ -16,8 +16,10 @@ import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.input.touch.controller.MultiTouch;
 import org.andengine.ui.activity.BaseGameActivity;
 import org.escoladeltreball.shooter2d.commands.CommandFactory;
+import org.escoladeltreball.shooter2d.entities.Bullet;
 import org.escoladeltreball.shooter2d.entities.Player;
 import org.escoladeltreball.shooter2d.entities.Zombie;
+import org.escoladeltreball.shooter2d.entities.loader.BulletLoader;
 import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
 import org.escoladeltreball.shooter2d.entities.loader.ZombieLoader;
 import org.escoladeltreball.shooter2d.physics.GameContactListener;
@@ -49,6 +51,8 @@ public class MainActivity extends BaseGameActivity
 	private ZombieLoader zombieLoader;
 	private ArrayList<Zombie> zombies;
 	private Scene scene;
+	private BulletLoader bulletLoader;
+	private ArrayList<Bullet> bullets;
 
 
 	@Override
@@ -73,7 +77,9 @@ public class MainActivity extends BaseGameActivity
 		this.mapCreator = new MapCreator();
 		this.playerLoader = new PlayerLoader();
 		this.zombieLoader = new ZombieLoader();
+		this.bulletLoader = new BulletLoader();
 		this.zombies = new ArrayList<Zombie>();
+		this.bullets = new ArrayList<Bullet>();
 		return engineOptions;
 	}
 
@@ -84,6 +90,7 @@ public class MainActivity extends BaseGameActivity
 		ResourceManager.getInstance().loadMusic(mEngine, this);
 		ResourceManager.getInstance().musicIntro.play();
 		this.playerLoader.loadResources(this.getTextureManager(), this.getAssets());
+		this.bulletLoader.loadResources(this.getTextureManager(), this.getAssets());
 		pOnCreateResourcesCallback.onCreateResourcesFinished();
 	}
 
@@ -109,9 +116,13 @@ public class MainActivity extends BaseGameActivity
 		scene.attachChild(player);
 		this.zombies.add(zombieLoader.loadZombie(camera, 50, 100, this.getTextureManager(), this.getAssets(), this.getVertexBufferObjectManager(), player));
 		this.zombies.add(zombieLoader.loadZombie(camera, 50, 300, this.getTextureManager(), this.getAssets(), this.getVertexBufferObjectManager(), player));
+		
 		for(Zombie zombie : this.zombies){
 			scene.attachChild(zombie);
 		}
+		this.bullets.add(bulletLoader.loadBullet(camera,500, 100, this.getTextureManager(), this.getAssets(), this.getVertexBufferObjectManager(), 0, 3));
+		scene.attachChild(bullets.get(0));
+		
 		// Añade los controles con commandos a la escena 
 		UI.getInstance().createAnalogControls(this.camera, this.getVertexBufferObjectManager(), CommandFactory.getSetPlayerVelocity(this.player), CommandFactory.getDoNothingCommand(), CommandFactory.getDoNothingAnalogCommand(), CommandFactory.getDoNothingCommand());
 		pOnPopulateSceneCallback.onPopulateSceneFinished();
