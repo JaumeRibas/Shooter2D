@@ -3,7 +3,6 @@ package org.escoladeltreball.shooter2d.entities;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.adt.color.Color;
-import org.andengine.util.math.MathUtils;
 import org.escoladeltreball.shooter2d.constants.HPConstants;
 import org.escoladeltreball.shooter2d.entities.interfaces.Attacking;
 import org.escoladeltreball.shooter2d.entities.interfaces.Targeting;
@@ -22,7 +21,7 @@ import com.badlogic.gdx.physics.box2d.Body;
  */
 public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 
-	private float speed = 0.5f;
+	private float speed = 0.75f;
 
 	private static final float ZOMBIE_ATTACK_COOLDOWN = 3;
 	private float attackCooldownTimer = 0;
@@ -73,9 +72,11 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 			float xStep = xDistance / distance;
 			float yStep = yDistance / distance;
 			// Rotación
-			this.getBody().setTransform(this.getBody().getPosition(), (float) Math.atan2(-xStep, yStep));
+			this.getBody().setTransform(this.getBody().getPosition(),
+					(float) Math.atan2(-xStep, yStep));
 			// Calculo de la velocidad
-			this.getBody().setLinearVelocity(xStep * this.speed, yStep * this.speed);
+			this.getBody().setLinearVelocity(xStep * this.speed,
+					yStep * this.speed);
 		}
 	}
 
@@ -85,10 +86,9 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 	public void attack() {
 		this.isWalking = false;
 		this.setCurrentTileIndex(0);
-		if (this.attackCooldownTimer == 0
-				&& super.getTarget() instanceof ActorEntity) {
+		System.out.println("Cooldown Timer: " + this.attackCooldownTimer);
+		if (this.attackCooldownTimer == 0) {
 			ActorEntity actorEntity = (ActorEntity) super.getTarget();
-
 			actorEntity.hurt(HPConstants.ZOMBIE_STRENGH);
 			super.getTarget().setColor(Color.RED);
 			this.resetCooldown();
@@ -137,5 +137,16 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 		if (userData == super.getTarget()) {
 			this.attack();
 		}
+	}
+	
+	/**
+	 * Realiza las acciones que el zombie realiza cuando es herido.
+	 * 
+	 * @param strengh un integer, la fuerza del ataque recibido enemigo.
+	 */
+	@Override
+	public void hurt(int strengh){
+		super.hurt(strengh);
+		System.out.println("ZOMBIE HEALTH: " + getHealthpoints() + "/" + getMaxHealthPoints());
 	}
 }

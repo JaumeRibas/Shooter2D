@@ -13,4 +13,8 @@ public final class SpriteConstants {
 	public static String PLAYER_SPRITE = "gfx/character.png";
 	public static int PLAYER_SPRITE_COLUMNS = 6;
 	public static int PLAYER_SPRITE_ROWS = 1;
+	
+	public static String BULLET_SPRITE = "gfx/bullet.png";
+	public static int BULLET_SPRITE_COLUMNS = 2;
+	public static int BULLET_SPRITE_ROWS = 1;
 }
