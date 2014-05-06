@@ -6,15 +6,22 @@ import org.andengine.audio.music.MusicFactory;
 import org.andengine.audio.sound.Sound;
 import org.andengine.audio.sound.SoundFactory;
 import org.andengine.engine.Engine;
+import org.andengine.opengl.texture.TextureManager;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.atlas.bitmap.BuildableBitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.source.IBitmapTextureAtlasSource;
 import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtlasBuilder;
 import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder.TextureAtlasBuilderException;
+import org.andengine.opengl.texture.bitmap.AssetBitmapTexture;
 import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.TextureRegionFactory;
+import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.util.debug.Debug;
+import org.escoladeltreball.shooter2d.constants.SpriteConstants;
+
 import android.content.Context;
+import android.content.res.AssetManager;
 
 /**
  * La clase ResourceManager contiene los recursos del juego
@@ -26,18 +33,25 @@ import android.content.Context;
  * @author Jaume Ribas
  */
 public class ResourceManager {
-	private static final String CONTROL_KNOB_SPRITE = "gfx/onscreen_control_knob.png";
-	private static final String CONTROL_BASE_SPRITE = "gfx/onscreen_control_base.png";
 
-	/** la instancia unica */
+	/** la instancia unica de ResourceManager*/
 	public static ResourceManager instance;
 
 	/** la base del analog conrol */
 	public ITextureRegion analogControlBaseTextureRegion;
 	/** el centro del analog control */
 	public ITextureRegion analogControlKnobTextureRegion;
+	/** la sprite del player */
+	public TiledTextureRegion playerTextureRegion;
+	/** la sprite del zombie */
+	public TiledTextureRegion zombieTextureRegion;
+	
+	//musica
 	public Music musicIntro;
+	
+	//efectos sonido
 	public Sound sound;
+
 
 	//añadir aqui los recursos del juego
 
@@ -63,19 +77,27 @@ public class ResourceManager {
 	 * @param context
 	 */
 	public synchronized void loadGameTextures(Engine engine, Context context) {
-		//Se usa el texture atlas porque es mas eficiente
-		BuildableBitmapTextureAtlas analogControlTextureAtlas = new BuildableBitmapTextureAtlas(engine.getTextureManager(), 250, 150);
-
-		//la base del analog stick
-		this.analogControlBaseTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(analogControlTextureAtlas, context,  CONTROL_BASE_SPRITE);			
-		//el centro del analog stick
-		this.analogControlKnobTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(analogControlTextureAtlas, context,  CONTROL_KNOB_SPRITE);
-
-		//cargar aqui el resto de texturas del juego
-
 		try {
+			//jugador
+			this.playerTextureRegion = loadResources(engine.getTextureManager(), context.getAssets(), SpriteConstants.PLAYER_SPRITE, SpriteConstants.PLAYER_SPRITE_COLUMNS, SpriteConstants.PLAYER_SPRITE_ROWS);
+			
+			//zombie
+			//cambiar en caso de que el zombie sea una sprite diferente al jugador
+			this.zombieTextureRegion = this.playerTextureRegion;
+			
+			//Se usa el texture atlas porque es mas eficiente
+			BuildableBitmapTextureAtlas analogControlTextureAtlas = new BuildableBitmapTextureAtlas(engine.getTextureManager(), 250, 150);
+
+			//la base del analog stick
+			this.analogControlBaseTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(analogControlTextureAtlas, context,  SpriteConstants.CONTROL_BASE_SPRITE);			
+			//el centro del analog stick
+			this.analogControlKnobTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(analogControlTextureAtlas, context,  SpriteConstants.CONTROL_KNOB_SPRITE);
+
+			//cargar aqui el resto de texturas del juego
 			analogControlTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1));
 			analogControlTextureAtlas.load();
+		} catch (IOException e) {
+			Debug.e(e);
 		} catch (TextureAtlasBuilderException e) {
 			Debug.e(e);
 		}
@@ -126,5 +148,22 @@ public class ResourceManager {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Carga recursos relacionados con la entidad.
+	 * 
+	 * @param textureManger un TextureManager
+	 * @param assets un AssetManager
+	 * @param spritePath un String, la direccion al sprite.
+	 * @param spriteCols un integer, las columnas del sprite
+	 * @param spriteRows un integer, las filas del sprite
+	 * @throws IOException
+	 */
+	private static TiledTextureRegion loadResources(TextureManager textureManger, AssetManager assets, String spritePath, int spriteCols, int spriteRows) throws IOException{
+		AssetBitmapTexture mGameEntityTexture = new AssetBitmapTexture(textureManger, assets, spritePath);
+		TiledTextureRegion mGameEntityTextureRegion = TextureRegionFactory.extractTiledFromTexture(mGameEntityTexture, spriteCols, spriteRows);
+		mGameEntityTexture.load();
+		return mGameEntityTextureRegion;
 	}
 }

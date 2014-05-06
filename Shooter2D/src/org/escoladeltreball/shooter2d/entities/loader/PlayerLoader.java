@@ -1,19 +1,16 @@
 package org.escoladeltreball.shooter2d.entities.loader;
 
-import java.io.IOException;
-
 import org.andengine.engine.camera.Camera;
-import org.andengine.opengl.texture.TextureManager;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
-import org.escoladeltreball.shooter2d.constants.SpriteConstants;
+import org.escoladeltreball.shooter2d.ResourceManager;
 import org.escoladeltreball.shooter2d.entities.Player;
 
-import android.content.res.AssetManager;
+public class PlayerLoader {
 
-public class PlayerLoader extends EntityLoader {
-
-	private Player player;
+	private static Player player;
+	
+	private PlayerLoader(){};
 
 	/**
 	 * La clase PlayerLoader se encarga cargar los recursos del jugador y del propio jugador.
@@ -22,36 +19,26 @@ public class PlayerLoader extends EntityLoader {
 	 * @author Elvis Puertas
 	 * @author Jaume Ribas
 	 */
-	public Player loadPlayer(Camera camera, TextureManager textureManger,
-			AssetManager assets,
-			VertexBufferObjectManager vertexBufferObjectManager) {
-		if (this.player == null) {
-			try {
-				TiledTextureRegion pTiledTextureRegion;
-				pTiledTextureRegion = this.loadResources(textureManger, assets);
+	public static Player loadPlayer(Camera camera,	VertexBufferObjectManager vertexBufferObjectManager) {
+		if (player == null) {
+			TiledTextureRegion pTiledTextureRegion;
+			pTiledTextureRegion = ResourceManager.getInstance().playerTextureRegion;
 
-				this.player = new Player(camera.getCenterX(),
-						camera.getCenterY(), pTiledTextureRegion,
-						vertexBufferObjectManager);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			player = new Player(camera.getCenterX(),
+					camera.getCenterY(), pTiledTextureRegion,
+					vertexBufferObjectManager);
 		}
-		return this.player;
+		return player;
 
 	}
+	
 	/**
-	 * Carga recursos relacionados con el jugador.
+	 * Obtiene la instancia de player.
+	 * Puede ser null si todavia no se ha
 	 * 
-	 * @param textureManger un TextureManager
-	 * @param assets un AssetManager
-	 * @throws IOException
+	 * @return
 	 */
-	public TiledTextureRegion loadResources(TextureManager textureManger,
-			AssetManager assets) throws IOException {
-		return super.loadResources(textureManger, assets,
-				SpriteConstants.PLAYER_SPRITE,
-				SpriteConstants.PLAYER_SPRITE_COLUMNS,
-				SpriteConstants.PLAYER_SPRITE_ROWS);
+	public static Player getPlayer() {
+		return player;
 	}
 }

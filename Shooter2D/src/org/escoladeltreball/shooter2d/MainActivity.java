@@ -15,7 +15,6 @@ import org.andengine.entity.scene.background.Background;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.input.touch.controller.MultiTouch;
 import org.andengine.ui.activity.BaseGameActivity;
-import org.escoladeltreball.shooter2d.commands.CommandFactory;
 import org.escoladeltreball.shooter2d.entities.Player;
 import org.escoladeltreball.shooter2d.entities.Zombie;
 import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
@@ -27,13 +26,11 @@ import android.widget.Toast;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Contact;
 
 public class MainActivity extends BaseGameActivity
 {
 	private BoundCamera camera;
 	private MapCreator mapCreator;
-	private PlayerLoader playerLoader;
 	public static final int CAMERA_WIDTH = 720;
 	public static final int CAMERA_HEIGHT = 480;
 	public static final int STEPS_PER_SECOND = 60;
@@ -46,7 +43,6 @@ public class MainActivity extends BaseGameActivity
 	public static FixedStepPhysicsWorld mPhysicsWorld;
 	public Body wallBody;
 	private Player player;
-	private ZombieLoader zombieLoader;
 	private ArrayList<Zombie> zombies;
 	private Scene scene;
 
@@ -71,8 +67,6 @@ public class MainActivity extends BaseGameActivity
 		engineOptions.getAudioOptions().setNeedsMusic(true);
 		engineOptions.getAudioOptions().setNeedsSound(true);
 		this.mapCreator = new MapCreator();
-		this.playerLoader = new PlayerLoader();
-		this.zombieLoader = new ZombieLoader();
 		this.zombies = new ArrayList<Zombie>();
 		return engineOptions;
 	}
@@ -83,7 +77,6 @@ public class MainActivity extends BaseGameActivity
 		ResourceManager.getInstance().loadGameTextures(mEngine, this);
 		ResourceManager.getInstance().loadMusic(mEngine, this);
 		ResourceManager.getInstance().musicIntro.play();
-		this.playerLoader.loadResources(this.getTextureManager(), this.getAssets());
 		pOnCreateResourcesCallback.onCreateResourcesFinished();
 	}
 
@@ -101,19 +94,19 @@ public class MainActivity extends BaseGameActivity
 		mPhysicsWorld = new FixedStepPhysicsWorld(STEPS_PER_SECOND, new Vector2(0f, 0), false, VELOCITY_INTERACTIONS, POSITION_INTERACTIONS);
 		this.scene.registerUpdateHandler(mPhysicsWorld);
 		mPhysicsWorld.setContactListener(GameContactListener.getInstance());
-		this.player = playerLoader.loadPlayer(camera,  getTextureManager(), getAssets(), getVertexBufferObjectManager());
+		this.player = PlayerLoader.loadPlayer(camera,  getVertexBufferObjectManager());
 		// Muestra el mapa en la pantalla
 		scene = this.mapCreator.loadMap(getAssets(), getTextureManager(), getVertexBufferObjectManager(), scene, this.camera);
 		// La camara sigue al jugador
 		this.camera.setChaseEntity(player);
 		scene.attachChild(player);
-		this.zombies.add(zombieLoader.loadZombie(camera, 50, 100, this.getTextureManager(), this.getAssets(), this.getVertexBufferObjectManager(), player));
-		this.zombies.add(zombieLoader.loadZombie(camera, 50, 300, this.getTextureManager(), this.getAssets(), this.getVertexBufferObjectManager(), player));
+		this.zombies.add(ZombieLoader.loadZombie(camera, 50, 100, this.getTextureManager(), this.getAssets(), this.getVertexBufferObjectManager(), player));
+		this.zombies.add(ZombieLoader.loadZombie(camera, 50, 300, this.getTextureManager(), this.getAssets(), this.getVertexBufferObjectManager(), player));
 		for(Zombie zombie : this.zombies){
 			scene.attachChild(zombie);
 		}
-		// Añade los controles con commandos a la escena 
-		UI.getInstance().createAnalogControls(this.camera, this.getVertexBufferObjectManager(), CommandFactory.getSetPlayerVelocity(this.player), CommandFactory.getDoNothingCommand(), CommandFactory.getDoNothingAnalogCommand(), CommandFactory.getDoNothingCommand());
+		// Añade la UI 
+		UI.getInstance().createUI(this.getVertexBufferObjectManager());
 		pOnPopulateSceneCallback.onPopulateSceneFinished();
 	}
 
@@ -152,22 +145,5 @@ public class MainActivity extends BaseGameActivity
 			}
 		}
 	}	
-	
-	public boolean isBodyContacted(Body pBody, Contact pContact) {
-		if (pContact.getFixtureA().getBody().equals(pBody) || pContact.getFixtureB().getBody().equals(pBody)) {
-			return true;
-		}
-		return false;
-	}
-	
-	public boolean areBodiesContacted(Body pBody1, Body pBody2, Contact pContact) {
-		if (pContact.getFixtureA().getBody().equals(pBody1) || 
-				pContact.getFixtureB().getBody().equals(pBody1)){
-			if (pContact.getFixtureA().getBody().equals(pBody2) || 
-					pContact.getFixtureB().getBody().equals(pBody2)) {
-				return true;				
-			}
-		}
-		return false;
-	}
+
 }

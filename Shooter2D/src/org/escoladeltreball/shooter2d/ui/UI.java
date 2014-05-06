@@ -45,6 +45,10 @@ public class UI {
 		return instance;
 	}
 	
+	public void createUI(VertexBufferObjectManager vertexBufferObjectManager) {
+		createAnalogControls(hud.getCamera(), vertexBufferObjectManager, CommandFactory.getSetPlayerVelocityAndOrientation(), CommandFactory.getDoNothingCommand(), CommandFactory.getDoNothingAnalogCommand(), CommandFactory.getDoNothingCommand());
+	}
+	
 	/**
 	 * Este metodo crea dos {@link AnalogOnScreenControl} y los coloca a cada
 	 * lado de la camara en la parte inferior. Devuelve un {@link AnalogOnScreenControl}
@@ -58,7 +62,7 @@ public class UI {
 	 * @param rightAnalogClickCommand el comando a ejecutar cuando se clique el analog derecho
 	 * @return un {@link AnalogOnScreenControl} con el otro {@link AnalogOnScreenControl} como su {@link Scene} hija
 	 */
-	public void createAnalogControls(Camera camera, VertexBufferObjectManager vertexBufferObjectManager, AnalogChangeCommand leftAnalogChangeCommand, Command leftAnalogClickCommand, AnalogChangeCommand rightAnalogChangeCommand, Command rightAnalogClickCommand) {
+	private void createAnalogControls(Camera camera, VertexBufferObjectManager vertexBufferObjectManager, AnalogChangeCommand leftAnalogChangeCommand, Command leftAnalogClickCommand, AnalogChangeCommand rightAnalogChangeCommand, Command rightAnalogClickCommand) {
 		
 		ConfigurableAnalogControlListener leftAnalogListener = new ConfigurableAnalogControlListener();
 		leftAnalogListener.setAnalogChangeCommand(leftAnalogChangeCommand == null? CommandFactory.getDoNothingAnalogCommand(): leftAnalogChangeCommand);

@@ -19,9 +19,9 @@ public class CommandFactory {
 	private static DoNothing doNothingInstance;
 	private static SetPlayerVelocityAndOrientation setPlayerVelocityInstance;
 
-	public static AnalogChangeCommand getSetPlayerVelocity(Player player) {
+	public static AnalogChangeCommand getSetPlayerVelocityAndOrientation() {
 		if (setPlayerVelocityInstance == null) {
-			setPlayerVelocityInstance = new SetPlayerVelocityAndOrientation(player);
+			setPlayerVelocityInstance = new SetPlayerVelocityAndOrientation();
 		}
 		return setPlayerVelocityInstance;
 	}
@@ -39,5 +39,4 @@ public class CommandFactory {
 		}
 		return doNothingInstance;
 	}
-
 }
