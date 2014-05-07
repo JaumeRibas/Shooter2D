@@ -18,8 +18,6 @@ import android.content.res.AssetManager;
  */
 
 public class EntityLoader {
-	private AssetBitmapTexture mGameEntityTexture;
-	private TiledTextureRegion mGameEntityTextureRegion;
 
 	/**
 	 * Carga recursos relacionados con la entidad.
@@ -31,10 +29,10 @@ public class EntityLoader {
 	 * @param spriteRows un integer, las filas del sprite
 	 * @throws IOException
 	 */
-	public TiledTextureRegion loadResources(TextureManager textureManger, AssetManager assets, String spritePath, int spriteCols, int spriteRows) throws IOException{
-		this.mGameEntityTexture = new AssetBitmapTexture(textureManger, assets, spritePath);
-		this.mGameEntityTextureRegion = TextureRegionFactory.extractTiledFromTexture(this.mGameEntityTexture, spriteCols, spriteRows);
-		this.mGameEntityTexture.load();
+	public static TiledTextureRegion loadResources(TextureManager textureManger, AssetManager assets, String spritePath, int spriteCols, int spriteRows) throws IOException{
+		AssetBitmapTexture mGameEntityTexture = new AssetBitmapTexture(textureManger, assets, spritePath);
+		TiledTextureRegion mGameEntityTextureRegion = TextureRegionFactory.extractTiledFromTexture(mGameEntityTexture, spriteCols, spriteRows);
+		mGameEntityTexture.load();
 		return mGameEntityTextureRegion;
 	}
 }

@@ -45,6 +45,8 @@ public class ResourceManager {
 	public TiledTextureRegion playerTextureRegion;
 	/** la sprite del zombie */
 	public TiledTextureRegion zombieTextureRegion;
+	/** la sprite de la bala */
+	public TiledTextureRegion bulletTextureRegion;
 	
 	//musica
 	public Music musicIntro;
@@ -79,15 +81,18 @@ public class ResourceManager {
 	public synchronized void loadGameTextures(Engine engine, Context context) {
 		try {
 			//jugador
-			this.playerTextureRegion = loadResources(engine.getTextureManager(), context.getAssets(), SpriteConstants.PLAYER_SPRITE, SpriteConstants.PLAYER_SPRITE_COLUMNS, SpriteConstants.PLAYER_SPRITE_ROWS);
+			this.playerTextureRegion = loadTiledTextureRegion(engine.getTextureManager(), context.getAssets(), SpriteConstants.PLAYER_SPRITE, SpriteConstants.PLAYER_SPRITE_COLUMNS, SpriteConstants.PLAYER_SPRITE_ROWS);
 			
 			//zombie
 			//cambiar en caso de que el zombie sea una sprite diferente al jugador
 			this.zombieTextureRegion = this.playerTextureRegion;
 			
+			//bala
+			this.bulletTextureRegion = loadTiledTextureRegion(engine.getTextureManager(), context.getAssets(), SpriteConstants.BULLET_SPRITE, SpriteConstants.BULLET_SPRITE_COLUMNS, SpriteConstants.BULLET_SPRITE_ROWS);
+			
+			//analogs
 			//Se usa el texture atlas porque es mas eficiente
 			BuildableBitmapTextureAtlas analogControlTextureAtlas = new BuildableBitmapTextureAtlas(engine.getTextureManager(), 250, 150);
-
 			//la base del analog stick
 			this.analogControlBaseTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(analogControlTextureAtlas, context,  SpriteConstants.CONTROL_BASE_SPRITE);			
 			//el centro del analog stick
@@ -160,7 +165,7 @@ public class ResourceManager {
 	 * @param spriteRows un integer, las filas del sprite
 	 * @throws IOException
 	 */
-	private static TiledTextureRegion loadResources(TextureManager textureManger, AssetManager assets, String spritePath, int spriteCols, int spriteRows) throws IOException{
+	private static TiledTextureRegion loadTiledTextureRegion(TextureManager textureManger, AssetManager assets, String spritePath, int spriteCols, int spriteRows) throws IOException{
 		AssetBitmapTexture mGameEntityTexture = new AssetBitmapTexture(textureManger, assets, spritePath);
 		TiledTextureRegion mGameEntityTextureRegion = TextureRegionFactory.extractTiledFromTexture(mGameEntityTexture, spriteCols, spriteRows);
 		mGameEntityTexture.load();

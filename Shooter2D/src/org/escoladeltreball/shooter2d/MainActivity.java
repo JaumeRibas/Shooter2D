@@ -15,13 +15,19 @@ import org.andengine.entity.scene.background.Background;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.input.touch.controller.MultiTouch;
 import org.andengine.ui.activity.BaseGameActivity;
+import org.escoladeltreball.shooter2d.entities.Bullet;
 import org.escoladeltreball.shooter2d.entities.Player;
 import org.escoladeltreball.shooter2d.entities.Zombie;
+import org.escoladeltreball.shooter2d.entities.loader.BulletLoader;
 import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
 import org.escoladeltreball.shooter2d.entities.loader.ZombieLoader;
 import org.escoladeltreball.shooter2d.physics.GameContactListener;
 import org.escoladeltreball.shooter2d.ui.UI;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.os.Bundle;
 import android.widget.Toast;
 
 import com.badlogic.gdx.math.Vector2;
@@ -34,18 +40,19 @@ public class MainActivity extends BaseGameActivity
 	public static final int CAMERA_WIDTH = 720;
 	public static final int CAMERA_HEIGHT = 480;
 	public static final int STEPS_PER_SECOND = 60;
-	
+
 	/** se usa al crear el FixedStepPhysicsWorld */
 	private static final int VELOCITY_INTERACTIONS = 8;
 	/** se usa al crear el FixedStepPhysicsWorld */
 	private static final int POSITION_INTERACTIONS = 3;
-	
+
 	public static FixedStepPhysicsWorld mPhysicsWorld;
 	public Body wallBody;
 	private Player player;
 	private ArrayList<Zombie> zombies;
 	private Scene scene;
-
+	private ArrayList<Bullet> bullets;
+	private boolean isGameSaved;
 
 	@Override
 	public Engine onCreateEngine(final EngineOptions pEngineOptions) {
@@ -68,6 +75,7 @@ public class MainActivity extends BaseGameActivity
 		engineOptions.getAudioOptions().setNeedsSound(true);
 		this.mapCreator = new MapCreator();
 		this.zombies = new ArrayList<Zombie>();
+		this.bullets  = new ArrayList<Bullet>();
 		return engineOptions;
 	}
 
@@ -90,23 +98,29 @@ public class MainActivity extends BaseGameActivity
 
 	@Override
 	public void onPopulateScene(Scene pScene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws IOException {
-		
+
 		mPhysicsWorld = new FixedStepPhysicsWorld(STEPS_PER_SECOND, new Vector2(0f, 0), false, VELOCITY_INTERACTIONS, POSITION_INTERACTIONS);
 		this.scene.registerUpdateHandler(mPhysicsWorld);
 		mPhysicsWorld.setContactListener(GameContactListener.getInstance());
-		this.player = PlayerLoader.loadPlayer(camera,  getVertexBufferObjectManager());
+		this.player = PlayerLoader.loadPlayer(CAMERA_WIDTH/2, CAMERA_HEIGHT/2, getVertexBufferObjectManager());
 		// Muestra el mapa en la pantalla
 		scene = this.mapCreator.loadMap(getAssets(), getTextureManager(), getVertexBufferObjectManager(), scene, this.camera);
 		// La camara sigue al jugador
 		this.camera.setChaseEntity(player);
 		scene.attachChild(player);
+		
 		this.zombies.add(ZombieLoader.loadZombie(camera, 50, 100, this.getTextureManager(), this.getAssets(), this.getVertexBufferObjectManager(), player));
 		this.zombies.add(ZombieLoader.loadZombie(camera, 50, 300, this.getTextureManager(), this.getAssets(), this.getVertexBufferObjectManager(), player));
 		for(Zombie zombie : this.zombies){
 			scene.attachChild(zombie);
 		}
+		
+		this.bullets.add(BulletLoader.loadBullet(camera,500, 100, this.getTextureManager(), this.getAssets(), this.getVertexBufferObjectManager(), 0, 3));
+		scene.attachChild(bullets.get(0));
+
 		// Añade la UI 
 		UI.getInstance().createUI(this.getVertexBufferObjectManager());
+		
 		pOnPopulateSceneCallback.onPopulateSceneFinished();
 	}
 
@@ -132,12 +146,13 @@ public class MainActivity extends BaseGameActivity
 				ResourceManager.getInstance().musicIntro.pause();
 			}
 		}
+		saveGame();
 	}
 
 	@Override
 	public synchronized void onResumeGame() {
 		super.onResumeGame();
-	    System.gc();
+		System.gc();
 		if (this.isGameLoaded()){
 			// Reanuda la reproducción de la música
 			if(ResourceManager.getInstance().musicIntro != null){
@@ -146,4 +161,45 @@ public class MainActivity extends BaseGameActivity
 		}
 	}	
 
+	/**
+	 * Mueve la aplicación a segundo plano al pulsar el botón atrás
+	 */
+	@Override
+	public void onBackPressed() {
+		moveTaskToBack(true);
+		saveGame();
+		// Pausa la reproducción de la música en caso de estar reproduciendose
+		if(ResourceManager.getInstance().musicIntro != null && ResourceManager.getInstance().musicIntro.isPlaying()){
+			ResourceManager.getInstance().musicIntro.pause();
+		}
+	}
+
+	public void saveGame(){
+		// Prepara el archivo sharedPreferences
+		SharedPreferences settings = getSharedPreferences("dbJuego", Context.MODE_PRIVATE);
+		// Escribe datos
+		Editor edit = settings.edit();
+		edit.putFloat("posXPlayer", player.getX());
+		edit.putFloat("posYPlayer", player.getY());
+		edit.apply(); 
+		this.isGameSaved = true;
+	}
+
+	public void loadGame(){
+		// Prepara el archivo sharedPreferences
+		SharedPreferences settings = getSharedPreferences("dbJuego", Context.MODE_PRIVATE);
+		// Lee datos
+		float x = settings.getFloat("posXPlayer", 50);
+		float y = settings.getFloat("posYPlayer", 50);
+		if (! (x >= 0 || y >= 0) ){
+			player.setX(x); 
+			player.setY(y); 
+		}
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
+		loadGame();
+	}
 }

@@ -1,6 +1,5 @@
 package org.escoladeltreball.shooter2d.entities.loader;
 
-import org.andengine.engine.camera.Camera;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.escoladeltreball.shooter2d.ResourceManager;
@@ -19,13 +18,12 @@ public class PlayerLoader {
 	 * @author Elvis Puertas
 	 * @author Jaume Ribas
 	 */
-	public static Player loadPlayer(Camera camera,	VertexBufferObjectManager vertexBufferObjectManager) {
+	public static Player loadPlayer(float x, float y, VertexBufferObjectManager vertexBufferObjectManager) {
 		if (player == null) {
 			TiledTextureRegion pTiledTextureRegion;
 			pTiledTextureRegion = ResourceManager.getInstance().playerTextureRegion;
 
-			player = new Player(camera.getCenterX(),
-					camera.getCenterY(), pTiledTextureRegion,
+			player = new Player(x, y, pTiledTextureRegion,
 					vertexBufferObjectManager);
 		}
 		return player;
@@ -34,7 +32,7 @@ public class PlayerLoader {
 	
 	/**
 	 * Obtiene la instancia de player.
-	 * Puede ser null si todavia no se ha
+	 * Puede ser null si todavia no se ha creado.
 	 * 
 	 * @return
 	 */
