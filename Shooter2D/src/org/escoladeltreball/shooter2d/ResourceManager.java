@@ -34,7 +34,7 @@ import android.content.res.AssetManager;
  */
 public class ResourceManager {
 
-	/** la instancia unica de ResourceManager*/
+	/** la instancia unica de ResourceManager */
 	public static ResourceManager instance;
 
 	/** la base del analog conrol */

@@ -1,15 +1,19 @@
 package org.escoladeltreball.shooter2d.ui;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
-import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.escoladeltreball.shooter2d.MainActivity;
 import org.escoladeltreball.shooter2d.ResourceManager;
 import org.escoladeltreball.shooter2d.commands.CommandFactory;
 import org.escoladeltreball.shooter2d.commands.interfaces.AnalogChangeCommand;
 import org.escoladeltreball.shooter2d.commands.interfaces.Command;
+import org.escoladeltreball.shooter2d.constants.HPConstants;
 
 /**
  * La clase UI continene variables y metodos relacionados con la interfaz de usuario.
@@ -19,8 +23,29 @@ import org.escoladeltreball.shooter2d.commands.interfaces.Command;
  * @author Elvis Puertas
  * @author Jaume Ribas
  */
-public class UI {
+public class UI implements Observer {
 	
+	private static final float HEALTH_BAR_WIDTH = 200;
+	private static final float HEALTH_BAR_HEIGHT = 7;
+	private static final float HEALTH_BAR_ANGLE = 0;
+	private static final float HEALTH_BAR_X = MainActivity.CAMERA_WIDTH - HEALTH_BAR_WIDTH - 20;
+	private static final float HEALTH_BAR_Y = MainActivity.CAMERA_HEIGHT - 20;
+	
+	private static final float ANALOG_ALPHA = 0.5f;
+	private static final float ANALOG_TIME_BETWEEN_UPDATES = 0.1f;
+
+	private static final float LEFT_ANALOG_X = 0;
+	private static final float LEFT_ANALOG_Y = 0;
+	private static final float LEFT_ANALOG_OFFSET_CENTER_X = 0;
+	private static final float LEFT_ANALOG_OFFSET_CENTER_Y = 0;
+	
+	private static final float RIGHT_ANALOG_X = MainActivity.CAMERA_WIDTH;
+	private static final float RIGHT_ANALOG_Y = 0;
+	private static final float RIGHT_ANALOG_OFFSET_CENTER_X = 1;
+	private static final float RIGHT_ANALOG_OFFSET_CENTER_Y = 0;
+
+	
+
 	/** instancia unica */
 	private static UI instance;
 	
@@ -29,6 +54,7 @@ public class UI {
 
 	private AnalogOnScreenControl leftAnalogControl;
 	private AnalogOnScreenControl rightAnalogControl;
+	private HUDBar healthBar;
 	
 	private UI(){}
 	
@@ -45,67 +71,69 @@ public class UI {
 		return instance;
 	}
 	
-	public void createUI(VertexBufferObjectManager vertexBufferObjectManager) {
-		createAnalogControls(hud.getCamera(), vertexBufferObjectManager, CommandFactory.getSetPlayerVelocityAndOrientation(), CommandFactory.getDoNothingCommand(), CommandFactory.getDoNothingAnalogCommand(), CommandFactory.getDoNothingCommand());
+	/**
+	 * Devuelve la unica instancia de {@link HUD}.
+	 * Si no existe la crea.
+	 * 
+	 * @return la unica instancia de {@link HUD}
+	 */
+	public static HUD getHUD() {
+		if (hud == null) {
+			hud = new HUD();
+		}
+		return hud;
 	}
 	
 	/**
-	 * Este metodo crea dos {@link AnalogOnScreenControl} y los coloca a cada
-	 * lado de la camara en la parte inferior. Devuelve un {@link AnalogOnScreenControl}
-	 * con el otro {@link AnalogOnScreenControl} como su {@link Scene} hija.
+	 * Crea los componentes de la interfaz de usuario y los une al HUD.
+	 */
+	public void createUI(VertexBufferObjectManager vertexBufferObjectManager) {
+		//Control analogico izquierda 
+		this.leftAnalogControl = createAnalogControl(getHUD().getCamera(), LEFT_ANALOG_X, LEFT_ANALOG_Y, LEFT_ANALOG_OFFSET_CENTER_X, LEFT_ANALOG_OFFSET_CENTER_Y, CommandFactory.getSetPlayerVelocityAndOrientation(), CommandFactory.getDoNothingCommand(), vertexBufferObjectManager);
+		// Control analogico derecha
+		this.rightAnalogControl = createAnalogControl(getHUD().getCamera(), RIGHT_ANALOG_X, RIGHT_ANALOG_Y, RIGHT_ANALOG_OFFSET_CENTER_X, RIGHT_ANALOG_OFFSET_CENTER_Y, CommandFactory.getDoNothingAnalogCommand(), CommandFactory.getDoNothingCommand(), vertexBufferObjectManager);
+		this.rightAnalogControl.setChildScene(this.leftAnalogControl);
+		getHUD().setChildScene(this.rightAnalogControl);
+		// Barra vida
+		this.healthBar = new HUDBar(HEALTH_BAR_X, HEALTH_BAR_Y, HEALTH_BAR_WIDTH, HEALTH_BAR_HEIGHT, HPConstants.HUMAN_HEALTH, HPConstants.HUMAN_HEALTH, HEALTH_BAR_ANGLE, vertexBufferObjectManager);
+		getHUD().attachChild(this.healthBar);
+	}
+
+
+	/**
+	 * Crea un {@link AnalogOnScreenControl}
 	 * 
 	 * @param camera
+	 * @param x
+	 * @param y
+	 * @param offsetCenterX
+	 * @param offsetCenterY
+	 * @param analogChangeCommand
+	 * @param analogClickCommand
 	 * @param vertexBufferObjectManager
-	 * @param leftAnalogChangeCommand el comando a ejecutar cuando se mueva el analog izquierdo
-	 * @param leftAnalogClickCommand el comando a ejecutar cuando se clique el analog izquierdo
-	 * @param rightAnalogChangeCommand el comando a ejecutar cuando se mueva el analog derecho
-	 * @param rightAnalogClickCommand el comando a ejecutar cuando se clique el analog derecho
-	 * @return un {@link AnalogOnScreenControl} con el otro {@link AnalogOnScreenControl} como su {@link Scene} hija
+	 * @return un {@link AnalogOnScreenControl}
 	 */
-	private void createAnalogControls(Camera camera, VertexBufferObjectManager vertexBufferObjectManager, AnalogChangeCommand leftAnalogChangeCommand, Command leftAnalogClickCommand, AnalogChangeCommand rightAnalogChangeCommand, Command rightAnalogClickCommand) {
+	private AnalogOnScreenControl createAnalogControl(Camera camera, float x, float y, float offsetCenterX, float offsetCenterY, AnalogChangeCommand analogChangeCommand, Command analogClickCommand, VertexBufferObjectManager vertexBufferObjectManager) {
 		
 		ConfigurableAnalogControlListener leftAnalogListener = new ConfigurableAnalogControlListener();
-		leftAnalogListener.setAnalogChangeCommand(leftAnalogChangeCommand == null? CommandFactory.getDoNothingAnalogCommand(): leftAnalogChangeCommand);
-		leftAnalogListener.setAnalogClickCommand(leftAnalogClickCommand == null? CommandFactory.getDoNothingCommand() : leftAnalogClickCommand);
-		ConfigurableAnalogControlListener rightAnalogListener = new ConfigurableAnalogControlListener();
-		rightAnalogListener.setAnalogChangeCommand(rightAnalogChangeCommand == null? CommandFactory.getDoNothingAnalogCommand() : rightAnalogChangeCommand);
-		rightAnalogListener.setAnalogClickCommand(rightAnalogClickCommand == null? CommandFactory.getDoNothingCommand() : rightAnalogClickCommand);
+		leftAnalogListener.setAnalogChangeCommand(analogChangeCommand == null? CommandFactory.getDoNothingAnalogCommand(): analogChangeCommand);
+		leftAnalogListener.setAnalogClickCommand(analogClickCommand == null? CommandFactory.getDoNothingCommand() : analogClickCommand);
 		
-		/* Control analogico izquierda */
-		leftAnalogControl = new AnalogOnScreenControl(0, 0, camera, ResourceManager.getInstance().analogControlBaseTextureRegion, ResourceManager.getInstance().analogControlKnobTextureRegion, 0.1f, vertexBufferObjectManager, leftAnalogListener);
+		
+		AnalogOnScreenControl analogControl = new AnalogOnScreenControl(x, y, camera, ResourceManager.getInstance().analogControlBaseTextureRegion, ResourceManager.getInstance().analogControlKnobTextureRegion, ANALOG_TIME_BETWEEN_UPDATES, vertexBufferObjectManager, leftAnalogListener);
 
 		{
-			final Sprite controlBase = leftAnalogControl.getControlBase();
-			controlBase.setAlpha(0.5f);
-			controlBase.setOffsetCenter(0, 0);
+			final Sprite controlBase = analogControl.getControlBase();
+			controlBase.setAlpha(ANALOG_ALPHA);
+			controlBase.setOffsetCenter(offsetCenterX, offsetCenterY);
 		}
-
-
-		/* Control analogico derecha. */
-		rightAnalogControl = new AnalogOnScreenControl(camera.getWidth(), 0, camera, ResourceManager.getInstance().analogControlBaseTextureRegion, ResourceManager.getInstance().analogControlKnobTextureRegion, 0.1f, vertexBufferObjectManager, rightAnalogListener);
-
-		{
-			final Sprite controlBase = rightAnalogControl.getControlBase();
-			controlBase.setOffsetCenter(1, 0);
-			controlBase.setAlpha(0.5f);
-	
-			leftAnalogControl.setChildScene(rightAnalogControl);
-		}
-		
-		hud.setChildScene(leftAnalogControl);
+		return analogControl;
 	}
 	
-	/**
-	 * Este metodo crea dos {@link AnalogOnScreenControl} y los coloca a cada
-	 * lado de la camara en la parte inferior. Devuelve un {@link AnalogOnScreenControl}
-	 * con el otro {@link AnalogOnScreenControl} como su {@link Scene} hija.
-	 * 
-	 * @param camera
-	 * @param vertexBufferObjectManager
-	 * @return
-	 */
-	public void createAnalogControls(Camera camera, VertexBufferObjectManager vertexBufferObjectManager) {
-		createAnalogControls(camera, vertexBufferObjectManager, null, null, null, null);
+	@Override
+	public void update(Observable observable, Object data) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	/**
@@ -186,12 +214,5 @@ public class UI {
 	 */
 	public void setRightAnalogClickCommand() {
 		((ConfigurableAnalogControlListener)this.rightAnalogControl.getOnScreenControlListener()).getAnalogClickCommand();
-	}
-
-	public static HUD getHUD() {
-		if (hud == null) {
-			hud = new HUD();
-		}
-		return hud;
 	}
 }
