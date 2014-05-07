@@ -55,7 +55,7 @@ public class BodyFactory {
 	
 	/**
 	 * Crea un {@link Body} para las paredes rectangulares.
-	 * Este {@link Body} tiene com userData {@link BodyFactory#WALL_USER_DATA}.
+	 * Este {@link Body} tiene como userData {@link BodyFactory#WALL_USER_DATA}.
 	 * 
 	 * @param positionX
 	 * @param positionY

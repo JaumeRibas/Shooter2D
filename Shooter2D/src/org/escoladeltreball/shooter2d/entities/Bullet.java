@@ -85,13 +85,14 @@ public class Bullet extends ColisionableEntity implements Walking {
 
 	@Override
 	public void collidesWith(Body otherBody) {
+
 		if (otherBody.getUserData().equals(BodyFactory.WALL_USER_DATA)) {
 			this.detachSelf();
 		} else if(otherBody.getUserData() instanceof ActorEntity) {
-			
 			ActorEntity actor = (ActorEntity) otherBody.getUserData();
 			actor.hurt(strengh);
 			this.detachSelf();
 		}
+
 	}
 }

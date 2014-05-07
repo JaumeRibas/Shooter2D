@@ -45,6 +45,10 @@ public class UI {
 		return instance;
 	}
 	
+	public void createUI(VertexBufferObjectManager vertexBufferObjectManager) {
+		createAnalogControls(hud.getCamera(), vertexBufferObjectManager, CommandFactory.getSetPlayerVelocityAndOrientation(), CommandFactory.getDoNothingCommand(), CommandFactory.getSetPlayerOrientationAndShoot(), CommandFactory.getDoNothingCommand());
+	}
+	
 	/**
 	 * Este metodo crea dos {@link AnalogOnScreenControl} y los coloca a cada
 	 * lado de la camara en la parte inferior. Devuelve un {@link AnalogOnScreenControl}

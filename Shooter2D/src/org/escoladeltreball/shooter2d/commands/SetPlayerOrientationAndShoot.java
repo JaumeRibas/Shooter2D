@@ -2,6 +2,7 @@ package org.escoladeltreball.shooter2d.commands;
 
 import org.escoladeltreball.shooter2d.commands.interfaces.AnalogChangeCommand;
 import org.escoladeltreball.shooter2d.entities.Player;
+import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
 
 /**
  * Cambia la velocidad dirección y sentido del movimiento del jugador
@@ -12,17 +13,12 @@ import org.escoladeltreball.shooter2d.entities.Player;
  */
 public class SetPlayerOrientationAndShoot implements AnalogChangeCommand {
 
-	private Player player;
-	
-	public SetPlayerOrientationAndShoot(Player player) {
-		this.player = player;
-	}
-
 	@Override
 	public void execute(float pValueX, float pValueY) {
+		Player player = PlayerLoader.getPlayer();
 		//cambiar orientacion del personaje
 		if(pValueX != 0 && pValueY != 0){
-			this.player.getBody().setTransform(this.player.getBody().getPosition(), (float)Math.atan2(-pValueX, pValueY));
+			player.getBody().setTransform(player.getBody().getPosition(), (float)Math.atan2(-pValueX, pValueY));
 			
 		}
 	}
