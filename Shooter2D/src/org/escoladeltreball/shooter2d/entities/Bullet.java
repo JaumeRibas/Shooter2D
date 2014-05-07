@@ -16,7 +16,7 @@ import com.badlogic.gdx.physics.box2d.Body;
  */
 public class Bullet extends ColisionableEntity implements Walking {
 
-	private float speed = 1f;
+	private float speed = 4f;
 	private int strengh = 1;
 	private float shootAngle;
 
@@ -42,9 +42,8 @@ public class Bullet extends ColisionableEntity implements Walking {
 		this.strengh = strengh;
 		this.setCurrentTileIndex(0);
 		this.setBody(body);
-		this.setScale(1.2f);
-		this.setRotation(angle);
-		this.animate(200);
+		this.setScale(1.0f);
+		this.animate(100);
 
 	}
 
@@ -52,12 +51,24 @@ public class Bullet extends ColisionableEntity implements Walking {
 	 * Camina hacia el objetivo si lo tiene.
 	 */
 	public void walk() {
+		
 		// Calcular movimiento horizontal.
 		float xStep = (float) Math.sin(Math.toRadians(shootAngle));
+
 		// Calcular movimiento vertical.
 		float yStep = (float) Math.cos(Math.toRadians(shootAngle));
+
 		// Calculo de la velocidad
-		this.getBody().setLinearVelocity(xStep * this.speed, yStep * this.speed);
+		this.getBody()
+				.setLinearVelocity(xStep * this.speed, yStep * this.speed);
+		// Calcular movimiento horizontal.
+		float xStep90 = (float) Math.sin(Math.toRadians(shootAngle - 90));
+
+				// Calcular movimiento vertical.
+		float yStep90 = (float) Math.cos(Math.toRadians(shootAngle - 90));
+
+		this.getBody().setTransform(this.getBody().getPosition(),
+				(float) Math.atan2(-xStep90, yStep90));
 	}
 
 	/**
@@ -68,18 +79,20 @@ public class Bullet extends ColisionableEntity implements Walking {
 	 */
 	@Override
 	protected void onManagedUpdate(float pSecondsElapsed) {
-		
 		this.walk();
 		super.onManagedUpdate(pSecondsElapsed);
 	}
 
 	@Override
 	public void collidesWith(Body otherBody) {
-		if (otherBody.getUserData() instanceof ActorEntity) {
-			ActorEntity actor = (ActorEntity)otherBody.getUserData();
+
+		if (otherBody.getUserData().equals(BodyFactory.WALL_USER_DATA)) {
+			this.detachSelf();
+		} else if(otherBody.getUserData() instanceof ActorEntity) {
+			ActorEntity actor = (ActorEntity) otherBody.getUserData();
 			actor.hurt(strengh);
 			this.detachSelf();
-		}		
-	}
+		}
 
+	}
 }

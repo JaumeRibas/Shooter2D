@@ -91,9 +91,9 @@ public class UI implements Observer {
 		//Control analogico izquierda 
 		this.leftAnalogControl = createAnalogControl(getHUD().getCamera(), LEFT_ANALOG_X, LEFT_ANALOG_Y, LEFT_ANALOG_OFFSET_CENTER_X, LEFT_ANALOG_OFFSET_CENTER_Y, CommandFactory.getSetPlayerVelocityAndOrientation(), CommandFactory.getDoNothingCommand(), vertexBufferObjectManager);
 		// Control analogico derecha
-		this.rightAnalogControl = createAnalogControl(getHUD().getCamera(), RIGHT_ANALOG_X, RIGHT_ANALOG_Y, RIGHT_ANALOG_OFFSET_CENTER_X, RIGHT_ANALOG_OFFSET_CENTER_Y, CommandFactory.getDoNothingAnalogCommand(), CommandFactory.getDoNothingCommand(), vertexBufferObjectManager);
-		this.rightAnalogControl.setChildScene(this.leftAnalogControl);
-		getHUD().setChildScene(this.rightAnalogControl);
+		this.rightAnalogControl = createAnalogControl(getHUD().getCamera(), RIGHT_ANALOG_X, RIGHT_ANALOG_Y, RIGHT_ANALOG_OFFSET_CENTER_X, RIGHT_ANALOG_OFFSET_CENTER_Y, CommandFactory.getSetPlayerOrientationAndShoot(), CommandFactory.getDoNothingCommand(), vertexBufferObjectManager);
+		this.leftAnalogControl.setChildScene(this.rightAnalogControl);
+		getHUD().setChildScene(this.leftAnalogControl);
 		// Barra vida
 		this.healthBar = new HUDBar(HEALTH_BAR_X, HEALTH_BAR_Y, HEALTH_BAR_WIDTH, HEALTH_BAR_HEIGHT, HPConstants.HUMAN_HEALTH, HPConstants.HUMAN_HEALTH, HEALTH_BAR_ANGLE, vertexBufferObjectManager);
 		getHUD().attachChild(this.healthBar);

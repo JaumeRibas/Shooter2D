@@ -18,12 +18,20 @@ public class CommandFactory {
 	
 	private static DoNothing doNothingInstance;
 	private static SetPlayerVelocityAndOrientation setPlayerVelocityInstance;
+	private static SetPlayerOrientationAndShoot setPlayerOrientationAndShoot;
 
 	public static AnalogChangeCommand getSetPlayerVelocityAndOrientation() {
 		if (setPlayerVelocityInstance == null) {
 			setPlayerVelocityInstance = new SetPlayerVelocityAndOrientation();
 		}
 		return setPlayerVelocityInstance;
+	}
+	
+	public static AnalogChangeCommand getSetPlayerOrientationAndShoot() {
+		if (setPlayerOrientationAndShoot == null) {
+			setPlayerOrientationAndShoot = new SetPlayerOrientationAndShoot();
+		}
+		return setPlayerOrientationAndShoot;
 	}
 
 	public static AnalogChangeCommand getDoNothingAnalogCommand() {

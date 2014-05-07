@@ -11,28 +11,15 @@ import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
  * @author Elvis Puertas
  * @author Jaume Ribas
  */
-public class SetPlayerVelocityAndOrientation implements AnalogChangeCommand {
+public class SetPlayerOrientationAndShoot implements AnalogChangeCommand {
 
-	public float SPEED = 2;
-	private boolean isWalking = false;
-	
 	@Override
 	public void execute(float pValueX, float pValueY) {
 		Player player = PlayerLoader.getPlayer();
-		//cambiar la velocidad del jugador
+		//cambiar orientacion del personaje
 		if(pValueX != 0 && pValueY != 0){
-			if(!this.isWalking){
-				player.animate(200);
-				this.isWalking = true;
-			}			
 			player.getBody().setTransform(player.getBody().getPosition(), (float)Math.atan2(-pValueX, pValueY));
-			player.getBody().setLinearVelocity(pValueX * SPEED, pValueY * SPEED);
-
-		} else {
-			player.stopAnimation();
-			player.setCurrentTileIndex(0);
-			player.getBody().setLinearVelocity(0, 0);
-			this.isWalking = false;
+			
 		}
 	}
 

@@ -148,5 +148,10 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 	public void hurt(int strengh){
 		super.hurt(strengh);
 		System.out.println("ZOMBIE HEALTH: " + getHealthpoints() + "/" + getMaxHealthPoints());
+		if(getHealthpoints() <= 0){
+			System.out.println("ZOMBIE MUERTO");
+			this.detachSelf();
+			this.setHealthpoints(getMaxHealthPoints());
+		}
 	}
 }
