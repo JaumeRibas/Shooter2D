@@ -120,11 +120,11 @@ public class MainActivity extends BaseGameActivity
 		for(Zombie zombie : this.zombies){
 			scene.attachChild(zombie);
 		}
-		this.bullets.add(bulletLoader.loadBullet(camera,500, 100, this.getTextureManager(), this.getAssets(), this.getVertexBufferObjectManager(), 0, 3));
+		this.bullets.add(bulletLoader.loadBullet(camera, 100, 300, this.getTextureManager(), this.getAssets(), this.getVertexBufferObjectManager(), 70, 3));
 		scene.attachChild(bullets.get(0));
 		
 		// Añade los controles con commandos a la escena 
-		UI.getInstance().createAnalogControls(this.camera, this.getVertexBufferObjectManager(), CommandFactory.getSetPlayerVelocity(this.player), CommandFactory.getDoNothingCommand(), CommandFactory.getDoNothingAnalogCommand(), CommandFactory.getDoNothingCommand());
+		UI.getInstance().createAnalogControls(this.camera, this.getVertexBufferObjectManager(), CommandFactory.getSetPlayerVelocity(this.player), CommandFactory.getDoNothingCommand(), CommandFactory.getSetPlayerOrientationAndShoot(this.player), CommandFactory.getDoNothingCommand());
 		pOnPopulateSceneCallback.onPopulateSceneFinished();
 	}
 
