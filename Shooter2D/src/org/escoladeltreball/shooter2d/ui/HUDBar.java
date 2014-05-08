@@ -6,7 +6,7 @@ import org.andengine.util.adt.color.Color;
 
 public class HUDBar extends Rectangle {
 	
-	private float currentValue;
+	private float value;
 	private float maxValue;
 	private float valueToPixelRatio;
 
@@ -17,7 +17,7 @@ public class HUDBar extends Rectangle {
 		this.setRotation(angle);
 		this.setMaxValue(maxValue);
 		this.valueToPixelRatio = pWidth / this.maxValue;
-		this.setCurrentValue(currentValue);
+		this.setValue(currentValue);
 		this.setColor(Color.GREEN);
 	}
 	
@@ -27,11 +27,11 @@ public class HUDBar extends Rectangle {
 	 * @param value un float
 	 */
 	public void change(float value) {
-		this.currentValue += value;
-		if (this.currentValue > this.maxValue) {
-			this.currentValue = this.maxValue;
-		} else if (this.currentValue < 0) {
-			this.currentValue = 0;
+		this.value += value;
+		if (this.value > this.maxValue) {
+			this.value = this.maxValue;
+		} else if (this.value < 0) {
+			this.value = 0;
 		}
 		this.updateWidth();
 	}
@@ -41,8 +41,8 @@ public class HUDBar extends Rectangle {
 	 * 
 	 * @return un float.
 	 */
-	public float getCurrentValue() {
-		return this.currentValue;
+	public float getValue() {
+		return this.value;
 	}
 
 	/**
@@ -50,9 +50,9 @@ public class HUDBar extends Rectangle {
 	 * 
 	 * @param currentValue un float
 	 */
-	public void setCurrentValue(float currentValue) {
+	public void setValue(float currentValue) {
 		if (currentValue >= 0 && currentValue <= this.maxValue)
-		this.currentValue = currentValue;
+		this.value = currentValue;
 		this.updateWidth();
 	}
 
@@ -65,6 +65,6 @@ public class HUDBar extends Rectangle {
 	}
 	
 	private void updateWidth() {
-		this.setWidth(this.valueToPixelRatio * this.getCurrentValue());
+		this.setWidth(this.valueToPixelRatio * this.getValue());
 	}
 }

@@ -1,8 +1,5 @@
 package org.escoladeltreball.shooter2d.ui;
 
-import java.util.Observable;
-import java.util.Observer;
-
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
@@ -14,6 +11,9 @@ import org.escoladeltreball.shooter2d.commands.CommandFactory;
 import org.escoladeltreball.shooter2d.commands.interfaces.AnalogChangeCommand;
 import org.escoladeltreball.shooter2d.commands.interfaces.Command;
 import org.escoladeltreball.shooter2d.constants.HPConstants;
+import org.escoladeltreball.shooter2d.constants.NotificationConstants;
+import org.escoladeltreball.shooter2d.entities.GameEntity;
+import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
 
 /**
  * La clase UI continene variables y metodos relacionados con la interfaz de usuario.
@@ -23,12 +23,12 @@ import org.escoladeltreball.shooter2d.constants.HPConstants;
  * @author Elvis Puertas
  * @author Jaume Ribas
  */
-public class UI implements Observer {
+public class UI implements GameObserver {
 	
 	private static final float HEALTH_BAR_WIDTH = 200;
 	private static final float HEALTH_BAR_HEIGHT = 7;
-	private static final float HEALTH_BAR_ANGLE = 0;
-	private static final float HEALTH_BAR_X = MainActivity.CAMERA_WIDTH - HEALTH_BAR_WIDTH - 20;
+	private static final float HEALTH_BAR_ANGLE = 180;
+	private static final float HEALTH_BAR_X = MainActivity.CAMERA_WIDTH - 20;
 	private static final float HEALTH_BAR_Y = MainActivity.CAMERA_HEIGHT - 20;
 	
 	private static final float ANALOG_ALPHA = 0.5f;
@@ -130,12 +130,6 @@ public class UI implements Observer {
 		return analogControl;
 	}
 	
-	@Override
-	public void update(Observable observable, Object data) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	/**
 	 * Devuelve el comando que se ejecuta al mover
 	 * el analog izquierdo
@@ -214,5 +208,20 @@ public class UI implements Observer {
 	 */
 	public void setRightAnalogClickCommand() {
 		((ConfigurableAnalogControlListener)this.rightAnalogControl.getOnScreenControlListener()).getAnalogClickCommand();
+	}
+
+	
+	@Override
+	public void notify(Object notifier, Object data) {
+		if (data instanceof Short) {
+			short notification = ((Short)data).shortValue();
+			if(notifier == PlayerLoader.getPlayer()) {
+				switch (notification) {
+				case NotificationConstants.CHANGE_HEALTH:
+					this.healthBar.setValue(PlayerLoader.getPlayer().getHealthpoints());
+					break;
+				}
+			}
+		}		
 	}
 }
