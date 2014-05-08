@@ -132,11 +132,8 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 	}
 
 	@Override
-	public void collidesWith(Body otherBody) {
-		Object userData = otherBody.getUserData();
-		if (userData == super.getTarget()) {
-			this.attack();
-		}
+	public void beginsContactWith(Body otherBody) {
+		
 	}
 	
 	/**
@@ -153,5 +150,19 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 			this.detachSelf();
 			this.setHealthpoints(getMaxHealthPoints());
 		}
+	}
+
+	@Override
+	public void endsContactWith(Body otherBody) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void isContactingWith(Body otherBody) {
+		Object userData = otherBody.getUserData();
+		if (userData == super.getTarget()) {
+			this.attack();
+		}		
 	}
 }

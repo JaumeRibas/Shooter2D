@@ -12,7 +12,6 @@ import org.escoladeltreball.shooter2d.commands.interfaces.AnalogChangeCommand;
 import org.escoladeltreball.shooter2d.commands.interfaces.Command;
 import org.escoladeltreball.shooter2d.constants.HPConstants;
 import org.escoladeltreball.shooter2d.constants.NotificationConstants;
-import org.escoladeltreball.shooter2d.entities.GameEntity;
 import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
 
 /**

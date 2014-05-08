@@ -1,6 +1,7 @@
 package org.escoladeltreball.shooter2d.entities;
 
 import org.andengine.extension.physics.box2d.PhysicsConnector;
+import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.escoladeltreball.shooter2d.MainActivity;
@@ -38,10 +39,28 @@ public abstract class ColisionableEntity extends GameEntity {
 	}
 	
 	/**
-	 * Se llama cuando esta {@link ColisionableEntity} colisiona con un {@link Body}.
+	 * Se llama cuando esta {@link ColisionableEntity} empieza a colisionar con un {@link Body}.
 	 * 
 	 * @param otherBody el {@link Body} con el que ha chocado
 	 */
-	public abstract void collidesWith(Body otherBody);
+	public abstract void beginsContactWith(Body otherBody);
+	
+	/**
+	 * Se llama cuando esta {@link ColisionableEntity} deja de colisionar con un {@link Body}.
+	 * 
+	 * @param otherBody el {@link Body} con el que ha chocado
+	 */
+	public abstract void endsContactWith(Body otherBody);
+	
+	
+	/**
+	 * Se llama cada step del {@link PhysicsWorld} en que esta 
+	 * {@link ColisionableEntity} esta colisionando con un {@link Body} 
+	 * (antes de que se calcule la colision).
+	 * 
+	 * @param otherBody el {@link Body} con el que esta chocando
+	 */
+	public abstract void isContactingWith(Body otherBody);
+	
 
 }

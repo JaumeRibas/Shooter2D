@@ -132,6 +132,8 @@ public class MainActivity extends BaseGameActivity {
 
 		// Añade la UI
 		UI.getInstance().createUI(this.getVertexBufferObjectManager());
+		// Se pone a la UI como observador del player 
+		this.player.setGameObserver(UI.getInstance());
 
 		pOnPopulateSceneCallback.onPopulateSceneFinished();
 	}
