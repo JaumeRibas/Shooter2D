@@ -59,12 +59,12 @@ public class MapCreator {
 			if(group.getTMXObjectGroupProperties().containsTMXProperty("wall", "true")){
 				// This is our "wall" layer. Create the boxes from it
 				for(final TMXObject object : group.getTMXObjects()) {
-					final Rectangle rect = new Rectangle(object.getX(), object.getY()-32, object.getWidth()+32, object.getHeight()+32, vbo);
+					Rectangle rect = new Rectangle(object.getX(), map.getHeight()-object.getHeight()-object.getY(), object.getWidth()+32, object.getHeight()+32, vbo);
 					rect.setOffsetCenter(0, 0);
 					rect.setVisible(true);
 					rect.setColor(Color.RED);
 					scene.attachChild(rect);
-					BodyFactory.createRectangleWallBody(object.getX()+(object.getWidth()/2), object.getY()+(object.getHeight()/2), object.getWidth(), object.getHeight());
+					BodyFactory.createRectangleWallBody(object.getX(), map.getHeight()-object.getY(), object.getWidth()+32, object.getHeight());
 				}
 			}
 		}
