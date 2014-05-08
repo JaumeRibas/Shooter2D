@@ -127,7 +127,7 @@ public class MainActivity extends BaseGameActivity {
 
 		this.bullets.add(BulletLoader.loadBullet(camera, 500, 100,
 				this.getTextureManager(), this.getAssets(),
-				this.getVertexBufferObjectManager(), 0, 3));
+				this.getVertexBufferObjectManager(), 300, 3));
 		scene.attachChild(bullets.get(0));
 
 		// Añade la UI
@@ -222,6 +222,6 @@ public class MainActivity extends BaseGameActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		loadGame();
+		//loadGame();
 	}
 }
