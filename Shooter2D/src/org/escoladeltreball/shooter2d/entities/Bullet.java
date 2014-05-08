@@ -19,6 +19,8 @@ public class Bullet extends ColisionableEntity implements Walking {
 	private float speed = 4f;
 	private int strengh = 1;
 	private float shootAngle;
+	
+	private boolean attached = true;
 
 	/**
 	 * Constructor de la bala.
@@ -44,7 +46,6 @@ public class Bullet extends ColisionableEntity implements Walking {
 		this.setBody(body);
 		this.setScale(1.0f);
 		this.animate(100);
-
 	}
 
 	/**
@@ -93,6 +94,26 @@ public class Bullet extends ColisionableEntity implements Walking {
 			actor.hurt(strengh);
 			this.detachSelf();
 		}
+	}
+	
+	
+	public Bullet clone(){
+		return this.clone();
+	}
+	
+	public float getSpeed() {
+		return speed;
+	}
 
+	public void setSpeed(float speed) {
+		this.speed = speed;
+	}
+
+	public float getShootAngle() {
+		return shootAngle;
+	}
+
+	public void setShootAngle(float shootAngle) {
+		this.shootAngle = shootAngle;
 	}
 }
