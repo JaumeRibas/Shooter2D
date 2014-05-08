@@ -1,11 +1,8 @@
 package org.escoladeltreball.shooter2d.weapons;
 
-import java.util.ArrayList;
-
 import org.andengine.entity.scene.Scene;
 import org.escoladeltreball.shooter2d.entities.Bullet;
 import org.escoladeltreball.shooter2d.entities.Player;
-import org.escoladeltreball.shooter2d.entities.loader.BulletLoader;
 
 
 

@@ -15,7 +15,6 @@ import org.andengine.entity.scene.background.Background;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.input.touch.controller.MultiTouch;
 import org.andengine.ui.activity.BaseGameActivity;
-import org.andengine.util.adt.pool.Pool;
 import org.escoladeltreball.shooter2d.entities.Bullet;
 import org.escoladeltreball.shooter2d.entities.Player;
 import org.escoladeltreball.shooter2d.entities.Zombie;

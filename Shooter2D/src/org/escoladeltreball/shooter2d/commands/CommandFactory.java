@@ -2,9 +2,6 @@ package org.escoladeltreball.shooter2d.commands;
 
 import org.escoladeltreball.shooter2d.commands.interfaces.AnalogChangeCommand;
 import org.escoladeltreball.shooter2d.commands.interfaces.Command;
-import org.escoladeltreball.shooter2d.entities.Player;
-
-import com.badlogic.gdx.physics.box2d.Body;
 
 
 /**

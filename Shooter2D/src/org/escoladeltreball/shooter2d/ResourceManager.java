@@ -1,6 +1,7 @@
 package org.escoladeltreball.shooter2d;
 
 import java.io.IOException;
+
 import org.andengine.audio.music.Music;
 import org.andengine.audio.music.MusicFactory;
 import org.andengine.audio.sound.Sound;
@@ -34,7 +35,7 @@ import android.content.res.AssetManager;
  */
 public class ResourceManager {
 
-	/** la instancia unica de ResourceManager*/
+	/** la instancia unica de ResourceManager */
 	public static ResourceManager instance;
 
 	/** la base del analog conrol */
