@@ -1,8 +1,10 @@
 package org.escoladeltreball.shooter2d.entities.loader;
 
+import org.andengine.entity.scene.Scene;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.escoladeltreball.shooter2d.ResourceManager;
+import org.escoladeltreball.shooter2d.entities.Bullet;
 import org.escoladeltreball.shooter2d.entities.Player;
 
 public class PlayerLoader {
@@ -17,17 +19,29 @@ public class PlayerLoader {
 	 * @author Carlos Serrano
 	 * @author Elvis Puertas
 	 * @author Jaume Ribas
+	 * @param scene 
 	 */
-	public static Player loadPlayer(float x, float y, VertexBufferObjectManager vertexBufferObjectManager) {
+	public static Player loadPlayer(float x, float y, VertexBufferObjectManager vertexBufferObjectManager, Scene scene) {
 		if (player == null) {
 			TiledTextureRegion pTiledTextureRegion;
 			pTiledTextureRegion = ResourceManager.getInstance().playerTextureRegion;
 
 			player = new Player(x, y, pTiledTextureRegion,
-					vertexBufferObjectManager);
+					vertexBufferObjectManager, scene);
 		}
 		return player;
 
+	}
+	
+	public static Player loadPlayer(float x, float y, VertexBufferObjectManager vertexBufferObjectManager, Scene scene, Bullet playerbullet) {
+		if (player == null) {
+			TiledTextureRegion pTiledTextureRegion;
+			pTiledTextureRegion = ResourceManager.getInstance().playerTextureRegion;
+
+			player = new Player(x, y, pTiledTextureRegion,
+					vertexBufferObjectManager, scene, playerbullet);
+		}
+		return player;
 	}
 	
 	/**
@@ -39,4 +53,5 @@ public class PlayerLoader {
 	public static Player getPlayer() {
 		return player;
 	}
+
 }

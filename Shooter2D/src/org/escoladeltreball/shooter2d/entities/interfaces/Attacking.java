@@ -16,16 +16,4 @@ public interface Attacking {
 	 */
 	public abstract void attack();
 
-	/**
-	 * Actualiza el timer de cooldown.
-	 * 
-	 * @param pSecondsElapsed
-	 */
-	public abstract void manageCooldown(float pSecondsElapsed);
-
-	/**
-	 * Vuelve a establecer un coodown.
-	 */
-	public abstract void resetCooldown();
-
 }

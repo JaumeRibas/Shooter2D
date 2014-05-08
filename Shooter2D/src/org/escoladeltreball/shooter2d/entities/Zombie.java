@@ -8,6 +8,7 @@ import org.escoladeltreball.shooter2d.entities.interfaces.Attacking;
 import org.escoladeltreball.shooter2d.entities.interfaces.Targeting;
 import org.escoladeltreball.shooter2d.entities.interfaces.Walking;
 import org.escoladeltreball.shooter2d.physics.BodyFactory;
+import org.escoladeltreball.shooter2d.weapons.Cooldown;
 
 import com.badlogic.gdx.physics.box2d.Body;
 
@@ -23,8 +24,8 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 
 	private float speed = 0.75f;
 
-	private static final float ZOMBIE_ATTACK_COOLDOWN = 3;
-	private float attackCooldownTimer = 0;
+	private static final float ZOMBIE_ATTACK_TIMER = 3f;
+	private Cooldown attackCooldown;
 
 	private boolean isWalking = false;
 
@@ -45,7 +46,7 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 			VertexBufferObjectManager pVertexBufferObjectManager, Player player) {
 		super(pX, pY, pTiledTextureRegion, pVertexBufferObjectManager);
 		super.setTarget(player);
-		this.attackCooldownTimer = Zombie.ZOMBIE_ATTACK_COOLDOWN;
+		this.attackCooldown = new Cooldown(ZOMBIE_ATTACK_TIMER);
 		Body body = BodyFactory.createHumanBody(pX, pY);
 		this.setBody(body);
 		this.setColor(Color.GREEN);
@@ -86,35 +87,12 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 	public void attack() {
 		this.isWalking = false;
 		this.setCurrentTileIndex(0);
-		System.out.println("Cooldown Timer: " + this.attackCooldownTimer);
-		if (this.attackCooldownTimer == 0) {
+		System.out.println("Cooldown Timer: " + this.attackCooldown.toString());
+		if (this.attackCooldown.cooldownReady()) {
 			ActorEntity actorEntity = (ActorEntity) super.getTarget();
 			actorEntity.hurt(HPConstants.ZOMBIE_STRENGH);
 			super.getTarget().setColor(Color.RED);
-			this.resetCooldown();
 		}
-	}
-
-	/**
-	 * Actualiza el timer de cooldown.
-	 * 
-	 * @param pSecondsElapsed
-	 *            el tiempo pasado entre la actualización anterior y esta.
-	 */
-	@Override
-	public void manageCooldown(float pSecondsElapsed) {
-		this.attackCooldownTimer -= pSecondsElapsed;
-		if (this.attackCooldownTimer < 0) {
-			this.attackCooldownTimer = 0;
-		}
-	}
-
-	/**
-	 * Reestablece el cooldown.
-	 */
-	@Override
-	public void resetCooldown() {
-		this.attackCooldownTimer = Zombie.ZOMBIE_ATTACK_COOLDOWN;
 	}
 
 	/**
@@ -127,7 +105,7 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 	protected void onManagedUpdate(float pSecondsElapsed) {
 
 		this.walk();
-		this.manageCooldown(pSecondsElapsed);
+		this.attackCooldown.updateTimer(pSecondsElapsed);
 		super.onManagedUpdate(pSecondsElapsed);
 	}
 

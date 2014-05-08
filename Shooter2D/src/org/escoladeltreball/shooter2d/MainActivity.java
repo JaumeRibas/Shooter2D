@@ -100,14 +100,19 @@ public class MainActivity extends BaseGameActivity {
 	public void onPopulateScene(Scene pScene,
 			OnPopulateSceneCallback pOnPopulateSceneCallback)
 			throws IOException {
-
+		
 		mPhysicsWorld = new FixedStepPhysicsWorld(STEPS_PER_SECOND,
 				new Vector2(0f, 0), false, VELOCITY_INTERACTIONS,
 				POSITION_INTERACTIONS);
 		this.scene.registerUpdateHandler(mPhysicsWorld);
 		mPhysicsWorld.setContactListener(GameContactListener.getInstance());
+		
+		Bullet playerbullet = BulletLoader.loadBullet(camera, 0, 20,
+				this.getTextureManager(), this.getAssets(),
+				this.getVertexBufferObjectManager(), 0, 3);
+		
 		this.player = PlayerLoader.loadPlayer(CAMERA_WIDTH / 2,
-				CAMERA_HEIGHT / 2, getVertexBufferObjectManager());
+				CAMERA_HEIGHT / 2, getVertexBufferObjectManager(), scene, playerbullet);
 		// Muestra el mapa en la pantalla
 		scene = this.mapCreator.loadMap(getAssets(), getTextureManager(),
 				getVertexBufferObjectManager(), scene, this.camera);
@@ -124,11 +129,6 @@ public class MainActivity extends BaseGameActivity {
 		for (Zombie zombie : this.zombies) {
 			scene.attachChild(zombie);
 		}
-
-		this.bullets.add(BulletLoader.loadBullet(camera, 500, 100,
-				this.getTextureManager(), this.getAssets(),
-				this.getVertexBufferObjectManager(), 300, 3));
-		scene.attachChild(bullets.get(0));
 
 		// Añade la UI
 		UI.getInstance().createUI(this.getVertexBufferObjectManager());
@@ -224,6 +224,6 @@ public class MainActivity extends BaseGameActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//loadGame();
+		loadGame();
 	}
 }

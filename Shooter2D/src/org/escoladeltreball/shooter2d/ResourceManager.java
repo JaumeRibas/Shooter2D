@@ -1,6 +1,7 @@
 package org.escoladeltreball.shooter2d;
 
 import java.io.IOException;
+
 import org.andengine.audio.music.Music;
 import org.andengine.audio.music.MusicFactory;
 import org.andengine.audio.sound.Sound;

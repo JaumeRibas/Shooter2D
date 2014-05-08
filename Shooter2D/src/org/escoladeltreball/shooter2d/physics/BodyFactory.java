@@ -3,6 +3,8 @@ package org.escoladeltreball.shooter2d.physics;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.escoladeltreball.shooter2d.MainActivity;
 import org.escoladeltreball.shooter2d.entities.ColisionableEntity;
+import org.escoladeltreball.shooter2d.entities.Player;
+import org.escoladeltreball.shooter2d.entities.Zombie;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
