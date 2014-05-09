@@ -41,8 +41,13 @@ public class Gun {
 	 */
 	public void shoot(float x, float y){
 		if(this.gunCooldown.cooldownReady() && bullet != null && bulletShot == false){
-			bullet.setPosition(shooter.getX() + (float)Math.cos(x), shooter.getY() + (float)Math.cos(y));
-			// 
+			bullet.setPosition(shooter.getX() + (x * 50), shooter.getY() + (y * 50));
+			float angle = (float) Math.toDegrees(Math.atan2(y, x)); 
+			System.out.println("X: " + x);
+			System.out.println("Y: " + y);
+			System.out.println("Angle: " + angle);
+			
+			bullet.setShootAngle(angle);
 			scene.attachChild(bullet);
 			this.bulletShot = true;
 		}
