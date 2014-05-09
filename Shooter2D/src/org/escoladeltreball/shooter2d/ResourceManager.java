@@ -153,6 +153,7 @@ public class ResourceManager {
 		MusicFactory.setAssetBasePath("sfx/");
 		try {
 			this.musicIntro = MusicFactory.createMusicFromAsset(engine.getMusicManager(), context, "intro.mp3");
+			this.musicIntro.setVolume(0.3f);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
