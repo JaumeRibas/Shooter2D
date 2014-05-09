@@ -11,7 +11,7 @@ import org.escoladeltreball.shooter2d.weapons.Gun;
 import com.badlogic.gdx.physics.box2d.Body;
 
 /**
- * La clase Player es una GameEntity que controlara el jugador.
+ * La clase Player es una {@link ActorEntity} que controlara el jugador.
  * 
  * @author Carlos Serrano
  * @author Elvis Puertas
@@ -66,9 +66,16 @@ public class Player extends ActorEntity {
 	@Override
 	public void hurt(int strengh){
 		super.hurt(strengh);
+		// TODO Efectos de sonido del zombie herido
+		// TODO Animación y particulas de zombie herido
 		System.out.println("PLAYER HEALTH: " + getHealthpoints() + "/" + getMaxHealthPoints());
 	}
-
+	
+	/**
+	 * Realiza las acciones que el jugador colisiona con otras entidades.
+	 * 
+	 * @param otherBody un body de otra entidad.
+	 */
 	@Override
 	public void beginsContactWith(Body otherBody) {
 		// TODO Auto-generated method stub

@@ -10,16 +10,27 @@ import org.escoladeltreball.shooter2d.entities.Zombie;
 
 import android.content.res.AssetManager;
 
+/**
+ * La clase ZombieLoader se encarga cargar los recursos del jugador y del propio jugador.
+ * 
+ * @author Carlos Serrano
+ * @author Elvis Puertas
+ * @author Jaume Ribas
+ */
 public class ZombieLoader {
 	
 	private ZombieLoader(){};
-
 	/**
-	 * La clase PlayerLoader se encarga cargar los recursos del jugador y del propio jugador.
+	 * Devuelve un zombie nuevo.
 	 * 
-	 * @author Carlos Serrano
-	 * @author Elvis Puertas
-	 * @author Jaume Ribas
+	 * @param camera a {@link Camera}
+	 * @param x a integer, la posición horizontal del zombie
+	 * @param y a integer, la posición vertical del zombie
+	 * @param textureManger a {@link TextureManager}
+	 * @param assets a {@link AssetManager}
+	 * @param vertexBufferObjectManager un {@link VertexBufferObjectManager}
+	 * @param player a {@link Player} a perseguir
+	 * @return a {@link Zombie}
 	 */
 	public static Zombie loadZombie(Camera camera, int x, int y, TextureManager textureManger,
 			AssetManager assets,
@@ -34,6 +45,5 @@ public class ZombieLoader {
 				y, pTiledTextureRegion,
 				vertexBufferObjectManager, player);
 		return zombie;
-
 	}
 }

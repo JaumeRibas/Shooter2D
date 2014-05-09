@@ -101,19 +101,20 @@ public class MainActivity extends BaseGameActivity {
 	public void onPopulateScene(Scene pScene,
 			OnPopulateSceneCallback pOnPopulateSceneCallback)
 			throws IOException {
-		
+
 		mPhysicsWorld = new FixedStepPhysicsWorld(STEPS_PER_SECOND,
 				new Vector2(0f, 0), false, VELOCITY_INTERACTIONS,
 				POSITION_INTERACTIONS);
 		this.scene.registerUpdateHandler(mPhysicsWorld);
 		mPhysicsWorld.setContactListener(GameContactListener.getInstance());
-		
-		Bullet playerbullet = BulletLoader.loadBullet(camera, 0, 20,
-				this.getTextureManager(), this.getAssets(),
+
+		Bullet playerbullet = BulletLoader.loadBullet(camera, CAMERA_WIDTH / 2,
+				CAMERA_HEIGHT / 2, this.getTextureManager(), this.getAssets(),
 				this.getVertexBufferObjectManager(), 0, 3);
-		
+
 		this.player = PlayerLoader.loadPlayer(CAMERA_WIDTH / 2,
-				CAMERA_HEIGHT / 2, getVertexBufferObjectManager(), scene, playerbullet);
+				CAMERA_HEIGHT / 2, getVertexBufferObjectManager(), scene,
+				playerbullet);
 		// Muestra el mapa en la pantalla
 		scene = this.mapCreator.loadMap(getAssets(), getTextureManager(),
 				getVertexBufferObjectManager(), scene, this.camera);

@@ -5,7 +5,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.escoladeltreball.shooter2d.constants.NotificationConstants;
 
 /**
- * La clase abstracta ActorEntity es una ColisionableEntity que designa a personajes
+ * La clase abstracta ActorEntity es una {@link ColisionableEntity} que designa a personajes
  * actores, como el jugador y los enemigos.
  * 
  * @author Carlos Serrano

@@ -6,19 +6,33 @@ import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.escoladeltreball.shooter2d.ResourceManager;
 import org.escoladeltreball.shooter2d.entities.Bullet;
+import org.escoladeltreball.shooter2d.entities.Player;
 
 import android.content.res.AssetManager;
 
+/**
+ * La clase Bullet se encarga cargar las balas.
+ * 
+ * @author Carlos Serrano
+ * @author Elvis Puertas
+ * @author Jaume Ribas
+ */
 public class BulletLoader {
 
 	/**
-	 * La clase PlayerLoader se encarga cargar los recursos del jugador y del propio jugador.
+	 * Crea una nueva bala.
 	 * 
-	 * @author Carlos Serrano
-	 * @author Elvis Puertas
-	 * @author Jaume Ribas
-	 */
-	public static Bullet loadBullet(Camera camera, int x, int y, TextureManager textureManger,
+	 * @param camera a {@link Camera}
+	 * @param x a integer, la posición horizontal de la bala
+	 * @param y a integer, la posición vertical de la bala
+	 * @param textureManger a {@link TextureManager}
+	 * @param assets a {@link AssetManager}
+	 * @param vertexBufferObjectManager un {@link VertexBufferObjectManager}
+	 * @param angle a float, angulo en grados de la trayectoria de la bala
+	 * @param strengh a int, daño que realizará la bala
+	 * @return a {@link Player}
+	 */	
+	public static Bullet loadBullet(Camera camera, float x, float y, TextureManager textureManger,
 			AssetManager assets,
 			VertexBufferObjectManager vertexBufferObjectManager, float angle, int strengh) {
 		
@@ -29,7 +43,5 @@ public class BulletLoader {
 
 			bullet = new Bullet(x, y, pTiledTextureRegion, vertexBufferObjectManager, angle, strengh);
 		return bullet;
-
-
 	}
 }

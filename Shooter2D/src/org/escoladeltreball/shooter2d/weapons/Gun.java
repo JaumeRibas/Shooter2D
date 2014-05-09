@@ -1,33 +1,53 @@
 package org.escoladeltreball.shooter2d.weapons;
 
 import org.andengine.entity.scene.Scene;
+import org.escoladeltreball.shooter2d.entities.ActorEntity;
 import org.escoladeltreball.shooter2d.entities.Bullet;
 import org.escoladeltreball.shooter2d.entities.Player;
 
 
-
+/**
+ * La clase Gun es la encargada de posicionar las balas que disparan las ActorEntity.
+ * 
+ * @author Carlos Serrano
+ * @author Elvis Puertas
+ * @author Jaume Ribas
+ */
 public class Gun {
 	
 	private Cooldown gunCooldown;
 	private Bullet bullet;
 	private Scene scene;
-	private Player player;
+	private ActorEntity shooter;
 	private boolean bulletShot;
 	
-	public Cooldown getGunCooldown() {
-		return gunCooldown;
-	}
-
 	public Gun(float gunCooldownTime, Scene scene, Player player, Bullet playerbullet){
 		this.gunCooldown = new Cooldown(gunCooldownTime);
-		this.player = player;
+		this.shooter = player;
 		this.bullet = playerbullet;
 		this.scene = scene;
 	
 	}
 	
-	public void shoot(){
-		if(this.gunCooldown.cooldownReady() && bullet != null && bulletShot == false){	
+	public Cooldown getGunCooldown() {
+		return gunCooldown;
+	}
+	
+	/**
+	 * Dispara una bala. Colocará la bala en el mapa con respecto al angulo formado por X e Y.
+	 * 
+	 * @param x un float, define el desplazamiento y posicionamiento inicial horizontal de la bala.
+	 * @param y un float, define el desplazamiento y posicionamiento inicial horizontal de la bala.
+	 */
+	public void shoot(float x, float y){
+		if(this.gunCooldown.cooldownReady() && bullet != null && bulletShot == false){
+			bullet.setPosition(shooter.getX() + (x * 50), shooter.getY() + (y * 50));
+			float angle = (float) Math.toDegrees(Math.atan2(y, x)); 
+			System.out.println("X: " + x);
+			System.out.println("Y: " + y);
+			System.out.println("Angle: " + angle);
+			
+			bullet.setShootAngle(angle);
 			scene.attachChild(bullet);
 			this.bulletShot = true;
 		}
