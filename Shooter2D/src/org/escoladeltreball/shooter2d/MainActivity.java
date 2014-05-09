@@ -86,6 +86,7 @@ public class MainActivity extends BaseGameActivity {
 		ResourceManager.getInstance().loadGameTextures(mEngine, this);
 		ResourceManager.getInstance().loadMusic(mEngine, this);
 		ResourceManager.getInstance().musicIntro.play();
+		ResourceManager.getInstance().loadFonts(mEngine);
 		pOnCreateResourcesCallback.onCreateResourcesFinished();
 	}
 
@@ -224,6 +225,6 @@ public class MainActivity extends BaseGameActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		loadGame();
+		//loadGame();
 	}
 }

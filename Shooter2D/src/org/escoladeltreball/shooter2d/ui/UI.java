@@ -4,6 +4,8 @@ import org.andengine.engine.camera.Camera;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.text.Text;
+import org.andengine.entity.text.TextOptions;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.escoladeltreball.shooter2d.MainActivity;
 import org.escoladeltreball.shooter2d.ResourceManager;
@@ -13,6 +15,8 @@ import org.escoladeltreball.shooter2d.commands.interfaces.Command;
 import org.escoladeltreball.shooter2d.constants.HPConstants;
 import org.escoladeltreball.shooter2d.constants.NotificationConstants;
 import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
+
+import android.graphics.Color;
 
 /**
  * La clase UI continene variables y metodos relacionados con la interfaz de usuario.
@@ -42,6 +46,13 @@ public class UI implements GameObserver {
 	private static final float RIGHT_ANALOG_Y = 0;
 	private static final float RIGHT_ANALOG_OFFSET_CENTER_X = 1;
 	private static final float RIGHT_ANALOG_OFFSET_CENTER_Y = 0;
+	
+	private static final float AMMO_TEXT_X = MainActivity.CAMERA_WIDTH -20;
+	private static final float AMMO_TEXT_Y = MainActivity.CAMERA_HEIGHT - 40;
+	private static final CharSequence AMMO_TEXT_INITIAL_STRING = "PLACEHOLDER";
+	private static final int AMMO_TEXT_MAX_CHARACTER_COUNT = 1000;
+	private static final float AMMO_TEXT_OFFSET_CENTER_X = 1;
+	private static final float AMMO_TEXT_OFFSET_CENTER_Y = 1;
 
 	
 
@@ -54,6 +65,7 @@ public class UI implements GameObserver {
 	private AnalogOnScreenControl leftAnalogControl;
 	private AnalogOnScreenControl rightAnalogControl;
 	private HUDBar healthBar;
+	private Text ammoText;
 	
 	private UI(){}
 	
@@ -94,8 +106,15 @@ public class UI implements GameObserver {
 		this.leftAnalogControl.setChildScene(this.rightAnalogControl);
 		getHUD().setChildScene(this.leftAnalogControl);
 		// Barra vida
-		this.healthBar = new HUDBar(HEALTH_BAR_X, HEALTH_BAR_Y, HEALTH_BAR_WIDTH, HEALTH_BAR_HEIGHT, HPConstants.HUMAN_HEALTH, HPConstants.HUMAN_HEALTH, HEALTH_BAR_ANGLE, vertexBufferObjectManager);
+		this.healthBar = new HUDBar(HEALTH_BAR_X, HEALTH_BAR_Y, HEALTH_BAR_WIDTH, HEALTH_BAR_HEIGHT, HPConstants.HUMAN_HEALTH, HPConstants.HUMAN_HEALTH, 2f, Color.GRAY, Color.BLACK, vertexBufferObjectManager);
+		this.healthBar.setOffsetCenter(0, 0);
+		this.healthBar.setRotationCenter(0, 0);
+		this.healthBar.setRotation(HEALTH_BAR_ANGLE);
 		getHUD().attachChild(this.healthBar);
+		// contador balas
+		this.ammoText = new Text(AMMO_TEXT_X, AMMO_TEXT_Y, ResourceManager.getInstance().hudFont, String.valueOf(PlayerLoader.getPlayer().getHealthpoints()), AMMO_TEXT_MAX_CHARACTER_COUNT, vertexBufferObjectManager);
+		this.ammoText.setOffsetCenter(AMMO_TEXT_OFFSET_CENTER_X, AMMO_TEXT_OFFSET_CENTER_Y);
+		getHUD().attachChild(this.ammoText);
 	}
 
 
@@ -218,6 +237,7 @@ public class UI implements GameObserver {
 				switch (notification) {
 				case NotificationConstants.CHANGE_HEALTH:
 					this.healthBar.setValue(PlayerLoader.getPlayer().getHealthpoints());
+					this.ammoText.setText(String.valueOf(PlayerLoader.getPlayer().getHealthpoints()));
 					break;
 				}
 			}
