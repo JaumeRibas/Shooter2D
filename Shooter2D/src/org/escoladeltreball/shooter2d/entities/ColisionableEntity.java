@@ -8,7 +8,7 @@ import org.escoladeltreball.shooter2d.MainActivity;
 import com.badlogic.gdx.physics.box2d.Body;
 
 /**
- * La clase ColisionableEntity es una GameEntity hecha para objetos que pueden
+ * La clase abstracta ColisionableEntity es una {@link GameEntity} hecha para objetos que pueden
  * colisionar, como el jugador, los enemigos y posibles obstaculos del juego.
  * 
  * @author Carlos Serrano

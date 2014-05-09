@@ -4,7 +4,7 @@ import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 /**
- * La clase abstracta ActorEntity es una ColisionableEntity que designa a personajes
+ * La clase abstracta ActorEntity es una {@link ColisionableEntity} que designa a personajes
  * actores, como el jugador y los enemigos.
  * 
  * @author Carlos Serrano

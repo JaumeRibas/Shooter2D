@@ -5,7 +5,7 @@ import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 /**
- * La clase Abstracta GameEntity gestiona la carga gr�fica de la entidad y las
+ * La clase abstracta GameEntity gestiona la carga gráfica de la entidad y las
  * acciones comunes de todas las entidades, el jugador y los distintos
  * monstruos.
  * 
@@ -24,7 +24,7 @@ public abstract class GameEntity extends AnimatedSprite {
 	/**
 	 * Calcula la distancia entre esta entidad y otra.
 	 * 
-	 * @param another
+	 * @param another una {@link GameEntity}
 	 * @return a float.
 	 */
 	public float getDistance(GameEntity another){
@@ -37,7 +37,7 @@ public abstract class GameEntity extends AnimatedSprite {
 	/**
 	 * Calcula la distancia horizontal entre esta entidad y otra.
 	 * 
-	 * @param another a GameEntity
+	 * @param another a {@link GameEntity}
 	 * @return a float.
 	 */
 	public float getXDistance(GameEntity another){
@@ -50,7 +50,7 @@ public abstract class GameEntity extends AnimatedSprite {
 	/**
 	 * Calcula la distancia vertical entre esta entidad y otra.
 	 * 
-	 * @param another a GameEntity
+	 * @param another a {@link GameEntity}
 	 * @return a float.
 	 */
 	public float getYDistance(GameEntity another){
