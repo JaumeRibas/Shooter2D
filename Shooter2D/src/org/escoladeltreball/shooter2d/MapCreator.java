@@ -64,7 +64,8 @@ public class MapCreator {
 					rect.setVisible(true);
 					rect.setColor(Color.RED);
 					scene.attachChild(rect);
-					BodyFactory.createRectangleWallBody(object.getX(), map.getHeight()-object.getY(), object.getWidth()+32, object.getHeight());
+					//BodyFactory.createRectangleWallBody(object.getX(), map.getHeight()-object.getY(), object.getWidth()+32, object.getHeight());
+					BodyFactory.createRectangleWallBody(rect);
 				}
 			}
 		}

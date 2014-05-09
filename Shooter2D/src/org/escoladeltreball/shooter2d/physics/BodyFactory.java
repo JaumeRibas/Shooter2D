@@ -1,5 +1,6 @@
 package org.escoladeltreball.shooter2d.physics;
 
+import org.andengine.entity.primitive.Rectangle;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.escoladeltreball.shooter2d.MainActivity;
 import org.escoladeltreball.shooter2d.entities.ColisionableEntity;
@@ -68,6 +69,23 @@ public class BodyFactory {
 	
 	public static Body createRectangleWallBody(float positionX, float positionY, float width, float height) {
 		Body wall = PhysicsFactory.createBoxBody(MainActivity.mPhysicsWorld, positionX, positionY, width, height, BodyType.StaticBody, FixtureFactory.getWallFixture());
+		wall.setUserData(WALL_USER_DATA);
+		return wall;
+	}
+	
+	/**
+	 * Crea un {@link Body} para las paredes rectangulares.
+	 * Este {@link Body} tiene como userData {@link BodyFactory#WALL_USER_DATA}.
+	 * 
+	 * @param positionX
+	 * @param positionY
+	 * @param width
+	 * @param height
+	 * @return el {@link Body}
+	 */
+	
+	public static Body createRectangleWallBody(Rectangle rectangle) {
+		Body wall = PhysicsFactory.createBoxBody(MainActivity.mPhysicsWorld, rectangle, BodyType.StaticBody, FixtureFactory.getWallFixture());
 		wall.setUserData(WALL_USER_DATA);
 		return wall;
 	}
