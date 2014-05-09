@@ -1,42 +1,39 @@
 package org.escoladeltreball.shooter2d.ui;
 
+import org.andengine.entity.Entity;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
-import org.andengine.util.adt.color.Color;
 
-public class HUDBar extends Rectangle {
+public class HUDBar extends Entity {
 	
 	private static final int BACKGROUND_TAG = 0;
 	private static final int BORDER_TAG = 1;
 	private float value;
 	private float maxValue;
 	private float valueToPixelRatio;
-	private Rectangle background;
-	private Rectangle border;
+	private Rectangle valueRectangle;
 
-	public HUDBar(float pX, float pY, float pWidth, float pHeight, float maxValue, float currentValue, float borderWidth, int borderColor, int backgroundColor, VertexBufferObjectManager vertexBufferObjectManager) {
-		super(pX, pY, pWidth, pHeight, vertexBufferObjectManager);
+	public HUDBar(float pX, float pY, float pWidth, float pHeight, float maxValue, float currentValue, float borderWidth, int barColor, int borderColor, int backgroundColor, VertexBufferObjectManager vertexBufferObjectManager) {
+		super(pX, pY, pWidth, pHeight);
 		this.setMaxValue(maxValue);
 		this.valueToPixelRatio = pWidth / this.getMaxValue();
-		this.setValue(currentValue);
-		this.setColor(Color.GREEN);
-		background = new Rectangle(pX, pY, pWidth, pHeight, vertexBufferObjectManager);
-		background.setColor(backgroundColor);
-		background.setTag(BACKGROUND_TAG);
-		
-		border = new Rectangle(pX - borderWidth, pY - borderWidth, pWidth + borderWidth * 2, pHeight + borderWidth * 2, vertexBufferObjectManager);
+		this.value = currentValue;
+		Rectangle border = new Rectangle(-borderWidth, -borderWidth, pWidth + borderWidth * 2, pHeight + borderWidth * 2, vertexBufferObjectManager);
+		border.setOffsetCenter(0, 0);
 		border.setColor(borderColor);
 		border.setTag(BORDER_TAG);
-		
-	}
-	
-	@Override
-	public void onAttached() {
 		this.attachChild(border);
+		Rectangle background = new Rectangle(0, 0, pWidth, pHeight, vertexBufferObjectManager);
+		background.setOffsetCenter(0, 0);
+		background.setColor(backgroundColor);
+		background.setTag(BACKGROUND_TAG);
 		this.attachChild(background);
-		super.onAttached();
+		this.valueRectangle = new Rectangle(0, 0, pWidth, pHeight, vertexBufferObjectManager);
+		this.valueRectangle.setOffsetCenter(0, 0); 
+		this.valueRectangle.setColor(barColor);
+		this.attachChild(this.valueRectangle);
 	}
-	
+
 	/**
 	 * Cambia el valor de la barra de forma relativa.
 	 * 
@@ -81,6 +78,6 @@ public class HUDBar extends Rectangle {
 	}
 	
 	private void updateWidth() {
-		this.setWidth(this.valueToPixelRatio * this.getValue());
+		this.valueRectangle.setWidth(this.valueToPixelRatio * this.getValue());
 	}
 }

@@ -3,6 +3,7 @@ package org.escoladeltreball.shooter2d.ui;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
+import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
@@ -106,11 +107,17 @@ public class UI implements GameObserver {
 		this.leftAnalogControl.setChildScene(this.rightAnalogControl);
 		getHUD().setChildScene(this.leftAnalogControl);
 		// Barra vida
-		this.healthBar = new HUDBar(HEALTH_BAR_X, HEALTH_BAR_Y, HEALTH_BAR_WIDTH, HEALTH_BAR_HEIGHT, HPConstants.HUMAN_HEALTH, HPConstants.HUMAN_HEALTH, 2f, Color.GRAY, Color.BLACK, vertexBufferObjectManager);
+		this.healthBar = new HUDBar(HEALTH_BAR_X, HEALTH_BAR_Y, HEALTH_BAR_WIDTH, HEALTH_BAR_HEIGHT, HPConstants.HUMAN_HEALTH, HPConstants.HUMAN_HEALTH, 2f, Color.GREEN, Color.GRAY, Color.BLACK, vertexBufferObjectManager);
 		this.healthBar.setOffsetCenter(0, 0);
 		this.healthBar.setRotationCenter(0, 0);
 		this.healthBar.setRotation(HEALTH_BAR_ANGLE);
 		getHUD().attachChild(this.healthBar);
+//		Rectangle foreground = new Rectangle(MainActivity.CAMERA_WIDTH/2, MainActivity.CAMERA_HEIGHT/2, 200, 200, vertexBufferObjectManager);
+//		foreground.setColor(Color.BLUE);
+//		Rectangle border = new Rectangle(MainActivity.CAMERA_WIDTH/2, MainActivity.CAMERA_HEIGHT/2, 230, 230, vertexBufferObjectManager);
+//		border.setColor(Color.GRAY);
+//		getHUD().attachChild(foreground);
+//		foreground.attachChild(border);
 		// contador balas
 		this.ammoText = new Text(AMMO_TEXT_X, AMMO_TEXT_Y, ResourceManager.getInstance().hudFont, String.valueOf(PlayerLoader.getPlayer().getHealthpoints()), AMMO_TEXT_MAX_CHARACTER_COUNT, vertexBufferObjectManager);
 		this.ammoText.setOffsetCenter(AMMO_TEXT_OFFSET_CENTER_X, AMMO_TEXT_OFFSET_CENTER_Y);
