@@ -6,19 +6,35 @@ import org.andengine.util.adt.color.Color;
 
 public class HUDBar extends Rectangle {
 	
-	private float currentValue;
+	private static final int BACKGROUND_TAG = 0;
+	private static final int BORDER_TAG = 1;
+	private float value;
 	private float maxValue;
 	private float valueToPixelRatio;
+	private Rectangle background;
+	private Rectangle border;
 
-	public HUDBar(float pX, float pY, float pWidth, float pHeight, float maxValue, float currentValue, float angle, VertexBufferObjectManager vertexBufferObjectManager) {
+	public HUDBar(float pX, float pY, float pWidth, float pHeight, float maxValue, float currentValue, float borderWidth, int borderColor, int backgroundColor, VertexBufferObjectManager vertexBufferObjectManager) {
 		super(pX, pY, pWidth, pHeight, vertexBufferObjectManager);
-		this.setOffsetCenter(0, 0);
-		this.setRotationCenter(0, 0);
-		this.setRotation(angle);
 		this.setMaxValue(maxValue);
-		this.valueToPixelRatio = pWidth / this.maxValue;
-		this.setCurrentValue(currentValue);
+		this.valueToPixelRatio = pWidth / this.getMaxValue();
+		this.setValue(currentValue);
 		this.setColor(Color.GREEN);
+		background = new Rectangle(pX, pY, pWidth, pHeight, vertexBufferObjectManager);
+		background.setColor(backgroundColor);
+		background.setTag(BACKGROUND_TAG);
+		
+		border = new Rectangle(pX - borderWidth, pY - borderWidth, pWidth + borderWidth * 2, pHeight + borderWidth * 2, vertexBufferObjectManager);
+		border.setColor(borderColor);
+		border.setTag(BORDER_TAG);
+		
+	}
+	
+	@Override
+	public void onAttached() {
+		this.attachChild(border);
+		this.attachChild(background);
+		super.onAttached();
 	}
 	
 	/**
@@ -27,11 +43,11 @@ public class HUDBar extends Rectangle {
 	 * @param value un float
 	 */
 	public void change(float value) {
-		this.currentValue += value;
-		if (this.currentValue > this.maxValue) {
-			this.currentValue = this.maxValue;
-		} else if (this.currentValue < 0) {
-			this.currentValue = 0;
+		this.value += value;
+		if (this.value > this.maxValue) {
+			this.value = this.maxValue;
+		} else if (this.value < 0) {
+			this.value = 0;
 		}
 		this.updateWidth();
 	}
@@ -41,8 +57,8 @@ public class HUDBar extends Rectangle {
 	 * 
 	 * @return un float.
 	 */
-	public float getCurrentValue() {
-		return this.currentValue;
+	public float getValue() {
+		return this.value;
 	}
 
 	/**
@@ -50,9 +66,9 @@ public class HUDBar extends Rectangle {
 	 * 
 	 * @param currentValue un float
 	 */
-	public void setCurrentValue(float currentValue) {
+	public void setValue(float currentValue) {
 		if (currentValue >= 0 && currentValue <= this.maxValue)
-		this.currentValue = currentValue;
+		this.value = currentValue;
 		this.updateWidth();
 	}
 
@@ -65,6 +81,6 @@ public class HUDBar extends Rectangle {
 	}
 	
 	private void updateWidth() {
-		this.setWidth(this.valueToPixelRatio * this.getCurrentValue());
+		this.setWidth(this.valueToPixelRatio * this.getValue());
 	}
 }

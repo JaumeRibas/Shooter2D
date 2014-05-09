@@ -7,6 +7,8 @@ import org.andengine.audio.music.MusicFactory;
 import org.andengine.audio.sound.Sound;
 import org.andengine.audio.sound.SoundFactory;
 import org.andengine.engine.Engine;
+import org.andengine.opengl.font.Font;
+import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.TextureManager;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
@@ -23,6 +25,8 @@ import org.escoladeltreball.shooter2d.constants.SpriteConstants;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.graphics.Color;
+import android.graphics.Typeface;
 
 /**
  * La clase ResourceManager contiene los recursos del juego
@@ -34,6 +38,18 @@ import android.content.res.AssetManager;
  * @author Jaume Ribas
  */
 public class ResourceManager {
+
+	private static final int HUD_FONT_TEXTURE_HEIGHT = 256;
+
+	private static final int HUD_FONT_TEXTURE_WIDTH = 256;
+
+	private static final int HUD_FONT_TYPEFACE_STYLE = Typeface.NORMAL;
+
+	private static final Typeface HUD_FONT_TYPEFACE_FAMILY_NAME = Typeface.DEFAULT;
+
+	private static final int HUD_FONT_COLOR = Color.WHITE;
+
+	private static final float HUD_FONT_SIZE = 32f;
 
 	/** la instancia unica de ResourceManager */
 	public static ResourceManager instance;
@@ -48,6 +64,8 @@ public class ResourceManager {
 	public TiledTextureRegion zombieTextureRegion;
 	/** la sprite de la bala */
 	public TiledTextureRegion bulletTextureRegion;
+	/** la funete de texto de la HUD */
+	public Font hudFont;
 	
 	//musica
 	public Music musicIntro;
@@ -111,22 +129,6 @@ public class ResourceManager {
 	}
 
 	/**
-	 * 'Descarga' las texturas del juego.
-	 * 
-	 * @param engine 
-	 * @param context
-	 */
-	public synchronized void unloadGameTextures(Engine engine, Context context) {
-		//el atlas de las texturas del analog control
-		((BuildableBitmapTextureAtlas)this.analogControlBaseTextureRegion.getTexture()).unload();
-
-		//descargar aqui las texturas
-
-		//llamamos al garbage collector
-		System.gc();
-	}
-
-	/**
 	 * Carga los sonidos del juego.
 	 * 
 	 * @param engine
@@ -151,9 +153,17 @@ public class ResourceManager {
 		MusicFactory.setAssetBasePath("sfx/");
 		try {
 			this.musicIntro = MusicFactory.createMusicFromAsset(engine.getMusicManager(), context, "intro.mp3");
+			this.musicIntro.setVolume(0.3f);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public synchronized void loadFonts(Engine engine) {
+		//hud
+		this.hudFont = FontFactory.create(engine.getFontManager(), engine.getTextureManager(), HUD_FONT_TEXTURE_WIDTH, HUD_FONT_TEXTURE_HEIGHT, Typeface.create(HUD_FONT_TYPEFACE_FAMILY_NAME, HUD_FONT_TYPEFACE_STYLE), HUD_FONT_SIZE, true, HUD_FONT_COLOR);
+		this.hudFont.load();
+		this.hudFont.prepareLetters("1234567890".toCharArray());
 	}
 	
 	/**
@@ -171,5 +181,28 @@ public class ResourceManager {
 		TiledTextureRegion mGameEntityTextureRegion = TextureRegionFactory.extractTiledFromTexture(mGameEntityTexture, spriteCols, spriteRows);
 		mGameEntityTexture.load();
 		return mGameEntityTextureRegion;
+	}
+	
+	/**
+	 * 'Descarga' las texturas del juego.
+	 * 
+	 * @param engine 
+	 * @param context
+	 */
+	public synchronized void unloadGameTextures(Engine engine, Context context) {
+		//el atlas de las texturas del analog control
+		this.analogControlBaseTextureRegion.getTexture().unload();
+
+		this.playerTextureRegion.getTexture().unload();
+		//this.zombieTextureRegion.getTexture().unload();
+		
+		this.bulletTextureRegion.getTexture().unload();
+
+		//llamamos al garbage collector
+		System.gc();
+	}
+	
+	public synchronized void unloadFonts() {
+		this.hudFont.unload();
 	}
 }

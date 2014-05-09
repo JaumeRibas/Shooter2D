@@ -93,7 +93,6 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 
 	/**
 	 * Realiza las acciones que un zombie realiza en una actualización.
-	 * Camina y 
 	 * 
 	 * @param pSecondsElapsed el tiempo pasado entre la actualización anterior y esta.
 	 */
@@ -103,19 +102,15 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 		this.attackCooldown.updateTimer(pSecondsElapsed);
 		super.onManagedUpdate(pSecondsElapsed);
 	}
-	
 	/**
 	 * Realiza las acciones que el zombie realiza al colisionar con otra entidad.
 	 * 
 	 * @param otherBody a {@link Body}
 	 */
+
 	@Override
-	public void collidesWith(Body otherBody) {
-		Object userData = otherBody.getUserData();
-		// Si colisiona contra el objetivo, intenta comer cerebros
-		if (userData == super.getTarget()) {
-			this.attack();
-		}
+	public void beginsContactWith(Body otherBody) {
+		
 	}
 
 	/**
@@ -144,5 +139,19 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 		System.out.println("ZOMBIE MUERTO");
 		this.detachSelf();
 		this.setHealthpoints(getMaxHealthPoints());
+	}
+	
+	@Override
+	public void endsContactWith(Body otherBody) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void isContactingWith(Body otherBody) {
+		Object userData = otherBody.getUserData();
+		if (userData == super.getTarget()) {
+			this.attack();
+		}		
 	}
 }

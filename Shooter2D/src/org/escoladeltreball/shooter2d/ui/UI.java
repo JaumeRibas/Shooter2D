@@ -1,12 +1,11 @@
 package org.escoladeltreball.shooter2d.ui;
 
-import java.util.Observable;
-import java.util.Observer;
-
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.text.Text;
+import org.andengine.entity.text.TextOptions;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.escoladeltreball.shooter2d.MainActivity;
 import org.escoladeltreball.shooter2d.ResourceManager;
@@ -14,6 +13,10 @@ import org.escoladeltreball.shooter2d.commands.CommandFactory;
 import org.escoladeltreball.shooter2d.commands.interfaces.AnalogChangeCommand;
 import org.escoladeltreball.shooter2d.commands.interfaces.Command;
 import org.escoladeltreball.shooter2d.constants.HPConstants;
+import org.escoladeltreball.shooter2d.constants.NotificationConstants;
+import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
+
+import android.graphics.Color;
 
 /**
  * La clase UI continene variables y metodos relacionados con la interfaz de usuario.
@@ -23,12 +26,12 @@ import org.escoladeltreball.shooter2d.constants.HPConstants;
  * @author Elvis Puertas
  * @author Jaume Ribas
  */
-public class UI implements Observer {
+public class UI implements GameObserver {
 	
 	private static final float HEALTH_BAR_WIDTH = 200;
 	private static final float HEALTH_BAR_HEIGHT = 7;
-	private static final float HEALTH_BAR_ANGLE = 0;
-	private static final float HEALTH_BAR_X = MainActivity.CAMERA_WIDTH - HEALTH_BAR_WIDTH - 20;
+	private static final float HEALTH_BAR_ANGLE = 180;
+	private static final float HEALTH_BAR_X = MainActivity.CAMERA_WIDTH - 20;
 	private static final float HEALTH_BAR_Y = MainActivity.CAMERA_HEIGHT - 20;
 	
 	private static final float ANALOG_ALPHA = 0.5f;
@@ -43,6 +46,13 @@ public class UI implements Observer {
 	private static final float RIGHT_ANALOG_Y = 0;
 	private static final float RIGHT_ANALOG_OFFSET_CENTER_X = 1;
 	private static final float RIGHT_ANALOG_OFFSET_CENTER_Y = 0;
+	
+	private static final float AMMO_TEXT_X = MainActivity.CAMERA_WIDTH -20;
+	private static final float AMMO_TEXT_Y = MainActivity.CAMERA_HEIGHT - 40;
+	private static final CharSequence AMMO_TEXT_INITIAL_STRING = "PLACEHOLDER";
+	private static final int AMMO_TEXT_MAX_CHARACTER_COUNT = 1000;
+	private static final float AMMO_TEXT_OFFSET_CENTER_X = 1;
+	private static final float AMMO_TEXT_OFFSET_CENTER_Y = 1;
 
 	
 
@@ -55,6 +65,7 @@ public class UI implements Observer {
 	private AnalogOnScreenControl leftAnalogControl;
 	private AnalogOnScreenControl rightAnalogControl;
 	private HUDBar healthBar;
+	private Text ammoText;
 	
 	private UI(){}
 	
@@ -95,8 +106,15 @@ public class UI implements Observer {
 		this.leftAnalogControl.setChildScene(this.rightAnalogControl);
 		getHUD().setChildScene(this.leftAnalogControl);
 		// Barra vida
-		this.healthBar = new HUDBar(HEALTH_BAR_X, HEALTH_BAR_Y, HEALTH_BAR_WIDTH, HEALTH_BAR_HEIGHT, HPConstants.HUMAN_HEALTH, HPConstants.HUMAN_HEALTH, HEALTH_BAR_ANGLE, vertexBufferObjectManager);
+		this.healthBar = new HUDBar(HEALTH_BAR_X, HEALTH_BAR_Y, HEALTH_BAR_WIDTH, HEALTH_BAR_HEIGHT, HPConstants.HUMAN_HEALTH, HPConstants.HUMAN_HEALTH, 2f, Color.GRAY, Color.BLACK, vertexBufferObjectManager);
+		this.healthBar.setOffsetCenter(0, 0);
+		this.healthBar.setRotationCenter(0, 0);
+		this.healthBar.setRotation(HEALTH_BAR_ANGLE);
 		getHUD().attachChild(this.healthBar);
+		// contador balas
+		this.ammoText = new Text(AMMO_TEXT_X, AMMO_TEXT_Y, ResourceManager.getInstance().hudFont, String.valueOf(PlayerLoader.getPlayer().getHealthpoints()), AMMO_TEXT_MAX_CHARACTER_COUNT, vertexBufferObjectManager);
+		this.ammoText.setOffsetCenter(AMMO_TEXT_OFFSET_CENTER_X, AMMO_TEXT_OFFSET_CENTER_Y);
+		getHUD().attachChild(this.ammoText);
 	}
 
 
@@ -128,12 +146,6 @@ public class UI implements Observer {
 			controlBase.setOffsetCenter(offsetCenterX, offsetCenterY);
 		}
 		return analogControl;
-	}
-	
-	@Override
-	public void update(Observable observable, Object data) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	/**
@@ -214,5 +226,21 @@ public class UI implements Observer {
 	 */
 	public void setRightAnalogClickCommand() {
 		((ConfigurableAnalogControlListener)this.rightAnalogControl.getOnScreenControlListener()).getAnalogClickCommand();
+	}
+
+	
+	@Override
+	public void notify(Object notifier, Object data) {
+		if (data instanceof Short) {
+			short notification = ((Short)data).shortValue();
+			if(notifier == PlayerLoader.getPlayer()) {
+				switch (notification) {
+				case NotificationConstants.CHANGE_HEALTH:
+					this.healthBar.setValue(PlayerLoader.getPlayer().getHealthpoints());
+					this.ammoText.setText(String.valueOf(PlayerLoader.getPlayer().getHealthpoints()));
+					break;
+				}
+			}
+		}		
 	}
 }

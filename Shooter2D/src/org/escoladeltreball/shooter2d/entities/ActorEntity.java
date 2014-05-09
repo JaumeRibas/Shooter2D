@@ -2,6 +2,7 @@ package org.escoladeltreball.shooter2d.entities;
 
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.escoladeltreball.shooter2d.constants.NotificationConstants;
 
 /**
  * La clase abstracta ActorEntity es una {@link ColisionableEntity} que designa a personajes
@@ -30,6 +31,7 @@ public abstract class ActorEntity extends ColisionableEntity {
 	 */
 	public void hurt(int strengh){
 		this.setHealthpoints(this.getHealthpoints() - strengh);
+		this.notify(NotificationConstants.CHANGE_HEALTH);
 	}
 	
 	// GETTERS AND SETTERS

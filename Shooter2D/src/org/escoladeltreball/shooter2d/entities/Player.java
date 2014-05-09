@@ -77,7 +77,19 @@ public class Player extends ActorEntity {
 	 * @param otherBody un body de otra entidad.
 	 */
 	@Override
-	public void collidesWith(Body otherBody) {
+	public void beginsContactWith(Body otherBody) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void endsContactWith(Body otherBody) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void isContactingWith(Body otherBody) {
 		// TODO Auto-generated method stub
 		
 	}

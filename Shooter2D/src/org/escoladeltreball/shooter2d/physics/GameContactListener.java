@@ -17,21 +17,29 @@ public class GameContactListener implements ContactListener {
 		Body bodyA = contact.getFixtureA().getBody();
 		Body bodyB = contact.getFixtureB().getBody();
 		if (bodyA.getUserData() instanceof ColisionableEntity) 
-			((ColisionableEntity)bodyA.getUserData()).collidesWith(bodyB);
+			((ColisionableEntity)bodyA.getUserData()).beginsContactWith(bodyB);
 		if (bodyB.getUserData() instanceof ColisionableEntity) 
-			((ColisionableEntity)bodyB.getUserData()).collidesWith(bodyA);
+			((ColisionableEntity)bodyB.getUserData()).beginsContactWith(bodyA);
 	}
 
 	@Override
 	public void endContact(Contact contact) {
-		// TODO Auto-generated method stub
-
+		Body bodyA = contact.getFixtureA().getBody();
+		Body bodyB = contact.getFixtureB().getBody();
+		if (bodyA.getUserData() instanceof ColisionableEntity) 
+			((ColisionableEntity)bodyA.getUserData()).endsContactWith(bodyB);
+		if (bodyB.getUserData() instanceof ColisionableEntity) 
+			((ColisionableEntity)bodyB.getUserData()).endsContactWith(bodyA);
 	}
 
 	@Override
 	public void preSolve(Contact contact, Manifold oldManifold) {
-		// TODO Auto-generated method stub
-
+		Body bodyA = contact.getFixtureA().getBody();
+		Body bodyB = contact.getFixtureB().getBody();
+		if (bodyA.getUserData() instanceof ColisionableEntity) 
+			((ColisionableEntity)bodyA.getUserData()).isContactingWith(bodyB);
+		if (bodyB.getUserData() instanceof ColisionableEntity) 
+			((ColisionableEntity)bodyB.getUserData()).isContactingWith(bodyA);
 	}
 
 	@Override

@@ -2,11 +2,9 @@ package org.escoladeltreball.shooter2d.entities;
 
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
-import org.escoladeltreball.shooter2d.entities.interfaces.Walking;
 import org.escoladeltreball.shooter2d.physics.BodyFactory;
 import org.escoladeltreball.shooter2d.weapons.Cooldown;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 /**
@@ -96,9 +94,8 @@ public class Bullet extends ColisionableEntity {
 	 * 
 	 * @param otherBody a {@link Body}.
 	 */
-	@Override
-	public void collidesWith(Body otherBody) {
-		// Contra una bala simplemente sale de escena.
+	public void beginsContactWith(Body otherBody) {
+
 		if (otherBody.getUserData().equals(BodyFactory.WALL_USER_DATA)) {
 			this.detachSelf();
 		// Contra un ActorEntity hace daño a esa ActorEntity y sale de escena.
@@ -123,5 +120,17 @@ public class Bullet extends ColisionableEntity {
 
 	public void setShootAngle(float shootAngle) {
 		this.shootAngle = shootAngle;
+	}
+
+	@Override
+	public void endsContactWith(Body otherBody) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void isContactingWith(Body otherBody) {
+		// TODO Auto-generated method stub
+		
 	}
 }

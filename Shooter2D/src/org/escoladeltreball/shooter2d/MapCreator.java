@@ -61,10 +61,7 @@ public class MapCreator {
 				for(final TMXObject object : group.getTMXObjects()) {
 					Rectangle rect = new Rectangle(object.getX(), map.getHeight()-object.getHeight()-object.getY(), object.getWidth()+32, object.getHeight()+32, vbo);
 					rect.setOffsetCenter(0, 0);
-					rect.setVisible(true);
-					rect.setColor(Color.RED);
-					scene.attachChild(rect);
-					BodyFactory.createRectangleWallBody(object.getX(), map.getHeight()-object.getY(), object.getWidth()+32, object.getHeight());
+					BodyFactory.createRectangleWallBody(rect);
 				}
 			}
 		}
