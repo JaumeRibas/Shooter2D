@@ -224,6 +224,6 @@ public class MainActivity extends BaseGameActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		loadGame();
+		//loadGame();
 	}
 }
