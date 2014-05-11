@@ -86,7 +86,7 @@ public class MainActivity extends BaseGameActivity {
 		ResourceManager.getInstance().loadGameTextures(mEngine, this);
 		ResourceManager.getInstance().loadMusic(mEngine, this);
 		ResourceManager.getInstance().musicIntro.play();
-		ResourceManager.getInstance().loadFonts(mEngine);
+		ResourceManager.getInstance().loadFonts(mEngine, this);
 		pOnCreateResourcesCallback.onCreateResourcesFinished();
 	}
 

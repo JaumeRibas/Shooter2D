@@ -10,6 +10,7 @@ import org.andengine.engine.Engine;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.TextureManager;
+import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.atlas.bitmap.BuildableBitmapTextureAtlas;
@@ -48,8 +49,8 @@ public class ResourceManager {
 	private static final Typeface HUD_FONT_TYPEFACE_FAMILY_NAME = Typeface.DEFAULT;
 
 	private static final int HUD_FONT_COLOR = Color.WHITE;
-
 	private static final float HUD_FONT_SIZE = 32f;
+	private static final String HUD_FONT = "Oswald-Stencbab.ttf";
 
 	/** la instancia unica de ResourceManager */
 	public static ResourceManager instance;
@@ -159,9 +160,10 @@ public class ResourceManager {
 		}
 	}
 	
-	public synchronized void loadFonts(Engine engine) {
+	public synchronized void loadFonts(Engine engine, Context context) {
 		//hud
-		this.hudFont = FontFactory.create(engine.getFontManager(), engine.getTextureManager(), HUD_FONT_TEXTURE_WIDTH, HUD_FONT_TEXTURE_HEIGHT, Typeface.create(HUD_FONT_TYPEFACE_FAMILY_NAME, HUD_FONT_TYPEFACE_STYLE), HUD_FONT_SIZE, true, HUD_FONT_COLOR);
+		//this.hudFont = FontFactory.create(engine.getFontManager(), engine.getTextureManager(), HUD_FONT_TEXTURE_WIDTH, HUD_FONT_TEXTURE_HEIGHT, Typeface.create(HUD_FONT_TYPEFACE_FAMILY_NAME, HUD_FONT_TYPEFACE_STYLE), HUD_FONT_SIZE, true, HUD_FONT_COLOR);
+		this.hudFont = FontFactory.createFromAsset(engine.getFontManager(), engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR, context.getAssets(), "font/" + HUD_FONT, HUD_FONT_SIZE, true, HUD_FONT_COLOR);
 		this.hudFont.load();
 		this.hudFont.prepareLetters("1234567890".toCharArray());
 	}
