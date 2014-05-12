@@ -39,8 +39,8 @@
    <tile gid="4"/>
    <tile gid="4"/>
    <tile gid="4"/>
-   <tile gid="4"/>
-   <tile gid="4"/>
+   <tile gid="170"/>
+   <tile gid="170"/>
    <tile gid="4"/>
    <tile gid="4"/>
    <tile gid="4"/>
@@ -55,8 +55,8 @@
    <tile gid="4"/>
    <tile gid="4"/>
    <tile gid="4"/>
-   <tile gid="4"/>
-   <tile gid="4"/>
+   <tile gid="170"/>
+   <tile gid="170"/>
    <tile gid="4"/>
    <tile gid="4"/>
    <tile gid="4"/>
@@ -278,5 +278,12 @@
   <object x="993" y="34" height="984"/>
   <object x="1" y="1022" width="993" height="12"/>
   <object x="1103" y="538" width="3"/>
+ </objectgroup>
+ <objectgroup name="respawn" width="16" height="16">
+  <properties>
+   <property name="numberZombies" value="3"/>
+   <property name="respawn" value="true"/>
+  </properties>
+  <object x="130" y="160" width="92" height="96"/>
  </objectgroup>
 </map>
