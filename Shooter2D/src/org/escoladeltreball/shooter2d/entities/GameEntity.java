@@ -17,10 +17,18 @@ import org.escoladeltreball.shooter2d.ui.GameObserver;
 
 public abstract class GameEntity extends AnimatedSprite {
 	
-	private GameObserver observer;
+	private GameObserver[] observers = new GameObserver[2];
 
-	public void setGameObserver(GameObserver observer) {
-		this.observer = observer;
+	public boolean addGameObserver(GameObserver observer) {
+		int i = 0;
+		while (i < observers.length && observers[i] != null) {
+			i++;
+		}
+		if (i < observers.length) {
+			observers[i] = observer;
+			return true;
+		}
+		return false;
 	}
 	
 	/**
@@ -29,8 +37,10 @@ public abstract class GameEntity extends AnimatedSprite {
 	 * @param data
 	 */
 	public void notify(Object data) {
-		if (this.observer != null) {
-			this.observer.notify(this, data);
+		int i = 0;
+		while (i < this.observers.length && this.observers[i] != null) {
+			this.observers[i].notify(this, data);
+			i++;
 		}
 	}
 	
