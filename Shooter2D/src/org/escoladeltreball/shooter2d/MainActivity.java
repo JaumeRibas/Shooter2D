@@ -15,6 +15,7 @@ import org.andengine.entity.scene.background.Background;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.input.touch.controller.MultiTouch;
 import org.andengine.ui.activity.BaseGameActivity;
+import org.escoladeltreball.shooter2d.constants.NotificationConstants;
 import org.escoladeltreball.shooter2d.entities.Bullet;
 import org.escoladeltreball.shooter2d.entities.Player;
 import org.escoladeltreball.shooter2d.entities.Zombie;
@@ -22,6 +23,7 @@ import org.escoladeltreball.shooter2d.entities.loader.BulletLoader;
 import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
 import org.escoladeltreball.shooter2d.entities.loader.ZombieLoader;
 import org.escoladeltreball.shooter2d.physics.GameContactListener;
+import org.escoladeltreball.shooter2d.ui.GameObserver;
 import org.escoladeltreball.shooter2d.ui.UI;
 
 import android.content.Context;
@@ -33,7 +35,7 @@ import android.widget.Toast;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
-public class MainActivity extends BaseGameActivity {
+public class MainActivity extends BaseGameActivity implements GameObserver {
 	private BoundCamera camera;
 	private MapCreator mapCreator;
 	public static final int CAMERA_WIDTH = 720;
@@ -86,7 +88,7 @@ public class MainActivity extends BaseGameActivity {
 		ResourceManager.getInstance().loadGameTextures(mEngine, this);
 		ResourceManager.getInstance().loadMusic(mEngine, this);
 		ResourceManager.getInstance().musicIntro.play();
-		ResourceManager.getInstance().loadFonts(mEngine);
+		ResourceManager.getInstance().loadFonts(mEngine, this);
 		pOnCreateResourcesCallback.onCreateResourcesFinished();
 	}
 
@@ -115,6 +117,7 @@ public class MainActivity extends BaseGameActivity {
 		this.player = PlayerLoader.loadPlayer(CAMERA_WIDTH / 2,
 				CAMERA_HEIGHT / 2, getVertexBufferObjectManager(), scene,
 				playerbullet);
+		this.player.addGameObserver(this);
 		// Muestra el mapa en la pantalla
 		scene = this.mapCreator.loadMap(getAssets(), getTextureManager(),
 				getVertexBufferObjectManager(), scene, this.camera);
@@ -135,7 +138,7 @@ public class MainActivity extends BaseGameActivity {
 		// Añade la UI
 		UI.getInstance().createUI(this.getVertexBufferObjectManager());
 		// Se pone a la UI como observador del player 
-		this.player.setGameObserver(UI.getInstance());
+		this.player.addGameObserver(UI.getInstance());
 
 		pOnPopulateSceneCallback.onPopulateSceneFinished();
 	}
@@ -227,5 +230,21 @@ public class MainActivity extends BaseGameActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//loadGame();
+	}
+
+	@Override
+	public void notify(Object notifier, Object data) {
+		if (data instanceof Short) {
+			short notification = ((Short)data).shortValue();
+			if(notifier == PlayerLoader.getPlayer()) {
+				switch (notification) {
+				case NotificationConstants.CHANGE_HEALTH:
+					if (this.player.getHealthpoints() <= 0)  {
+						//cuando muere el player
+					}
+					break;
+				}
+			}
+		}
 	}
 }
