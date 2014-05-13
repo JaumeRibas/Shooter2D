@@ -3,7 +3,6 @@ package org.escoladeltreball.shooter2d.entities;
 import org.andengine.engine.Engine;
 import org.andengine.entity.scene.Scene;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
-import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.escoladeltreball.shooter2d.constants.HPConstants;
 import org.escoladeltreball.shooter2d.physics.BodyFactory;
 import org.escoladeltreball.shooter2d.weapons.Gun;
@@ -39,7 +38,6 @@ public class Player extends ActorEntity {
 		super(pX, pY, pTiledTextureRegion, engine);
 		Body body = BodyFactory.createHumanBody(pX, pY);
 		this.setBody(body);
-		this.setGun(new Gun(2000, scene, this, engine));
 		this.setMaxHealthPoints(HPConstants.HUMAN_HEALTH);
 		this.setHealthpoints(HPConstants.HUMAN_HEALTH);
 	}
@@ -85,5 +83,6 @@ public class Player extends ActorEntity {
 
 	public void setGun(Gun gun) {
 		this.gun = gun;
+		this.gun.setShooter(this);
 	}
 }

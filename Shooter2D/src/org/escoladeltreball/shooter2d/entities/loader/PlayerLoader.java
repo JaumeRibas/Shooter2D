@@ -35,9 +35,7 @@ public class PlayerLoader {
 		if (player == null) {
 			TiledTextureRegion pTiledTextureRegion;
 			pTiledTextureRegion = ResourceManager.getInstance().playerTextureRegion;
-
-			player = new Player(x, y, pTiledTextureRegion,
-					engine, scene);
+			player = new Player(x, y, pTiledTextureRegion, engine, scene);
 		}
 		return player;
 

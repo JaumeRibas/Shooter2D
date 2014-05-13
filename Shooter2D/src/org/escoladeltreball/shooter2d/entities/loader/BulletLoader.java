@@ -21,7 +21,7 @@ import android.content.res.AssetManager;
 public class BulletLoader {
 	
 	/** El angulo de la sprite de la bala en radianes */
-	public static final float BULLET_SPRITE_ANGLE = -(float) (Math.PI / 2f);
+	public static final float BULLET_SPRITE_ANGLE = 0;//-(float) (Math.PI / 2f);
 
 	/**
 	 * Crea una nueva bala.
@@ -35,13 +35,10 @@ public class BulletLoader {
 	 * @return a {@link Player}
 	 */	
 	public static Bullet loadBullet(float x, float y, float angle, int strengh,	Engine engine) {
-		
-			Bullet bullet = null;
-		
-			TiledTextureRegion pTiledTextureRegion;
-			pTiledTextureRegion = ResourceManager.getInstance().bulletTextureRegion;
-
-			bullet = new Bullet(x, y, pTiledTextureRegion, engine, angle + BULLET_SPRITE_ANGLE, strengh);
+		Bullet bullet = null;
+		TiledTextureRegion pTiledTextureRegion;
+		pTiledTextureRegion = ResourceManager.getInstance().bulletTextureRegion;
+		bullet = new Bullet(x, y, pTiledTextureRegion, engine, angle + BULLET_SPRITE_ANGLE, strengh);
 		return bullet;
 	}
 }

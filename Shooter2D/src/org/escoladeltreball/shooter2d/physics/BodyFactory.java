@@ -2,7 +2,7 @@ package org.escoladeltreball.shooter2d.physics;
 
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
-import org.escoladeltreball.shooter2d.MainActivity;
+import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.escoladeltreball.shooter2d.entities.ColisionableEntity;
 import org.escoladeltreball.shooter2d.entities.Player;
 import org.escoladeltreball.shooter2d.entities.Zombie;
@@ -26,6 +26,7 @@ public class BodyFactory {
 	private static final float BULLET_BODY_RADIUS = 2;
 
 	public static final String WALL_USER_DATA = "wall";
+	private static PhysicsWorld physicsWorld;
 	
 	/**
 	 * Crea un {@link Body} para el {@link Player},
@@ -37,7 +38,7 @@ public class BodyFactory {
 	 * @return un {@link Body}
 	 */
 	public static Body createHumanBody(float positionX, float positionY) {
-		Body humanBody = PhysicsFactory.createCircleBody(MainActivity.mPhysicsWorld, positionX, positionY, HUMAN_BODY_RADIUS, BodyType.DynamicBody, FixtureFactory.getFleshFixture());
+		Body humanBody = PhysicsFactory.createCircleBody(physicsWorld, positionX, positionY, HUMAN_BODY_RADIUS, BodyType.DynamicBody, FixtureFactory.getFleshFixture());
 		humanBody.setLinearDamping(HUMAN_BODY_LINEAR_DAMPING);
 		return humanBody;
 	}
@@ -50,7 +51,7 @@ public class BodyFactory {
 	 * @return el {@link Body}
 	 */
 	public static Body createBulletBody(float positionX, float positionY) {
-		Body bulletBody = PhysicsFactory.createCircleBody(MainActivity.mPhysicsWorld, positionX, positionY, BULLET_BODY_RADIUS, BodyType.DynamicBody, FixtureFactory.getFleshFixture());
+		Body bulletBody = PhysicsFactory.createCircleBody(physicsWorld, positionX, positionY, BULLET_BODY_RADIUS, BodyType.DynamicBody, FixtureFactory.getFleshFixture());
 		return bulletBody;
 	}
 	
@@ -66,7 +67,7 @@ public class BodyFactory {
 	 * @return el {@link Body}
 	 */
 	public static Body createRectangleWallBody(float positionX, float positionY, float width, float height) {
-		Body wall = PhysicsFactory.createBoxBody(MainActivity.mPhysicsWorld, positionX, positionY, width, height, BodyType.StaticBody, FixtureFactory.getWallFixture());
+		Body wall = PhysicsFactory.createBoxBody(physicsWorld, positionX, positionY, width, height, BodyType.StaticBody, FixtureFactory.getWallFixture());
 		wall.setUserData(WALL_USER_DATA);
 		return wall;
 	}
@@ -79,8 +80,16 @@ public class BodyFactory {
 	 * @return el {@link Body}
 	 */
 	public static Body createRectangleWallBody(Rectangle rectangle) {
-		Body wall = PhysicsFactory.createBoxBody(MainActivity.mPhysicsWorld, rectangle, BodyType.StaticBody, FixtureFactory.getWallFixture());
+		Body wall = PhysicsFactory.createBoxBody(physicsWorld, rectangle, BodyType.StaticBody, FixtureFactory.getWallFixture());
 		wall.setUserData(WALL_USER_DATA);
 		return wall;
+	}
+
+	public static PhysicsWorld getPhysicsWorld() {
+		return physicsWorld;
+	}
+
+	public static void setPhysicsWorld(PhysicsWorld physicsWorld) {
+		BodyFactory.physicsWorld = physicsWorld;
 	}
 }

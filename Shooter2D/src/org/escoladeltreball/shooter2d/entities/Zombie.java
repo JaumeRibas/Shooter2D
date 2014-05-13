@@ -40,9 +40,9 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 	 * @Param target un {@link GameEntity} para targetear.
 	 */
 	public Zombie(float pX, float pY, ITiledTextureRegion pTiledTextureRegion,
-			Engine engine, Player player) {
+			Engine engine, ActorEntity actorEntity) {
 		super(pX, pY, pTiledTextureRegion, engine);
-		super.setTarget(player);
+		super.setTarget(actorEntity);
 		this.attackCooldown = new Cooldown(ZOMBIE_ATTACK_TIMER);
 		Body body = BodyFactory.createHumanBody(pX, pY);
 		this.setBody(body);

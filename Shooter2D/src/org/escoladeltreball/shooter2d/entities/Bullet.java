@@ -17,10 +17,12 @@ import com.badlogic.gdx.physics.box2d.Body;
  */
 public class Bullet extends ColisionableEntity {
 
+	/** El tiempo de vida de la bala en segundos */
+	private static final int BULLET_LIFE_TIME = 2;
 	private float speed = 0.2f;
 	private int strengh = 1;
 
-	private Cooldown bulletTime = new Cooldown(2);
+	private Cooldown bulletTime;
 
 	private boolean attached = true;
 
@@ -50,6 +52,7 @@ public class Bullet extends ColisionableEntity {
 		this.setBody(body);
 		this.setScale(1.0f);
 		this.animate(100);
+		this.bulletTime = new Cooldown(BULLET_LIFE_TIME);
 	}
 
 	/**
