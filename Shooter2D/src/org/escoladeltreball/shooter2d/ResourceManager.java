@@ -27,7 +27,6 @@ import org.escoladeltreball.shooter2d.constants.SpriteConstants;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Color;
-import android.graphics.Typeface;
 
 /**
  * La clase ResourceManager contiene los recursos del juego
@@ -39,14 +38,6 @@ import android.graphics.Typeface;
  * @author Jaume Ribas
  */
 public class ResourceManager {
-
-	private static final int HUD_FONT_TEXTURE_HEIGHT = 256;
-
-	private static final int HUD_FONT_TEXTURE_WIDTH = 256;
-
-	private static final int HUD_FONT_TYPEFACE_STYLE = Typeface.NORMAL;
-
-	private static final Typeface HUD_FONT_TYPEFACE_FAMILY_NAME = Typeface.DEFAULT;
 
 	private static final int HUD_FONT_COLOR = Color.WHITE;
 	private static final float HUD_FONT_SIZE = 32f;

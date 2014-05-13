@@ -24,7 +24,6 @@ public class BodyFactory {
 	private static final float HUMAN_BODY_LINEAR_DAMPING = 1f;
 	
 	private static final float BULLET_BODY_RADIUS = 2;
-	private static final float BULLET_BODY_LINEAR_DAMPING = 1f;
 
 	public static final String WALL_USER_DATA = "wall";
 	
@@ -52,7 +51,6 @@ public class BodyFactory {
 	 */
 	public static Body createBulletBody(float positionX, float positionY) {
 		Body bulletBody = PhysicsFactory.createCircleBody(MainActivity.mPhysicsWorld, positionX, positionY, BULLET_BODY_RADIUS, BodyType.DynamicBody, FixtureFactory.getFleshFixture());
-		bulletBody.setLinearDamping(BULLET_BODY_LINEAR_DAMPING);
 		return bulletBody;
 	}
 	

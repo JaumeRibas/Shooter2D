@@ -3,10 +3,8 @@ package org.escoladeltreball.shooter2d.ui;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
-import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
-import org.andengine.entity.text.TextOptions;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.escoladeltreball.shooter2d.MainActivity;
 import org.escoladeltreball.shooter2d.ResourceManager;
@@ -140,12 +138,12 @@ public class UI implements GameObserver {
 	 */
 	private AnalogOnScreenControl createAnalogControl(Camera camera, float x, float y, float offsetCenterX, float offsetCenterY, AnalogChangeCommand analogChangeCommand, Command analogClickCommand, VertexBufferObjectManager vertexBufferObjectManager) {
 		
-		ConfigurableAnalogControlListener leftAnalogListener = new ConfigurableAnalogControlListener();
-		leftAnalogListener.setAnalogChangeCommand(analogChangeCommand == null? CommandFactory.getDoNothingAnalogCommand(): analogChangeCommand);
-		leftAnalogListener.setAnalogClickCommand(analogClickCommand == null? CommandFactory.getDoNothingCommand() : analogClickCommand);
+		ConfigurableAnalogControlListener analogListener = new ConfigurableAnalogControlListener();
+		analogListener.setAnalogChangeCommand(analogChangeCommand == null? CommandFactory.getDoNothingAnalogCommand(): analogChangeCommand);
+		analogListener.setAnalogClickCommand(analogClickCommand == null? CommandFactory.getDoNothingCommand() : analogClickCommand);
 		
 		
-		AnalogOnScreenControl analogControl = new AnalogOnScreenControl(x, y, camera, ResourceManager.getInstance().analogControlBaseTextureRegion, ResourceManager.getInstance().analogControlKnobTextureRegion, ANALOG_TIME_BETWEEN_UPDATES, vertexBufferObjectManager, leftAnalogListener);
+		AnalogOnScreenControl analogControl = new AnalogOnScreenControl(x, y, camera, ResourceManager.getInstance().analogControlBaseTextureRegion, ResourceManager.getInstance().analogControlKnobTextureRegion, ANALOG_TIME_BETWEEN_UPDATES, vertexBufferObjectManager, analogListener);
 
 		{
 			final Sprite controlBase = analogControl.getControlBase();

@@ -1,5 +1,6 @@
 package org.escoladeltreball.shooter2d.entities.loader;
 
+import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
 import org.andengine.opengl.texture.TextureManager;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
@@ -32,9 +33,7 @@ public class ZombieLoader {
 	 * @param player a {@link Player} a perseguir
 	 * @return a {@link Zombie}
 	 */
-	public static Zombie loadZombie(Camera camera, int x, int y, TextureManager textureManger,
-			AssetManager assets,
-			VertexBufferObjectManager vertexBufferObjectManager, Player player) {
+	public static Zombie loadZombie(Camera camera, int x, int y, Engine engine, Player player) {
 		
 		Zombie zombie = null;
 	
@@ -43,7 +42,7 @@ public class ZombieLoader {
 
 		zombie = new Zombie(x,
 				y, pTiledTextureRegion,
-				vertexBufferObjectManager, player);
+				engine, player);
 		return zombie;
 	}
 }

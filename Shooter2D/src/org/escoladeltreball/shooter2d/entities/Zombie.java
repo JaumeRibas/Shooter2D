@@ -1,5 +1,6 @@
 package org.escoladeltreball.shooter2d.entities;
 
+import org.andengine.engine.Engine;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.adt.color.Color;
@@ -39,8 +40,8 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 	 * @Param target un {@link GameEntity} para targetear.
 	 */
 	public Zombie(float pX, float pY, ITiledTextureRegion pTiledTextureRegion,
-			VertexBufferObjectManager pVertexBufferObjectManager, Player player) {
-		super(pX, pY, pTiledTextureRegion, pVertexBufferObjectManager);
+			Engine engine, Player player) {
+		super(pX, pY, pTiledTextureRegion, engine);
 		super.setTarget(player);
 		this.attackCooldown = new Cooldown(ZOMBIE_ATTACK_TIMER);
 		Body body = BodyFactory.createHumanBody(pX, pY);
@@ -99,7 +100,6 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 	@Override
 	protected void onManagedUpdate(float pSecondsElapsed) {
 		this.walk();
-		this.attackCooldown.updateTimer(pSecondsElapsed);
 		super.onManagedUpdate(pSecondsElapsed);
 	}
 	/**
@@ -137,7 +137,7 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 	 */
 	public void die() {
 		System.out.println("ZOMBIE MUERTO");
-		this.detachSelf();
+		this.remove();
 		this.setHealthpoints(getMaxHealthPoints());
 	}
 	
