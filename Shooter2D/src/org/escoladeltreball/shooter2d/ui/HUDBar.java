@@ -3,6 +3,7 @@ package org.escoladeltreball.shooter2d.ui;
 import org.andengine.entity.Entity;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.andengine.util.adt.color.Color;
 
 public class HUDBar extends Entity {
 	
@@ -68,6 +69,25 @@ public class HUDBar extends Entity {
 		this.value = currentValue;
 		this.updateWidth();
 	}
+	/**
+	 * Cambia el color de la barra en relación al porcentaje de vida que le queda al personaje.
+	 */
+	public void changeBarColor(){
+		float percent = this.value / this.maxValue;
+		System.out.println("Life percent:" + percent);
+		if(percent >= 0.5){
+			// Verde, sano
+			this.valueRectangle.setColor(Color.GREEN);
+			
+		} else if(percent < 0.5 && percent >= 0.2){
+			// Amarillo, levemente herido
+			this.valueRectangle.setColor(Color.YELLOW);
+			
+		} else if(percent < 0.2){
+			// Naranja, gravemente herido
+			this.valueRectangle.setColor(Color.RED);
+		}
+	}
 
 	public float getMaxValue() {
 		return maxValue;
@@ -79,5 +99,6 @@ public class HUDBar extends Entity {
 	
 	private void updateWidth() {
 		this.valueRectangle.setWidth(this.valueToPixelRatio * this.getValue());
+		this.changeBarColor();
 	}
 }
