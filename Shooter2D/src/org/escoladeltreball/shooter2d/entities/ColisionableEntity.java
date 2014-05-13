@@ -62,5 +62,18 @@ public abstract class ColisionableEntity extends GameEntity {
 	 */
 	public abstract void isContactingWith(Body otherBody);
 	
+	
+	/**
+	 * Se borra a si mismo, incluyendo el Body.
+	 * No llamar desde metodos de colision.
+	 * http://www.iforce2d.net/b2dtut/removing-bodies
+	 */
+	public void removeSelf() {
+		this.detachSelf();
+		this.clearUpdateHandlers();
+		MainActivity.mPhysicsWorld.unregisterPhysicsConnector(
+				MainActivity.mPhysicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(this));
+		MainActivity.mPhysicsWorld.destroyBody(this.getBody());
+	}
 
 }
