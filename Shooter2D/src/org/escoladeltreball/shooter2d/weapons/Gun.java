@@ -3,6 +3,7 @@ package org.escoladeltreball.shooter2d.weapons;
 import org.andengine.engine.Engine;
 import org.andengine.entity.scene.Scene;
 import org.andengine.extension.physics.box2d.util.Vector2Pool;
+import org.escoladeltreball.shooter2d.MainActivity;
 import org.escoladeltreball.shooter2d.entities.ActorEntity;
 import org.escoladeltreball.shooter2d.entities.Bullet;
 import org.escoladeltreball.shooter2d.entities.loader.BulletLoader;
@@ -23,7 +24,7 @@ public class Gun {
 	/** La diferencia en x de la posicion inicial de la bala en relacion al shooter (en coordenadas locales del shooter) */
 	private static final float BULLET_OFFSET_X = 0;
 	/** La diferencia en y de la posicion inicial de la bala en relacion al shooter (en coordenadas locales del shooter) */
-	private static final float BULLET_OFFSET_Y = 5;
+	private static final float BULLET_OFFSET_Y = 1;
 	private static final float GUN_COOLDOWN_TIME = 1;
 	private Cooldown gunCooldown;
 	private Scene scene;
@@ -45,11 +46,11 @@ public class Gun {
 	 */
 	public synchronized void shoot(){
 		if (this.gunCooldown.cooldownReady()) {
-			Vector2 bulletPosition = shooter.getBody().getWorldPoint(Vector2Pool.obtain(BULLET_OFFSET_X, BULLET_OFFSET_Y));
+			Vector2 bulletPosition = shooter.getBody().getWorldPoint(Vector2Pool.obtain(0, 0));
+			System.out.println("local spot 0, 0 is at global spot " + bulletPosition.x + ", " + bulletPosition.y);
 			float bulletAngle = shooter.getBody().getAngle();
-//			Bullet newBullet = BulletLoader.loadBullet(bulletPosition.x, bulletPosition.y, bulletAngle, 3, engine);
-//			scene.attachChild(newBullet);
-			scene.attachChild(ZombieLoader.loadZombie(bulletPosition.x, bulletPosition.y, engine, this.getShooter()));
+			Bullet newBullet = BulletLoader.loadBullet(bulletPosition.x, bulletPosition.y, bulletAngle, 3, engine);
+			scene.attachChild(newBullet);
 			System.out.println("######################\nSHOOTING\n######################");
 		}
 	}

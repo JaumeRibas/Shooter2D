@@ -16,17 +16,14 @@ import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.input.touch.controller.MultiTouch;
 import org.andengine.ui.activity.BaseGameActivity;
 import org.escoladeltreball.shooter2d.constants.NotificationConstants;
-import org.escoladeltreball.shooter2d.entities.Bullet;
 import org.escoladeltreball.shooter2d.entities.Player;
 import org.escoladeltreball.shooter2d.entities.Zombie;
-import org.escoladeltreball.shooter2d.entities.loader.BulletLoader;
 import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
 import org.escoladeltreball.shooter2d.entities.loader.ZombieLoader;
 import org.escoladeltreball.shooter2d.physics.BodyFactory;
 import org.escoladeltreball.shooter2d.physics.GameContactListener;
 import org.escoladeltreball.shooter2d.ui.GameObserver;
 import org.escoladeltreball.shooter2d.ui.UI;
-import org.escoladeltreball.shooter2d.weapons.Gun;
 import org.escoladeltreball.shooter2d.weapons.WeaponFactory;
 
 import android.content.Context;
