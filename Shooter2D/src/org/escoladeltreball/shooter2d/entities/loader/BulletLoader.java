@@ -21,7 +21,7 @@ import android.content.res.AssetManager;
 public class BulletLoader {
 	
 	/** El angulo de la sprite de la bala en radianes */
-	public static final float BULLET_SPRITE_ANGLE = 0;//-(float) (Math.PI / 2f);
+	public static final float BULLET_SPRITE_ANGLE = (float) (Math.PI / 2f);
 
 	/**
 	 * Crea una nueva bala.

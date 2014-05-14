@@ -5,9 +5,17 @@ public class Cooldown {
 	private long cooldownNanoseconds;
 	private long nextReadyMoment;
 	
-	public Cooldown(float cooldownSeconds) {
+	public Cooldown(float cooldownSeconds, boolean ready) {
 		this.cooldownNanoseconds = (long) (cooldownSeconds * 1000000000);
-		restart();
+		if (ready) {
+			this.nextReadyMoment = System.nanoTime();
+		} else {
+			restart();
+		}
+	}
+	
+	public Cooldown(float cooldownSeconds) {
+		this(cooldownSeconds, false);
 	}
 	
 	public synchronized boolean cooldownReady(){
