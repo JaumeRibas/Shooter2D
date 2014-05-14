@@ -66,8 +66,8 @@ public class Player extends ActorEntity {
 	@Override
 	public void hurt(int strengh){
 		super.hurt(strengh);
-		// TODO Efectos de sonido del zombie herido
-		// TODO Animación y particulas de zombie herido
+		// TODO Efectos de sonido del player herido
+		// TODO Animación y particulas de player herido
 		System.out.println("PLAYER HEALTH: " + getHealthpoints() + "/" + getMaxHealthPoints());
 	}
 	
@@ -100,6 +100,10 @@ public class Player extends ActorEntity {
 
 	public void setGun(Gun gun) {
 		this.gun = gun;
+	}
+	
+	public boolean isAlive(){
+		return this.getHealthpoints() > 0;
 	}
 	
 	/**

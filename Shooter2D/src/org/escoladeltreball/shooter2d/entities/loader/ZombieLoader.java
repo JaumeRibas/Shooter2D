@@ -32,7 +32,7 @@ public class ZombieLoader {
 	 * @param player a {@link Player} a perseguir
 	 * @return a {@link Zombie}
 	 */
-	public static Zombie loadZombie(Camera camera, int x, int y, TextureManager textureManger,
+	public static Zombie loadZombie(int x, int y, TextureManager textureManger,
 			AssetManager assets,
 			VertexBufferObjectManager vertexBufferObjectManager, Player player) {
 		

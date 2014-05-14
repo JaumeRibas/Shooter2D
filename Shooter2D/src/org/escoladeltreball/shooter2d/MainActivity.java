@@ -110,30 +110,30 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 		this.scene.registerUpdateHandler(mPhysicsWorld);
 		mPhysicsWorld.setContactListener(GameContactListener.getInstance());
 
-		Bullet playerbullet = BulletLoader.loadBullet(camera, CAMERA_WIDTH / 2,
-				CAMERA_HEIGHT / 2, this.getTextureManager(), this.getAssets(),
-				this.getVertexBufferObjectManager(), 0, 3);
-
+//		Bullet playerbullet = BulletLoader.loadBullet(camera, CAMERA_WIDTH / 2,
+//				CAMERA_HEIGHT / 2, this.getTextureManager(), this.getAssets(),
+//				this.getVertexBufferObjectManager(), 0, 3);
+		Bullet playerbullet = null;
 		this.player = PlayerLoader.loadPlayer(CAMERA_WIDTH / 2,
 				CAMERA_HEIGHT / 2, getVertexBufferObjectManager(), scene,
 				playerbullet);
 		this.player.addGameObserver(this);
 		// Muestra el mapa en la pantalla
 		scene = this.mapCreator.loadMap(getAssets(), getTextureManager(),
-				getVertexBufferObjectManager(), scene, this.camera);
+				getVertexBufferObjectManager(), scene, this.camera, player);
 		// La camara sigue al jugador
 		this.camera.setChaseEntity(player);
 		scene.attachChild(player);
-
-		this.zombies.add(ZombieLoader.loadZombie(camera, 50, 100,
-				this.getTextureManager(), this.getAssets(),
-				this.getVertexBufferObjectManager(), player));
-		this.zombies.add(ZombieLoader.loadZombie(camera, 50, 300,
-				this.getTextureManager(), this.getAssets(),
-				this.getVertexBufferObjectManager(), player));
-		for (Zombie zombie : this.zombies) {
-			scene.attachChild(zombie);
-		}
+						
+//		this.zombies.add(ZombieLoader.loadZombie(camera, 50, 100,
+//				this.getTextureManager(), this.getAssets(),
+//				this.getVertexBufferObjectManager(), player));
+//		this.zombies.add(ZombieLoader.loadZombie(camera, 50, 300,
+//				this.getTextureManager(), this.getAssets(),
+//				this.getVertexBufferObjectManager(), player));
+//		for (Zombie zombie : this.zombies) {
+//			scene.attachChild(zombie);
+//		}
 
 		// Añade la UI
 		UI.getInstance().createUI(this.getVertexBufferObjectManager());

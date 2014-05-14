@@ -19,6 +19,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 public abstract class ColisionableEntity extends GameEntity {
 
 	private Body body;
+	private boolean alive = true;
 
 	public ColisionableEntity(float pX, float pY,
 			ITiledTextureRegion pTiledTextureRegion,

@@ -13,8 +13,8 @@ import org.escoladeltreball.shooter2d.weapons.Cooldown;
 import com.badlogic.gdx.physics.box2d.Body;
 
 /**
- * La clase Zombie es una {@link IAEntity} enemiga controlada por IA que persigue al
- * jugador cuando lo detecta.
+ * La clase Zombie es una {@link IAEntity} enemiga controlada por IA que
+ * persigue al jugador cuando lo detecta.
  * 
  * @author Carlos Serrano
  * @author Elvis Puertas
@@ -29,13 +29,22 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 
 	private boolean isWalking = false;
 
+	private boolean dead = false;
+	
+	// CONSTANTS
+	
+	public static final String RESPAWN_NAME = "zombie";
 	/**
 	 * Constructor del Zombie.
 	 * 
-	 * @param pX un entero posicion horizontal del Zombie
-	 * @param pY un entero posicion vertical del Zombie
-	 * @param pTiledTextureRegion un {@link ITiledTextureRegion}
-	 * @param pVertexBufferObjectManager un {@link VertexBufferObjectManager}.
+	 * @param pX
+	 *            un entero posicion horizontal del Zombie
+	 * @param pY
+	 *            un entero posicion vertical del Zombie
+	 * @param pTiledTextureRegion
+	 *            un {@link ITiledTextureRegion}
+	 * @param pVertexBufferObjectManager
+	 *            un {@link VertexBufferObjectManager}.
 	 * @Param target un {@link GameEntity} para targetear.
 	 */
 	public Zombie(float pX, float pY, ITiledTextureRegion pTiledTextureRegion,
@@ -51,7 +60,8 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 	}
 
 	/**
-	 * Camina hacia el objetivo si lo tiene. Si no tiene objetivo, se queda quieto.
+	 * Camina hacia el objetivo si lo tiene. Si no tiene objetivo, se queda
+	 * quieto.
 	 */
 	public void walk() {
 		if (this.getTarget() != null) {
@@ -94,30 +104,39 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 	/**
 	 * Realiza las acciones que un zombie realiza en una actualización.
 	 * 
-	 * @param pSecondsElapsed el tiempo pasado entre la actualización anterior y esta.
+	 * @param pSecondsElapsed
+	 *            el tiempo pasado entre la actualización anterior y esta.
 	 */
 	@Override
 	protected void onManagedUpdate(float pSecondsElapsed) {
-		this.walk();
-		this.attackCooldown.updateTimer(pSecondsElapsed);
-		super.onManagedUpdate(pSecondsElapsed);
+		if (!dead) {
+			this.walk();
+			this.attackCooldown.updateTimer(pSecondsElapsed);
+			super.onManagedUpdate(pSecondsElapsed);
+		} else {
+			die();
+		}
 	}
+
 	/**
-	 * Realiza las acciones que el zombie realiza al colisionar con otra entidad.
+	 * Realiza las acciones que el zombie realiza al colisionar con otra
+	 * entidad.
 	 * 
-	 * @param otherBody a {@link Body}
+	 * @param otherBody
+	 *            a {@link Body}
 	 */
 
 	@Override
 	public void beginsContactWith(Body otherBody) {
-		
+
 	}
 
 	/**
 	 * Realiza las acciones que el zombie realiza cuando es herido. Si su vida
 	 * llega a 0, el zombie muere.
 	 * 
-	 * @param strengh un integer, la fuerza del ataque recibido enemigo.
+	 * @param strengh
+	 *            un integer, la fuerza del ataque recibido enemigo.
 	 */
 	@Override
 	public void hurt(int strengh) {
@@ -127,7 +146,7 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 		System.out.println("ZOMBIE HEALTH: " + getHealthpoints() + "/"
 				+ getMaxHealthPoints());
 		if (getHealthpoints() <= 0) {
-			die();
+			this.dead = true;
 		}
 	}
 
@@ -137,14 +156,13 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 	 */
 	public void die() {
 		System.out.println("ZOMBIE MUERTO");
-		this.detachSelf();
-		this.setHealthpoints(getMaxHealthPoints());
+		this.removeSelf();
 	}
-	
+
 	@Override
 	public void endsContactWith(Body otherBody) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -152,6 +170,6 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 		Object userData = otherBody.getUserData();
 		if (userData == super.getTarget()) {
 			this.attack();
-		}		
+		}
 	}
 }
