@@ -51,7 +51,7 @@ public class BodyFactory {
 	 * @return el {@link Body}
 	 */
 	public static Body createBulletBody(float positionX, float positionY) {
-		Body bulletBody = PhysicsFactory.createCircleBody(physicsWorld, positionX, positionY, BULLET_BODY_RADIUS, BodyType.DynamicBody, FixtureFactory.getFleshFixture());
+		Body bulletBody = PhysicsFactory.createCircleBody(physicsWorld, positionX, positionY, BULLET_BODY_RADIUS, BodyType.DynamicBody, FixtureFactory.getLeadFixture());
 		return bulletBody;
 	}
 	

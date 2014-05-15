@@ -19,6 +19,8 @@ import org.escoladeltreball.shooter2d.entities.Player;
 import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
 import org.escoladeltreball.shooter2d.physics.BodyFactory;
 import org.escoladeltreball.shooter2d.physics.GameContactListener;
+import org.escoladeltreball.shooter2d.scenes.MainMenuScene;
+import org.escoladeltreball.shooter2d.scenes.SplashScreen;
 import org.escoladeltreball.shooter2d.ui.GameObserver;
 import org.escoladeltreball.shooter2d.ui.UI;
 import org.escoladeltreball.shooter2d.weapons.WeaponFactory;
@@ -33,7 +35,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 public class MainActivity extends BaseGameActivity implements GameObserver {
-	private BoundCamera camera;
+	
+	public static MainActivity activity;
+	public BoundCamera camera;
 	public static final int CAMERA_WIDTH = 720;
 	public static final int CAMERA_HEIGHT = 480;
 	public static final int STEPS_PER_SECOND = 60;
@@ -46,11 +50,16 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 	public static FixedStepPhysicsWorld mPhysicsWorld;
 	public Body wallBody;
 	private Player player;
-	private Scene scene;
+
+	private Scene gameScene;
+	private Scene menuScene;
+	private Scene splashScreen;
+
 	private boolean isGameSaved;
 
 	@Override
 	public Engine onCreateEngine(final EngineOptions pEngineOptions) {
+		activity = this;
 		return new FixedStepEngine(pEngineOptions, STEPS_PER_SECOND);
 	}
 
@@ -58,7 +67,7 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 	public EngineOptions onCreateEngineOptions() {
 		checkCompatibilityMultiTouch();
 		camera = new BoundCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-		camera.setHUD(UI.getHUD());
+		//this.camera.setHUD(UI.getHUD());
 		EngineOptions engineOptions = new EngineOptions(true,
 				ScreenOrientation.LANDSCAPE_FIXED, new RatioResolutionPolicy(
 						CAMERA_WIDTH, CAMERA_HEIGHT), camera);
@@ -86,9 +95,11 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 
 	@Override
 	public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) {
-		this.scene = new Scene();
-		scene.setBackground(new Background(0.09804f, 0.6274f, 0.8784f));
-		pOnCreateSceneCallback.onCreateSceneFinished(scene);
+		this.gameScene = new Scene();
+		gameScene.setBackground(new Background(0.09804f, 0.6274f, 0.8784f));
+		this.menuScene = new MainMenuScene(this.camera, mEngine, this);
+		this.splashScreen = new SplashScreen(mEngine);
+		pOnCreateSceneCallback.onCreateSceneFinished(this.splashScreen);
 	}
 
 	@Override
@@ -99,28 +110,28 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 		mPhysicsWorld = new FixedStepPhysicsWorld(STEPS_PER_SECOND,
 				new Vector2(0f, 0), false, VELOCITY_INTERACTIONS,
 				POSITION_INTERACTIONS);
-				this.scene.registerUpdateHandler(mPhysicsWorld);
-				mPhysicsWorld.setContactListener(GameContactListener.getInstance());
-				BodyFactory.setPhysicsWorld(mPhysicsWorld);
-				// Muestra el mapa en la pantalla
-				scene.attachChild(MapCreator.getCurrentMap());
-				// crea el player
-				this.player = PlayerLoader.loadPlayer(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2, getEngine(), scene);
-				this.player.setGun(WeaponFactory.getGun(scene, getEngine()));
-				//crea los objetos del mapa
-				MapCreator.createMapObjects(pScene, mEngine, MapCreator.getCurrentMap(), getVertexBufferObjectManager(), player);
-				// La camara sigue al jugador
-				this.camera.setChaseEntity(player);
-				scene.attachChild(player);
-				
-				// Añade la UI
-				UI.getInstance().createUI(this.getVertexBufferObjectManager());
-				// Se pone a la UI como observador del player
-				this.player.addGameObserver(UI.getInstance());
-				// Se pone al MainActivity como observador del player
-				this.player.addGameObserver(this);
 
-				pOnPopulateSceneCallback.onPopulateSceneFinished();
+		this.gameScene.registerUpdateHandler(mPhysicsWorld);
+		mPhysicsWorld.setContactListener(GameContactListener.getInstance());
+		BodyFactory.setPhysicsWorld(mPhysicsWorld);
+		// Muestra el mapa en la pantalla
+		gameScene.attachChild(MapCreator.getCurrentMap());
+		// crea el player
+		this.player = PlayerLoader.loadPlayer(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2, mEngine, gameScene);
+		this.player.setGun(WeaponFactory.getGun(gameScene, mEngine));
+		//crea los objetos del mapa
+		MapCreator.createMapObjects(gameScene, mEngine, MapCreator.getCurrentMap(), getVertexBufferObjectManager(), player);
+		// La camara sigue al jugador
+		this.camera.setChaseEntity(player);
+		gameScene.attachChild(player);
+		// Añade la UI
+		UI.getInstance().createUI(this.camera, this.getVertexBufferObjectManager());
+		// Se pone a la UI como observador del player 
+		this.player.addGameObserver(UI.getInstance());
+		// Se pone al MainActivity como observador del player 
+		this.player.addGameObserver(this);
+
+		pOnPopulateSceneCallback.onPopulateSceneFinished();
 	}
 
 	/**
@@ -226,5 +237,18 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 				}
 			}
 		}
+	}	
+	
+	public void startGame() {
+		mEngine.setScene(this.gameScene);
+		this.camera.setHUD(UI.getHUD());
+	}
+	
+	public static MainActivity getInstance() {
+		return activity;
+	}
+
+	public void openMainMenu() {
+		mEngine.setScene(this.menuScene);		
 	}
 }
