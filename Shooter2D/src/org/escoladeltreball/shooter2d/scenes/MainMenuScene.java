@@ -1,4 +1,4 @@
-package org.escoladeltreball.shooter2d;
+package org.escoladeltreball.shooter2d.scenes;
 
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
@@ -8,6 +8,9 @@ import org.andengine.entity.scene.menu.MenuScene.IOnMenuItemClickListener;
 import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.TextMenuItem;
 import org.andengine.ui.activity.BaseActivity;
+import org.escoladeltreball.shooter2d.MainActivity;
+import org.escoladeltreball.shooter2d.R;
+import org.escoladeltreball.shooter2d.ResourceManager;
 
 /**
  * El menu principal
@@ -27,9 +30,8 @@ public class MainMenuScene extends MenuScene implements
 		setBackground(new Background(0.09804f, 0.6274f, 0.8784f));
 		IMenuItem startButton = new TextMenuItem(MENU_START, ResourceManager.getInstance().hudFont, activity.getString(R.string.start),
 				engine.getVertexBufferObjectManager());
-		startButton.setPosition(MainActivity.CAMERA_WIDTH / 2 - startButton.getWidth()
-				/ 2, MainActivity.CAMERA_HEIGHT / 2 - startButton.getHeight() / 2);
-
+		startButton.setOffsetCenter(0.5f, 0.5f);
+		startButton.setPosition(MainActivity.CAMERA_WIDTH / 2, MainActivity.CAMERA_HEIGHT / 2);
 		addMenuItem(startButton);
 		setOnMenuItemClickListener(this);
 	}

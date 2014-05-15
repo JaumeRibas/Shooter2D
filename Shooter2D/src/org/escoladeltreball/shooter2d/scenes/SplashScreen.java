@@ -1,4 +1,4 @@
-package org.escoladeltreball.shooter2d;
+package org.escoladeltreball.shooter2d.scenes;
 
 import org.andengine.engine.Engine;
 import org.andengine.entity.IEntity;
@@ -11,6 +11,8 @@ import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.util.modifier.IModifier;
 import org.andengine.util.modifier.IModifier.IModifierListener;
+import org.escoladeltreball.shooter2d.MainActivity;
+import org.escoladeltreball.shooter2d.ResourceManager;
 
 /**
  * SplashScreenActivity

@@ -19,6 +19,8 @@ import org.escoladeltreball.shooter2d.entities.Player;
 import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
 import org.escoladeltreball.shooter2d.physics.BodyFactory;
 import org.escoladeltreball.shooter2d.physics.GameContactListener;
+import org.escoladeltreball.shooter2d.scenes.MainMenuScene;
+import org.escoladeltreball.shooter2d.scenes.SplashScreen;
 import org.escoladeltreball.shooter2d.ui.GameObserver;
 import org.escoladeltreball.shooter2d.ui.UI;
 import org.escoladeltreball.shooter2d.weapons.WeaponFactory;
