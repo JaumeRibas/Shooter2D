@@ -19,7 +19,7 @@ public class Bullet extends ColisionableEntity {
 
 	/** El tiempo de vida de la bala en segundos */
 	private static final int BULLET_LIFE_TIME = 2;
-	private float speed = 0.2f;
+	public static final float SPEED = 20f;
 	private int strengh = 1;
 
 	private Cooldown bulletTime;
@@ -47,6 +47,7 @@ public class Bullet extends ColisionableEntity {
 			Engine engine, float angle, int strengh) {
 		super(pX, pY, pTiledTextureRegion, engine);
 		Body body = BodyFactory.createBulletBody(pX, pY);
+		body.setTransform(body.getPosition(), angle);
 		this.strengh = strengh;
 		this.setCurrentTileIndex(0);
 		this.setBody(body);
@@ -90,15 +91,7 @@ public class Bullet extends ColisionableEntity {
 			this.remove();
 		}
 	}
-
-	public float getSpeed() {
-		return speed;
-	}
-
-	public void setSpeed(float speed) {
-		this.speed = speed;
-	}
-
+	
 	@Override
 	public void endsContactWith(Body otherBody) {
 		// TODO Auto-generated method stub
