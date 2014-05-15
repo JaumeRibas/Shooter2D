@@ -1,9 +1,15 @@
 package org.escoladeltreball.shooter2d.weapons;
 
+import org.andengine.engine.Engine;
 import org.andengine.entity.scene.Scene;
+import org.andengine.extension.physics.box2d.util.Vector2Pool;
+import org.escoladeltreball.shooter2d.MainActivity;
 import org.escoladeltreball.shooter2d.entities.ActorEntity;
 import org.escoladeltreball.shooter2d.entities.Bullet;
-import org.escoladeltreball.shooter2d.entities.Player;
+import org.escoladeltreball.shooter2d.entities.loader.BulletLoader;
+import org.escoladeltreball.shooter2d.entities.loader.ZombieLoader;
+
+import com.badlogic.gdx.math.Vector2;
 
 
 /**
@@ -15,18 +21,20 @@ import org.escoladeltreball.shooter2d.entities.Player;
  */
 public class Gun {
 	
+	/** La diferencia en x de la posicion inicial de la bala en relacion al shooter (en coordenadas locales del shooter) */
+	private static final float BULLET_OFFSET_X = 0;
+	/** La diferencia en y de la posicion inicial de la bala en relacion al shooter (en coordenadas locales del shooter) */
+	private static final float BULLET_OFFSET_Y = 1;
+	private static final float GUN_COOLDOWN_TIME = 1;
 	private Cooldown gunCooldown;
-	private Bullet bullet;
 	private Scene scene;
 	private ActorEntity shooter;
-	private boolean bulletShot;
+	private Engine engine;
 	
-	public Gun(float gunCooldownTime, Scene scene, Player player, Bullet playerbullet){
-		this.gunCooldown = new Cooldown(gunCooldownTime);
-		this.shooter = player;
-		this.bullet = playerbullet;
+	public Gun(Scene scene, Engine engine){
+		this.gunCooldown = new Cooldown(GUN_COOLDOWN_TIME);
 		this.scene = scene;
-	
+		this.engine = engine;
 	}
 	
 	public Cooldown getGunCooldown() {
@@ -34,22 +42,24 @@ public class Gun {
 	}
 	
 	/**
-	 * Dispara una bala. Colocará la bala en el mapa con respecto al angulo formado por X e Y.
-	 * 
-	 * @param x un float, define el desplazamiento y posicionamiento inicial horizontal de la bala.
-	 * @param y un float, define el desplazamiento y posicionamiento inicial horizontal de la bala.
+	 * Dispara una bala. Colocará la bala en el mapa con respecto al angulo del shooter.
 	 */
-	public void shoot(float x, float y){
-		if(this.gunCooldown.cooldownReady() && bullet != null && bulletShot == false){
-			bullet.setPosition(shooter.getX() + (x * 50), shooter.getY() + (y * 50));
-			float angle = (float) Math.toDegrees(Math.atan2(y, x)); 
-			System.out.println("X: " + x);
-			System.out.println("Y: " + y);
-			System.out.println("Angle: " + angle);
-			
-			bullet.setShootAngle(angle);
-			scene.attachChild(bullet);
-			this.bulletShot = true;
+	public synchronized void shoot(){
+		if (this.gunCooldown.cooldownReady()) {
+			Vector2 bulletPosition = shooter.getBody().getWorldPoint(Vector2Pool.obtain(0, 0));
+			System.out.println("local spot 0, 0 is at global spot " + bulletPosition.x + ", " + bulletPosition.y);
+			float bulletAngle = shooter.getBody().getAngle();
+			Bullet newBullet = BulletLoader.loadBullet(bulletPosition.x, bulletPosition.y, bulletAngle, 3, engine);
+			scene.attachChild(newBullet);
+			System.out.println("######################\nSHOOTING\n######################");
 		}
+	}
+
+	public ActorEntity getShooter() {
+		return shooter;
+	}
+
+	public void setShooter(ActorEntity shooter) {
+		this.shooter = shooter;
 	}
 }

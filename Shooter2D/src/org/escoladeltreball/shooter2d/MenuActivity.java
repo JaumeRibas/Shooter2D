@@ -5,6 +5,7 @@ import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
 import org.andengine.entity.scene.Scene;
+import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.TextureOptions;
@@ -12,6 +13,7 @@ import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
+import org.andengine.util.adt.color.Color;
 
 import android.content.Intent;
 
@@ -22,12 +24,19 @@ public class MenuActivity extends SimpleBaseGameActivity {
 
 	private BitmapTextureAtlas mBackground;
 	private BitmapTextureAtlas mButtontexture;
-	private TextureRegion mBackgroundTextureRegion;
 	private TextureRegion mStartButtonTextureRegion;
 	private TextureRegion mScoresButtonTextureRegion;
-	private Sprite mBG;
+	private TextureRegion mSoundOnButtonTextureRegion;
 	private Sprite mStartButton;
 	private Sprite mScoresButton;
+	private Sprite mSoundOnButton;
+	private BitmapTextureAtlas mButtonSoundtexture;
+	private TextureRegion mSoundOffButtonTextureRegion;
+	private Sprite mSoundOffButton;
+	private Sprite mSongOnButton;
+	private TextureRegion mSongOffButtonTextureRegion;
+	private TextureRegion mSongOnButtonTextureRegion;
+	private BitmapTextureAtlas mButtonSongtexture;
 
 	@Override
 	public EngineOptions onCreateEngineOptions() {
@@ -39,30 +48,63 @@ public class MenuActivity extends SimpleBaseGameActivity {
 
 	@Override
 	public void onCreateResources() {
-		mBackground = new BitmapTextureAtlas(this.getTextureManager(), 512, 512,
+		mBackground = new BitmapTextureAtlas(this.getTextureManager(), 5000, 5000,
 				TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 		mButtontexture = new BitmapTextureAtlas(this.getTextureManager(), 256, 256,
 				TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		mButtonSoundtexture = new BitmapTextureAtlas(this.getTextureManager(), 256, 256,
+				TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		mButtonSongtexture = new BitmapTextureAtlas(this.getTextureManager(), 256, 256,
+				TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-		//mBackgroundTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
-			//	mBackground, this, "bg3.png", 0, 0);
+
 		mStartButtonTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
 				mButtontexture, this, "button_start.png", 0, 0);
 		mScoresButtonTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
 				mButtontexture, this, "button_options.png", 0, 70);
+		mSoundOnButtonTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+				mButtonSoundtexture, this, "button_sound_on.png", 0, 70);
+		mSoundOffButtonTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+				mButtonSoundtexture, this, "button_sound_off.png", 0, 70);
+		
+		mSongOnButtonTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+				mButtonSongtexture, this, "button_music_on.png", 0, 70);
+		mSongOffButtonTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+				mButtonSongtexture, this, "button_music_off.png", 0, 70);
+		
 		this.mEngine.getTextureManager().loadTexture(mButtontexture);
+		this.mEngine.getTextureManager().loadTexture(mButtonSoundtexture);
+		this.mEngine.getTextureManager().loadTexture(mButtonSongtexture);
 		this.mEngine.getTextureManager().loadTexture(mBackground);
-
 	}
 
 	@Override
 	public Scene onCreateScene() {
 		Scene scene = new Scene();
-		//mBG = new Sprite(0, 0, mBackgroundTextureRegion, this.mEngine.getVertexBufferObjectManager());
-		//scene.setBackground(new SpriteBackground(mBG));
 
-		mStartButton = new Sprite((CAMERA_WIDTH / 2) - (mStartButtonTextureRegion.getWidth() / 2), 100,
+		createStartButton();
+		createOptionsButton();
+		createSongButton();
+		createSoundButton();
+
+		scene.attachChild(mStartButton);
+		scene.attachChild(mScoresButton);
+		scene.attachChild(mSoundOnButton);
+		scene.attachChild(mSongOnButton);
+		scene.setTouchAreaBindingOnActionDownEnabled(true);
+		scene.registerTouchArea(mStartButton);
+		scene.registerTouchArea(mSoundOnButton);
+		scene.registerTouchArea(mSongOnButton);
+		scene.registerTouchArea(mScoresButton);
+
+		scene.setBackground(new Background(Color.BLACK)); 
+
+		return scene;
+	}
+
+	public void createStartButton(){
+		this.mStartButton = new Sprite((float) (CAMERA_WIDTH/2-70), (float) (CAMERA_HEIGHT/4),
 				mStartButtonTextureRegion, this.mEngine.getVertexBufferObjectManager()) {
 			@Override
 			protected void onManagedUpdate(float pSecondsElapsed) {
@@ -80,9 +122,10 @@ public class MenuActivity extends SimpleBaseGameActivity {
 				return true;
 			}
 		};
+	}
 
-		mScoresButton = new Sprite((CAMERA_WIDTH / 2)
-				- (mScoresButtonTextureRegion.getWidth() / 2), 180,
+	public void createOptionsButton(){
+		mScoresButton = new Sprite((float) (CAMERA_WIDTH/2+70), (float) (CAMERA_HEIGHT/4),
 				mScoresButtonTextureRegion, this.mEngine.getVertexBufferObjectManager()) {
 			@Override
 			protected void onManagedUpdate(float pSecondsElapsed) {
@@ -102,14 +145,50 @@ public class MenuActivity extends SimpleBaseGameActivity {
 				return true;
 			}
 		};
+	}
 
-		scene.attachChild(mStartButton);
-		scene.attachChild(mScoresButton);
-		scene.setTouchAreaBindingOnActionDownEnabled(true);
-		scene.registerTouchArea(mStartButton);
-		scene.registerTouchArea(mScoresButton);
+	public void createSongButton(){
+		mSongOnButton = new Sprite((float) (CAMERA_WIDTH-50), (float) (CAMERA_HEIGHT-50),
+				mSongOnButtonTextureRegion, this.mEngine.getVertexBufferObjectManager()) {
+			private Sprite mSongOffButton;
 
-		return scene;
+			@Override
+			protected void onManagedUpdate(float pSecondsElapsed) {
+				super.onManagedUpdate(pSecondsElapsed);
+			}
+
+			@Override
+			public boolean onAreaTouched(TouchEvent pSceneTouchEvent,
+					float pTouchAreaLocalX, float
+					pTouchAreaLocalY) {
+
+				if (pSceneTouchEvent.isActionDown()) {
+					mSongOnButton = mSongOffButton;
+				}
+				return true;
+			}
+		};
+	}
+	
+	public void createSoundButton(){
+		mSoundOnButton = new Sprite((float) (CAMERA_WIDTH-115), (float) (CAMERA_HEIGHT-50),
+				mSoundOnButtonTextureRegion, this.mEngine.getVertexBufferObjectManager()) {
+			@Override
+			protected void onManagedUpdate(float pSecondsElapsed) {
+				super.onManagedUpdate(pSecondsElapsed);
+			}
+
+			@Override
+			public boolean onAreaTouched(TouchEvent pSceneTouchEvent,
+					float pTouchAreaLocalX, float
+					pTouchAreaLocalY) {
+
+				if (pSceneTouchEvent.isActionDown()) {
+					mSoundOnButton = mSoundOffButton;
+				}
+				return true;
+			}
+		};
 	}
 
 }

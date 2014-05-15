@@ -1,5 +1,6 @@
 package org.escoladeltreball.shooter2d.entities;
 
+import org.andengine.engine.Engine;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.escoladeltreball.shooter2d.constants.NotificationConstants;
@@ -20,8 +21,8 @@ public abstract class ActorEntity extends ColisionableEntity {
 
 	public ActorEntity(float pX, float pY,
 			ITiledTextureRegion pTiledTextureRegion,
-			VertexBufferObjectManager pVertexBufferObjectManager) {
-		super(pX, pY, pTiledTextureRegion, pVertexBufferObjectManager);
+			Engine engine) {
+		super(pX, pY, pTiledTextureRegion, engine);
 	}
 
 	/**

@@ -1,26 +1,20 @@
 package org.escoladeltreball.shooter2d;
 
-import org.andengine.engine.camera.BoundCamera;
+import org.andengine.engine.Engine;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
-import org.andengine.opengl.texture.TextureManager;
-import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.adt.color.Color;
+import org.escoladeltreball.shooter2d.entities.ActorEntity;
 import org.escoladeltreball.shooter2d.entities.GameEntity;
-import org.escoladeltreball.shooter2d.entities.Player;
 import org.escoladeltreball.shooter2d.entities.Zombie;
 import org.escoladeltreball.shooter2d.entities.loader.ZombieLoader;
 
-import android.content.res.AssetManager;
-
 public class Respawn extends Thread {
 	
+	private Engine engine;
 	private Scene scene;
-	private TextureManager textureManager;
-	private AssetManager assets;
-	private VertexBufferObjectManager vertexBufferObjectManager;
-	private Player player;
+	private ActorEntity player;
 	private long spawnMiliSeconds;
 	private long spawnAcceleration;
 	private Rectangle area;
@@ -28,21 +22,17 @@ public class Respawn extends Thread {
 	private int unitlimit;
 	
 
-	public Respawn(Scene scene, int x, int y, int width, int heigth, TextureManager textureManager,
-			AssetManager assets,
-			VertexBufferObjectManager vertexBufferObjectManager,
-			FixedStepPhysicsWorld mPhysicsWorld, Player player, long spawnMiliSeconds, long spawnAcceleration, String unit, int unitlimit) {
+	public Respawn(Scene scene, int x, int y, int width, int heigth, Engine engine,
+			FixedStepPhysicsWorld mPhysicsWorld, ActorEntity player, long spawnMiliSeconds, long spawnAcceleration, String unit, int unitlimit) {
 		this.scene = scene;
 		
-		this.area = new Rectangle(x, y, width, heigth, vertexBufferObjectManager);
+		this.area = new Rectangle(x, y, width, heigth, engine.getVertexBufferObjectManager());
 		this.area.setColor(Color.RED);
 		this.area.setAlpha(0.25f);
 		
+		this.engine = engine;
 		this.scene.attachChild(area);
 		
-		this.textureManager = textureManager;
-		this.assets = assets;
-		this.vertexBufferObjectManager = vertexBufferObjectManager;
 		this.player = player;
 		
 		this.spawnMiliSeconds = spawnMiliSeconds;		
@@ -56,8 +46,7 @@ public class Respawn extends Thread {
 		int[] spawn = calculateRandomCoordinate(area);
 		GameEntity entity = null;
 		if(monster_name.equals(Zombie.RESPAWN_NAME)){
-			entity = ZombieLoader.loadZombie(spawn[0], spawn[1], this.textureManager, this.assets,
-					vertexBufferObjectManager, player);	
+			entity = ZombieLoader.loadZombie(spawn[0], spawn[1], engine, player);	
 		} else {
 			System.out.println("Monstruo invalido");
 			this.unitlimit = 0;

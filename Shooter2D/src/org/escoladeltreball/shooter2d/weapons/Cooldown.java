@@ -2,29 +2,23 @@ package org.escoladeltreball.shooter2d.weapons;
 
 public class Cooldown {
 	
-	private float cooldown_time;
-	private float timer;
+	private long cooldownNanoseconds;
+	private long nextReadyMoment;
 	
-	public Cooldown(float cooldown_time) {
-		super();
-		this.cooldown_time = cooldown_time;
-		this.timer = cooldown_time;
+	public Cooldown(float cooldownSeconds) {
+		this.cooldownNanoseconds = (long) (cooldownSeconds * 1000000000);
+		restart();
 	}
 	
-	public void updateTimer(float pSecondsElapsed){
-		if(this.timer > 0){
-			this.timer -= pSecondsElapsed;
+	public synchronized boolean cooldownReady(){
+		if (System.nanoTime() >= this.nextReadyMoment) {
+			restart();
+			return true;
 		}
-		if(this.timer < 0){
-			this.timer = 0;
-		}
+		return false;
 	}
 	
-	public boolean cooldownReady(){
-		boolean ready = this.timer == 0;
-		if(ready){
-			this.timer = cooldown_time;
-		}
-		return ready;
+	public void restart() {
+		this.nextReadyMoment = System.nanoTime() + this.cooldownNanoseconds;
 	}
 }

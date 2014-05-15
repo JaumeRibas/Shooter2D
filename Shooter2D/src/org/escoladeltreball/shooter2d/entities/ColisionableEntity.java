@@ -1,5 +1,6 @@
 package org.escoladeltreball.shooter2d.entities;
 
+import org.andengine.engine.Engine;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
@@ -19,12 +20,16 @@ import com.badlogic.gdx.physics.box2d.Body;
 public abstract class ColisionableEntity extends GameEntity {
 
 	private Body body;
-	private boolean alive = true;
+	
+	private volatile boolean removeSelf = false;
+
+	private Engine engine;
 
 	public ColisionableEntity(float pX, float pY,
 			ITiledTextureRegion pTiledTextureRegion,
-			VertexBufferObjectManager pVertexBufferObjectManager) {
-		super(pX, pY, pTiledTextureRegion, pVertexBufferObjectManager);
+			Engine engine) {
+		super(pX, pY, pTiledTextureRegion, engine.getVertexBufferObjectManager());
+		this.engine = engine;
 	}
 
 	// GETTERS AND SETTERS
@@ -69,12 +74,31 @@ public abstract class ColisionableEntity extends GameEntity {
 	 * No llamar desde metodos de colision.
 	 * http://www.iforce2d.net/b2dtut/removing-bodies
 	 */
-	public void removeSelf() {
+	private void removeSelf() {
 		this.detachSelf();
 		this.clearUpdateHandlers();
 		MainActivity.mPhysicsWorld.unregisterPhysicsConnector(
 				MainActivity.mPhysicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(this));
 		MainActivity.mPhysicsWorld.destroyBody(this.getBody());
 	}
-
+	
+	/**
+	 * Borra esta {@link ColisionableEntity} incluyendo su {@link Body}.
+	 */
+	public void remove() {
+		this.removeSelf = true;
+	}
+	
+	@Override
+	protected void onManagedUpdate(float pSecondsElapsed) {
+		if (this.removeSelf) {
+			engine.runOnUpdateThread(new Runnable() {
+		        @Override
+		        public void run() {
+		            ColisionableEntity.this.removeSelf();
+		        }
+		    });
+		}
+		super.onManagedUpdate(pSecondsElapsed);
+	}
 }
