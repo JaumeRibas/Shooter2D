@@ -96,11 +96,11 @@ public class UI implements GameObserver {
 	/**
 	 * Crea los componentes de la interfaz de usuario y los une al HUD.
 	 */
-	public void createUI(VertexBufferObjectManager vertexBufferObjectManager) {
+	public void createUI(Camera camera, VertexBufferObjectManager vertexBufferObjectManager) {
 		//Control analogico izquierda 
-		this.leftAnalogControl = createAnalogControl(getHUD().getCamera(), LEFT_ANALOG_X, LEFT_ANALOG_Y, LEFT_ANALOG_OFFSET_CENTER_X, LEFT_ANALOG_OFFSET_CENTER_Y, CommandFactory.getSetPlayerVelocityAndOrientation(), CommandFactory.getDoNothingCommand(), vertexBufferObjectManager);
+		this.leftAnalogControl = createAnalogControl(camera, LEFT_ANALOG_X, LEFT_ANALOG_Y, LEFT_ANALOG_OFFSET_CENTER_X, LEFT_ANALOG_OFFSET_CENTER_Y, CommandFactory.getSetPlayerVelocityAndOrientation(), CommandFactory.getDoNothingCommand(), vertexBufferObjectManager);
 		// Control analogico derecha
-		this.rightAnalogControl = createAnalogControl(getHUD().getCamera(), RIGHT_ANALOG_X, RIGHT_ANALOG_Y, RIGHT_ANALOG_OFFSET_CENTER_X, RIGHT_ANALOG_OFFSET_CENTER_Y, CommandFactory.getSetPlayerOrientationAndShoot(), CommandFactory.getDoNothingCommand(), vertexBufferObjectManager);
+		this.rightAnalogControl = createAnalogControl(camera, RIGHT_ANALOG_X, RIGHT_ANALOG_Y, RIGHT_ANALOG_OFFSET_CENTER_X, RIGHT_ANALOG_OFFSET_CENTER_Y, CommandFactory.getSetPlayerOrientationAndShoot(), CommandFactory.getDoNothingCommand(), vertexBufferObjectManager);
 		this.leftAnalogControl.setChildScene(this.rightAnalogControl);
 		getHUD().setChildScene(this.leftAnalogControl);
 		// Barra vida

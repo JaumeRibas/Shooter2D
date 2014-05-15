@@ -36,7 +36,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 public class MainActivity extends BaseGameActivity implements GameObserver {
-	private BoundCamera camera;
+	
+	public static MainActivity activity;
+	public BoundCamera camera;
 	public static final int CAMERA_WIDTH = 720;
 	public static final int CAMERA_HEIGHT = 480;
 	public static final int STEPS_PER_SECOND = 60;
@@ -50,11 +52,13 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 	public Body wallBody;
 	private Player player;
 	private ArrayList<Zombie> zombies;
-	private Scene scene;
+	private Scene gameScene;
+	private Scene menuScene;
 	private boolean isGameSaved;
 
 	@Override
 	public Engine onCreateEngine(final EngineOptions pEngineOptions) {
+		activity = this;
 		return new FixedStepEngine(pEngineOptions, STEPS_PER_SECOND);
 	}
 
@@ -62,7 +66,7 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 	public EngineOptions onCreateEngineOptions() {
 		checkCompatibilityMultiTouch();
 		camera = new BoundCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-		camera.setHUD(UI.getHUD());
+		//this.camera.setHUD(UI.getHUD());
 		EngineOptions engineOptions = new EngineOptions(true,
 				ScreenOrientation.LANDSCAPE_FIXED, new RatioResolutionPolicy(
 						CAMERA_WIDTH, CAMERA_HEIGHT), camera);
@@ -91,9 +95,10 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 
 	@Override
 	public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) {
-		this.scene = new Scene();
-		scene.setBackground(new Background(0.09804f, 0.6274f, 0.8784f));
-		pOnCreateSceneCallback.onCreateSceneFinished(scene);
+		this.gameScene = new Scene();
+		gameScene.setBackground(new Background(0.09804f, 0.6274f, 0.8784f));
+		this.menuScene = new MainMenuScene(this.camera, mEngine, this);
+		pOnCreateSceneCallback.onCreateSceneFinished(this.menuScene);
 	}
 
 	@Override
@@ -104,27 +109,27 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 		mPhysicsWorld = new FixedStepPhysicsWorld(STEPS_PER_SECOND,
 				new Vector2(0f, 0), false, VELOCITY_INTERACTIONS,
 				POSITION_INTERACTIONS);
-		this.scene.registerUpdateHandler(mPhysicsWorld);
+		this.gameScene.registerUpdateHandler(mPhysicsWorld);
 		mPhysicsWorld.setContactListener(GameContactListener.getInstance());
 		BodyFactory.setPhysicsWorld(mPhysicsWorld);
 		// Muestra el mapa en la pantalla
-		scene.attachChild(MapCreator.getCurrentMap());
+		gameScene.attachChild(MapCreator.getCurrentMap());
 		//crea los objetos del mapa
 		MapCreator.createMapObjects(getVertexBufferObjectManager());
 		// crea el player
-		this.player = PlayerLoader.loadPlayer(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2, getEngine(), scene);
-		this.player.setGun(WeaponFactory.getGun(scene, getEngine()));
+		this.player = PlayerLoader.loadPlayer(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2, mEngine, gameScene);
+		this.player.setGun(WeaponFactory.getGun(gameScene, mEngine));
 		// La camara sigue al jugador
 		this.camera.setChaseEntity(player);
-		scene.attachChild(player);
-		this.zombies.add(ZombieLoader.loadZombie(50, 100, getEngine(), player));
-		this.zombies.add(ZombieLoader.loadZombie(50, 300, getEngine(), player));
+		gameScene.attachChild(player);
+		this.zombies.add(ZombieLoader.loadZombie(50, 100, mEngine, player));
+		this.zombies.add(ZombieLoader.loadZombie(50, 300, mEngine, player));
 		for (Zombie zombie : this.zombies) {
-			scene.attachChild(zombie);
+			gameScene.attachChild(zombie);
 		}
 
 		// Añade la UI
-		UI.getInstance().createUI(this.getVertexBufferObjectManager());
+		UI.getInstance().createUI(this.camera, this.getVertexBufferObjectManager());
 		// Se pone a la UI como observador del player 
 		this.player.addGameObserver(UI.getInstance());
 		// Se pone al MainActivity como observador del player 
@@ -236,5 +241,15 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 				}
 			}
 		}
+	}
+	
+	
+	public void startGame() {
+		mEngine.setScene(this.gameScene);
+		this.camera.setHUD(UI.getHUD());
+	}
+	
+	public static MainActivity getInstance() {
+		return activity;
 	}
 }

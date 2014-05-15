@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Shooter2D</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="start">START</string>
     <string name="action_settings">Settings</string>
 
 </resources>
