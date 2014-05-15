@@ -8,6 +8,7 @@ import org.andengine.entity.scene.menu.MenuScene.IOnMenuItemClickListener;
 import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.TextMenuItem;
 import org.andengine.ui.activity.BaseActivity;
+import org.andengine.util.adt.color.Color;
 import org.escoladeltreball.shooter2d.MainActivity;
 import org.escoladeltreball.shooter2d.R;
 import org.escoladeltreball.shooter2d.ResourceManager;
@@ -22,12 +23,11 @@ import org.escoladeltreball.shooter2d.ResourceManager;
 public class MainMenuScene extends MenuScene implements
 		IOnMenuItemClickListener {
 
-	BaseActivity activity;
 	private static final int MENU_START = 0;
 
 	public MainMenuScene(Camera camera, Engine engine, BaseActivity activity) {
 		super(camera);
-		setBackground(new Background(0.09804f, 0.6274f, 0.8784f));
+		setBackground(new Background(Color.BLACK));
 		IMenuItem startButton = new TextMenuItem(MENU_START, ResourceManager.getInstance().hudFont, activity.getString(R.string.start),
 				engine.getVertexBufferObjectManager());
 		startButton.setOffsetCenter(0.5f, 0.5f);
