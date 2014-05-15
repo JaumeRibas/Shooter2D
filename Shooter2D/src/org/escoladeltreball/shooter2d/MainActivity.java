@@ -104,11 +104,11 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 				BodyFactory.setPhysicsWorld(mPhysicsWorld);
 				// Muestra el mapa en la pantalla
 				scene.attachChild(MapCreator.getCurrentMap());
-				//crea los objetos del mapa
-				MapCreator.createMapObjects(getVertexBufferObjectManager());
 				// crea el player
 				this.player = PlayerLoader.loadPlayer(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2, getEngine(), scene);
 				this.player.setGun(WeaponFactory.getGun(scene, getEngine()));
+				//crea los objetos del mapa
+				MapCreator.createMapObjects(pScene, mEngine, MapCreator.getCurrentMap(), getVertexBufferObjectManager(), player);
 				// La camara sigue al jugador
 				this.camera.setChaseEntity(player);
 				scene.attachChild(player);

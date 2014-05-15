@@ -5,7 +5,119 @@
  </tileset>
  <layer name="Tile Layer 1" width="16" height="16">
   <data>
-   <tile gid="51"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="5"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="6"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="6"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="6"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="5"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="6"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="5"/>
+   <tile gid="5"/>
+   <tile gid="5"/>
+   <tile gid="5"/>
+   <tile gid="5"/>
+   <tile gid="5"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="6"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="83"/>
+   <tile gid="82"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="6"/>
+   <tile gid="6"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="6"/>
+   <tile gid="6"/>
+   <tile gid="83"/>
+   <tile gid="82"/>
    <tile gid="10"/>
    <tile gid="10"/>
    <tile gid="10"/>
@@ -20,110 +132,110 @@
    <tile gid="10"/>
    <tile gid="10"/>
    <tile gid="10"/>
-   <tile gid="51"/>
+   <tile gid="82"/>
+   <tile gid="83"/>
+   <tile gid="6"/>
+   <tile gid="6"/>
+   <tile gid="6"/>
+   <tile gid="6"/>
    <tile gid="10"/>
-   <tile gid="87"/>
-   <tile gid="87"/>
-   <tile gid="87"/>
-   <tile gid="87"/>
-   <tile gid="10"/>
-   <tile gid="87"/>
-   <tile gid="87"/>
-   <tile gid="87"/>
-   <tile gid="87"/>
-   <tile gid="10"/>
-   <tile gid="87"/>
-   <tile gid="87"/>
-   <tile gid="87"/>
-   <tile gid="87"/>
+   <tile gid="6"/>
    <tile gid="10"/>
    <tile gid="10"/>
-   <tile gid="87"/>
-   <tile gid="169"/>
-   <tile gid="169"/>
-   <tile gid="87"/>
-   <tile gid="10"/>
-   <tile gid="87"/>
-   <tile gid="169"/>
-   <tile gid="169"/>
-   <tile gid="87"/>
-   <tile gid="10"/>
-   <tile gid="87"/>
-   <tile gid="169"/>
-   <tile gid="169"/>
-   <tile gid="87"/>
    <tile gid="10"/>
    <tile gid="10"/>
-   <tile gid="87"/>
-   <tile gid="169"/>
-   <tile gid="169"/>
-   <tile gid="87"/>
-   <tile gid="10"/>
-   <tile gid="87"/>
-   <tile gid="169"/>
-   <tile gid="169"/>
-   <tile gid="87"/>
-   <tile gid="10"/>
-   <tile gid="87"/>
-   <tile gid="169"/>
-   <tile gid="169"/>
-   <tile gid="87"/>
    <tile gid="10"/>
    <tile gid="10"/>
-   <tile gid="87"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="82"/>
+   <tile gid="83"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="5"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="5"/>
+   <tile gid="5"/>
+   <tile gid="5"/>
+   <tile gid="5"/>
+   <tile gid="5"/>
+   <tile gid="5"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="5"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="5"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="5"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="10"/>
    <tile gid="4"/>
    <tile gid="4"/>
-   <tile gid="87"/>
+   <tile gid="4"/>
    <tile gid="10"/>
-   <tile gid="87"/>
+   <tile gid="5"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="5"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="5"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="10"/>
    <tile gid="4"/>
    <tile gid="4"/>
-   <tile gid="87"/>
+   <tile gid="4"/>
    <tile gid="10"/>
-   <tile gid="87"/>
+   <tile gid="5"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="5"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="5"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="10"/>
    <tile gid="4"/>
    <tile gid="4"/>
-   <tile gid="87"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="87"/>
    <tile gid="4"/>
-   <tile gid="4"/>
-   <tile gid="87"/>
    <tile gid="10"/>
-   <tile gid="87"/>
-   <tile gid="4"/>
-   <tile gid="4"/>
-   <tile gid="87"/>
+   <tile gid="5"/>
    <tile gid="10"/>
-   <tile gid="87"/>
-   <tile gid="4"/>
-   <tile gid="4"/>
-   <tile gid="87"/>
    <tile gid="10"/>
    <tile gid="10"/>
-   <tile gid="87"/>
-   <tile gid="87"/>
-   <tile gid="87"/>
-   <tile gid="87"/>
    <tile gid="10"/>
-   <tile gid="87"/>
-   <tile gid="87"/>
-   <tile gid="87"/>
-   <tile gid="87"/>
    <tile gid="10"/>
-   <tile gid="87"/>
-   <tile gid="87"/>
-   <tile gid="87"/>
-   <tile gid="87"/>
    <tile gid="10"/>
    <tile gid="10"/>
    <tile gid="10"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
    <tile gid="10"/>
    <tile gid="10"/>
    <tile gid="10"/>
    <tile gid="10"/>
    <tile gid="10"/>
+   <tile gid="5"/>
    <tile gid="10"/>
    <tile gid="10"/>
    <tile gid="10"/>
@@ -132,191 +244,109 @@
    <tile gid="10"/>
    <tile gid="10"/>
    <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="169"/>
-   <tile gid="169"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="169"/>
-   <tile gid="169"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="51"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="10"/>
-   <tile gid="51"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
+   <tile gid="83"/>
   </data>
  </layer>
  <objectgroup name="Muro Mitad Mapa" width="16" height="16">
   <properties>
    <property name="wall" value="true"/>
   </properties>
-  <object x="59" y="94" width="41" height="354"/>
-  <object x="100" y="94" width="154" height="33"/>
-  <object x="256" y="93" width="32" height="355"/>
-  <object x="703" y="94" width="33" height="351"/>
-  <object x="897" y="98" width="29" height="348"/>
-  <object x="737" y="96" width="156" height="35"/>
-  <object x="738" y="417" width="155" height="29"/>
-  <object x="102" y="414" width="152" height="35"/>
-  <object x="576" y="96" width="32" height="355"/>
-  <object x="379" y="97" width="42" height="353"/>
-  <object x="422" y="417" width="152" height="35"/>
-  <object x="420" y="97" width="154" height="33"/>
  </objectgroup>
  <objectgroup name="pared mapa" width="16" height="16">
   <properties>
    <property name="wall" value="true"/>
   </properties>
-  <object x="0" y="33" height="993"/>
-  <object x="1" y="32" width="990" height="1"/>
-  <object x="993" y="34" height="984"/>
-  <object x="1" y="1022" width="993" height="12"/>
-  <object x="1103" y="538" width="3"/>
+  <object x="3" y="62" width="32" height="997"/>
+  <object x="2" y="33" width="993" height="32"/>
+  <object x="958" y="34" width="35" height="989"/>
+  <object x="1" y="994" width="990" height="35"/>
+  <object x="41" y="348" width="375" height="36"/>
+  <object x="384" y="287" width="33" height="60"/>
+  <object x="385" y="68" width="31" height="64"/>
+  <object x="573" y="64" width="33" height="384"/>
+  <object x="607" y="413" width="64" height="36"/>
+  <object x="575" y="609" width="33" height="223"/>
+  <object x="571" y="607" width="425" height="35"/>
+  <object x="769" y="611" width="32" height="217"/>
+  <object x="37" y="545" width="251" height="32"/>
+  <object x="384" y="548" width="33" height="456"/>
+  <object x="828" y="414" width="131" height="35"/>
  </objectgroup>
  <objectgroup name="respawn" width="16" height="16">
   <properties>
    <property name="numberZombies" value="3"/>
    <property name="respawn" value="true"/>
   </properties>
-  <object type="respawn" x="126" y="158" width="97" height="99">
+  <object type="respawn" x="93" y="117" width="226" height="172">
    <properties>
-    <property name="number" value="1"/>
+    <property name="quantity" value="5"/>
     <property name="type" value="zombie"/>
    </properties>
   </object>
-  <object type="respawn" x="767" y="159" width="97" height="100">
+  <object type="respawn" x="639" y="91" width="281" height="292">
    <properties>
-    <property name="number" value="-1"/>
+    <property name="quantity" value="3"/>
     <property name="type" value="zombie"/>
    </properties>
   </object>
-  <object type="respawn" x="446" y="159" width="97" height="100">
+  <object type="respawn" x="877" y="474" width="61" height="105">
    <properties>
-    <property name="number" value="5"/>
+    <property name="quantity" value="1"/>
     <property name="type" value="zombie"/>
    </properties>
   </object>
-  <object type="respawn" x="766" y="606" width="97" height="100">
+  <object type="respawn" x="670" y="669" width="33" height="36">
    <properties>
-    <property name="number" value="-1"/>
-    <property name="type" value="nada"/>
+    <property name="quantity" value="1"/>
+    <property name="target" value="none"/>
+    <property name="type" value="zombie"/>
+   </properties>
+  </object>
+  <object type="respawn" x="861" y="671" width="34" height="35">
+   <properties>
+    <property name="quantity" value="1"/>
+    <property name="target" value="none"/>
+    <property name="type" value="zombie"/>
+   </properties>
+  </object>
+  <object type="respawn" x="62" y="417" width="218" height="99">
+   <properties>
+    <property name="quantity" value="3"/>
+    <property name="type" value="zombie"/>
+   </properties>
+  </object>
+  <object type="respawn" x="65" y="639" width="33" height="29">
+   <properties>
+    <property name="target" value="none"/>
+    <property name="type" value="zombie"/>
+   </properties>
+  </object>
+  <object type="respawn" x="63" y="763" width="31" height="32">
+   <properties>
+    <property name="target" value="none"/>
+    <property name="type" value="zombie"/>
+   </properties>
+  </object>
+  <object type="respawn" x="63" y="891" width="33" height="33">
+   <properties>
+    <property name="target" value="none"/>
+    <property name="type" value="zombie"/>
    </properties>
   </object>
  </objectgroup>
