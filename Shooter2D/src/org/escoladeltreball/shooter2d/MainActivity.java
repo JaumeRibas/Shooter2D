@@ -52,10 +52,11 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 	private Player player;
 
 	private Scene gameScene;
-	private Scene menuScene;
-	private Scene splashScreen;
+	private MainMenuScene menuScene;
+	private SplashScreen splashScreen;
 
 	private boolean isGameSaved;
+	private boolean populateFinished = false;
 
 	@Override
 	public Engine onCreateEngine(final EngineOptions pEngineOptions) {
@@ -67,7 +68,6 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 	public EngineOptions onCreateEngineOptions() {
 		checkCompatibilityMultiTouch();
 		camera = new BoundCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-		//this.camera.setHUD(UI.getHUD());
 		EngineOptions engineOptions = new EngineOptions(true,
 				ScreenOrientation.LANDSCAPE_FIXED, new RatioResolutionPolicy(
 						CAMERA_WIDTH, CAMERA_HEIGHT), camera);
@@ -130,7 +130,10 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 		this.player.addGameObserver(UI.getInstance());
 		// Se pone al MainActivity como observador del player 
 		this.player.addGameObserver(this);
-
+		//Cuando se termina de cargar se abre el menu principal
+		if (this.splashScreen.getAnimationFinished())
+			this.openMainMenu();
+		this.populateFinished = true;
 		pOnPopulateSceneCallback.onPopulateSceneFinished();
 	}
 
@@ -250,5 +253,9 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 
 	public void openMainMenu() {
 		mEngine.setScene(this.menuScene);		
+	}
+
+	public boolean getPopulateFinished() {
+		return this.populateFinished;
 	}
 }

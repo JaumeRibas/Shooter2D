@@ -15,14 +15,18 @@ import org.escoladeltreball.shooter2d.MainActivity;
 import org.escoladeltreball.shooter2d.ResourceManager;
 
 /**
- * SplashScreenActivity
- * @author 
+ * La splash screen del inicio
+ *
+ * @author Carlos Serrano
+ * @author Elvis Puertas
+ * @author Jaume Ribas
  *
  */
 public class SplashScreen extends Scene {
 	
 	private static final int SPLASH_DURATION = 3;
 	private static final float SPLASH_SCALE_FROM = 0.6f;
+	private boolean animationFinished = false;
 
 	public SplashScreen(Engine engine) {
 		/* Crea y añaade la imagen a la scene. */
@@ -47,17 +51,24 @@ public class SplashScreen extends Scene {
 
 			@Override
 			public void onModifierFinished(final IModifier<IEntity> pEntityModifier, final IEntity pEntity) {
-				MainActivity.getInstance().runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						MainActivity.getInstance().openMainMenu();
-					}
-				});
+				if (MainActivity.getInstance().getPopulateFinished()) {
+					MainActivity.getInstance().runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							MainActivity.getInstance().openMainMenu();
+						}
+					});
+				}
+				SplashScreen.this.animationFinished = true;
 			}
 		});		
 		splashimage.setAlpha(0);
 		splashimage.setScale(SPLASH_SCALE_FROM);
 		splashimage.registerEntityModifier(animation);		
 		this.attachChild(splashimage);
+	}
+
+	public boolean getAnimationFinished() {
+		return this.animationFinished;
 	}
 }
