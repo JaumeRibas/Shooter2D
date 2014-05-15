@@ -7,7 +7,6 @@ import org.andengine.opengl.texture.TextureManager;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.escoladeltreball.shooter2d.ResourceManager;
-import org.escoladeltreball.shooter2d.entities.Bullet;
 import org.escoladeltreball.shooter2d.entities.Player;
 
 import android.content.res.AssetManager;
@@ -35,8 +34,7 @@ public class PlayerLoader {
 		if (player == null) {
 			TiledTextureRegion pTiledTextureRegion;
 			pTiledTextureRegion = ResourceManager.getInstance().playerTextureRegion;
-			player = new Player(x, y, pTiledTextureRegion, engine, scene);
-		}
+			player = new Player(x, y, pTiledTextureRegion, engine, scene);		}
 		return player;
 
 	}
