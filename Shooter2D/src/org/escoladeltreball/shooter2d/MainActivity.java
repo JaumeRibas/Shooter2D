@@ -51,6 +51,7 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 
 	private Scene gameScene;
 	private Scene menuScene;
+	private Scene splashScreen;
 
 	private boolean isGameSaved;
 
@@ -95,7 +96,8 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 		this.gameScene = new Scene();
 		gameScene.setBackground(new Background(0.09804f, 0.6274f, 0.8784f));
 		this.menuScene = new MainMenuScene(this.camera, mEngine, this);
-		pOnCreateSceneCallback.onCreateSceneFinished(this.menuScene);
+		this.splashScreen = new SplashScreen(mEngine);
+		pOnCreateSceneCallback.onCreateSceneFinished(this.splashScreen);
 	}
 
 	@Override
@@ -242,5 +244,9 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 	
 	public static MainActivity getInstance() {
 		return activity;
+	}
+
+	public void openMainMenu() {
+		mEngine.setScene(this.menuScene);		
 	}
 }

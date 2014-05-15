@@ -138,9 +138,9 @@ public class MenuActivity extends SimpleBaseGameActivity {
 					float pTouchAreaLocalX, float pTouchAreaLocalY) {
 
 				if (pSceneTouchEvent.isActionDown()) {
-					Intent start = new Intent(MenuActivity.this,
-							SplashScreenActivity.class);
-					startActivity(start);
+//					Intent start = new Intent(MenuActivity.this,
+//							SplashScreenActivity.class);
+//					startActivity(start);
 				}
 				return true;
 			}

@@ -19,6 +19,7 @@ import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtla
 import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder.TextureAtlasBuilderException;
 import org.andengine.opengl.texture.bitmap.AssetBitmapTexture;
 import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.texture.region.TextureRegionFactory;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.util.debug.Debug;
@@ -64,6 +65,9 @@ public class ResourceManager {
 	
 	//efectos sonido
 	public Sound sound;
+	
+	//splash screen
+	public TextureRegion splashTextureRegion;
 
 
 	//añadir aqui los recursos del juego
@@ -91,6 +95,11 @@ public class ResourceManager {
 	 */
 	public synchronized void loadGameTextures(Engine engine, Context context) {
 		try {
+			//splash screen
+			BitmapTextureAtlas splashBitmapTextureAtlas = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 512, TextureOptions.BILINEAR);
+			this.splashTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(splashBitmapTextureAtlas, context.getAssets(), SpriteConstants.SPLASH_IMAGE, 0, 0);
+			splashBitmapTextureAtlas.load();
+			
 			//jugador
 			this.playerTextureRegion = loadTiledTextureRegion(engine.getTextureManager(), context.getAssets(), SpriteConstants.PLAYER_SPRITE, SpriteConstants.PLAYER_SPRITE_COLUMNS, SpriteConstants.PLAYER_SPRITE_ROWS);
 			
