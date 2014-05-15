@@ -1,7 +1,6 @@
 package org.escoladeltreball.shooter2d;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import org.andengine.engine.Engine;
 import org.andengine.engine.FixedStepEngine;
@@ -17,9 +16,7 @@ import org.andengine.input.touch.controller.MultiTouch;
 import org.andengine.ui.activity.BaseGameActivity;
 import org.escoladeltreball.shooter2d.constants.NotificationConstants;
 import org.escoladeltreball.shooter2d.entities.Player;
-import org.escoladeltreball.shooter2d.entities.Zombie;
 import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
-import org.escoladeltreball.shooter2d.entities.loader.ZombieLoader;
 import org.escoladeltreball.shooter2d.physics.BodyFactory;
 import org.escoladeltreball.shooter2d.physics.GameContactListener;
 import org.escoladeltreball.shooter2d.ui.GameObserver;
@@ -51,9 +48,10 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 	public static FixedStepPhysicsWorld mPhysicsWorld;
 	public Body wallBody;
 	private Player player;
-	private ArrayList<Zombie> zombies;
+
 	private Scene gameScene;
 	private Scene menuScene;
+
 	private boolean isGameSaved;
 
 	@Override
@@ -77,7 +75,6 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 		engineOptions.getTouchOptions().setNeedsMultiTouch(true);
 		engineOptions.getAudioOptions().setNeedsMusic(true);
 		engineOptions.getAudioOptions().setNeedsSound(true);
-		this.zombies = new ArrayList<Zombie>();
 		return engineOptions;
 	}
 
@@ -89,7 +86,7 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 		ResourceManager.getInstance().loadMusic(mEngine, this);
 		ResourceManager.getInstance().musicIntro.play();
 		ResourceManager.getInstance().loadFonts(mEngine, this);
-		MapCreator.loadMap(mEngine, this, this.camera);
+		MapCreator.loadMap(mEngine, this, this.camera, player);
 		pOnCreateResourcesCallback.onCreateResourcesFinished();
 	}
 
@@ -109,6 +106,7 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 		mPhysicsWorld = new FixedStepPhysicsWorld(STEPS_PER_SECOND,
 				new Vector2(0f, 0), false, VELOCITY_INTERACTIONS,
 				POSITION_INTERACTIONS);
+
 		this.gameScene.registerUpdateHandler(mPhysicsWorld);
 		mPhysicsWorld.setContactListener(GameContactListener.getInstance());
 		BodyFactory.setPhysicsWorld(mPhysicsWorld);
@@ -122,12 +120,6 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 		// La camara sigue al jugador
 		this.camera.setChaseEntity(player);
 		gameScene.attachChild(player);
-		this.zombies.add(ZombieLoader.loadZombie(50, 100, mEngine, player));
-		this.zombies.add(ZombieLoader.loadZombie(50, 300, mEngine, player));
-		for (Zombie zombie : this.zombies) {
-			gameScene.attachChild(zombie);
-		}
-
 		// Añade la UI
 		UI.getInstance().createUI(this.camera, this.getVertexBufferObjectManager());
 		// Se pone a la UI como observador del player 
@@ -241,8 +233,7 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 				}
 			}
 		}
-	}
-	
+	}	
 	
 	public void startGame() {
 		mEngine.setScene(this.gameScene);

@@ -14,8 +14,8 @@ import org.escoladeltreball.shooter2d.weapons.Cooldown;
 import com.badlogic.gdx.physics.box2d.Body;
 
 /**
- * La clase Zombie es una {@link IAEntity} enemiga controlada por IA que persigue al
- * jugador cuando lo detecta.
+ * La clase Zombie es una {@link IAEntity} enemiga controlada por IA que
+ * persigue al jugador cuando lo detecta.
  * 
  * @author Carlos Serrano
  * @author Elvis Puertas
@@ -30,6 +30,9 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 
 	private boolean isWalking = false;
 
+	// CONSTANTS
+	
+	public static final String RESPAWN_NAME = "zombie";
 	/**
 	 * Constructor del Zombie.
 	 * 
@@ -102,6 +105,7 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 		this.walk();
 		super.onManagedUpdate(pSecondsElapsed);
 	}
+
 	/**
 	 * Realiza las acciones que el zombie realiza al colisionar con otra entidad.
 	 * 
@@ -140,11 +144,11 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 		this.remove();
 		this.setHealthpoints(getMaxHealthPoints());
 	}
-	
+
 	@Override
 	public void endsContactWith(Body otherBody) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -152,6 +156,6 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 		Object userData = otherBody.getUserData();
 		if (userData == super.getTarget()) {
 			this.attack();
-		}		
+		}
 	}
 }

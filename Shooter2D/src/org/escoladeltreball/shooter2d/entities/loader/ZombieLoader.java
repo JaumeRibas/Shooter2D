@@ -26,12 +26,13 @@ public class ZombieLoader {
 	/**
 	 * Devuelve un zombie nuevo.
 	 * 
-	 * @param x
-	 * @param y
-	 * @param engine
-	 * @param actorEntity a {@link Player} a perseguir
+	 * @param x a integer, la posición horizontal del zombie
+	 * @param y a integer, la posición vertical del zombie
+	 * @param engine a {@link Engine}
+	 * @param actorEntity a {@link ActorEntity} a perseguir
 	 * @return a {@link Zombie}
 	 */
+
 	public static Zombie loadZombie(float x, float y, Engine engine, ActorEntity actorEntity) {
 		Zombie zombie = null;
 		TiledTextureRegion pTiledTextureRegion;

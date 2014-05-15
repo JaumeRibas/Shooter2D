@@ -41,6 +41,7 @@ public class Player extends ActorEntity {
 		this.setMaxHealthPoints(HPConstants.HUMAN_HEALTH);
 		this.setHealthpoints(HPConstants.HUMAN_HEALTH);
 	}
+
 	/**
 	 * Realiza las acciones que el jugador realiza cuando es herido.
 	 * 
@@ -49,8 +50,8 @@ public class Player extends ActorEntity {
 	@Override
 	public void hurt(int strengh){
 		super.hurt(strengh);
-		// TODO Efectos de sonido del zombie herido
-		// TODO Animación y particulas de zombie herido
+		// TODO Efectos de sonido del player herido
+		// TODO Animación y particulas de player herido
 		System.out.println("PLAYER HEALTH: " + getHealthpoints() + "/" + getMaxHealthPoints());
 	}
 	

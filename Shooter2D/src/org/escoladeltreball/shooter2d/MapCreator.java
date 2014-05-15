@@ -8,12 +8,14 @@ import org.andengine.extension.tmx.TMXLayer;
 import org.andengine.extension.tmx.TMXLoader;
 import org.andengine.extension.tmx.TMXObject;
 import org.andengine.extension.tmx.TMXObjectGroup;
+import org.andengine.extension.tmx.TMXProperty;
 import org.andengine.extension.tmx.TMXTiledMap;
 import org.andengine.extension.tmx.util.exception.TMXLoadException;
 import org.andengine.opengl.texture.TextureManager;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.debug.Debug;
+import org.escoladeltreball.shooter2d.entities.Player;
 import org.escoladeltreball.shooter2d.physics.BodyFactory;
 
 import android.content.Context;
@@ -31,7 +33,9 @@ public class MapCreator {
 	 * @param vbo
 	 * @return el mapa cargado para ser añadido a la scene
 	 */
-	public static void loadMap(Engine engine, Context context, BoundCamera camera){
+
+	public static void loadMap(Engine engine, Context context, BoundCamera camera, Player player){
+
 		TMXTiledMap mTMXTiledMap = null;
 		try {
 			final TMXLoader tmxLoader = new TMXLoader(context.getAssets(), engine.getTextureManager(), TextureOptions.BILINEAR_PREMULTIPLYALPHA, engine.getVertexBufferObjectManager());
@@ -62,6 +66,31 @@ public class MapCreator {
 					Rectangle rect = new Rectangle(object.getX(), currentMap.getHeight()-object.getHeight()-object.getY(), object.getWidth()+TILE_SIZE, object.getHeight()+TILE_SIZE, vbo);
 					rect.setOffsetCenter(0, 0);
 					BodyFactory.createRectangleWallBody(rect);
+				}
+			}
+			
+			if(group.getTMXObjectGroupProperties().containsTMXProperty("respawn", "true")){
+				// This is our "wall" layer. Create the boxes from it
+				for(final TMXObject object : group.getTMXObjects()) {
+					long spawnMiliSeconds = 5000;
+					long spawnAcceleration = 0;
+					String unit = null;
+					int unitlimit = 0;
+					for(TMXProperty property : object.getTMXObjectProperties()){
+						String name = property.getName();
+						String value = property.getValue();
+						if(name.equals("spawntime")){
+							spawnMiliSeconds = Long.parseLong(value);
+						} else if(name.equals("spawnacceleration")){
+							spawnAcceleration = Long.parseLong(value);
+						} else if(name.equals("quantity")){
+							unitlimit = Integer.parseInt(value);
+						} else if(name.equals("type")){
+							unit = value;
+						}
+					}
+//					Respawn res = new Respawn(scene, object.getX(), map.getHeight()-object.getHeight()-object.getY(), object.getWidth() + 32, object.getHeight() + 32, tma , assets, vbo, player, spawnMiliSeconds, spawnAcceleration, unit, unitlimit);
+
 				}
 			}
 		}

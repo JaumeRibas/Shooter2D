@@ -10,20 +10,20 @@ import org.andengine.entity.scene.menu.item.TextMenuItem;
 import org.andengine.ui.activity.BaseActivity;
 
 /**
+ * El menu principal
  * 
- * @author local
- * 
+ * @author Carlos Serrano
+ * @author Elvis Puertas
+ * @author Jaume Ribas
  */
 public class MainMenuScene extends MenuScene implements
 		IOnMenuItemClickListener {
 
 	BaseActivity activity;
-	private Engine engine;
 	private static final int MENU_START = 0;
 
 	public MainMenuScene(Camera camera, Engine engine, BaseActivity activity) {
 		super(camera);
-		this.engine = engine;
 		setBackground(new Background(0.09804f, 0.6274f, 0.8784f));
 		IMenuItem startButton = new TextMenuItem(MENU_START, ResourceManager.getInstance().hudFont, activity.getString(R.string.start),
 				engine.getVertexBufferObjectManager());
