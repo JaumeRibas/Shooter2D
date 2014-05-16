@@ -20,15 +20,23 @@ import org.escoladeltreball.shooter2d.ResourceManager;
  * @author Elvis Puertas
  * @author Jaume Ribas
  */
-public class MainMenuScene extends MenuScene implements
+public class MainMenuScene extends MenuScene implements GameScene,
 		IOnMenuItemClickListener {
 
 	private static final int MENU_START = 0;
 	private static final int MENU_EXIT = 1;
+	private Engine engine;
+	private BaseActivity activity;
 
 	public MainMenuScene(Camera camera, Engine engine, BaseActivity activity) {
 		super(camera);
 		setBackground(new Background(Color.BLACK));
+		this.engine = engine;
+		this.activity = activity;
+	}
+	
+	@Override
+	public void populate() {
 		float centerY = MainActivity.CAMERA_HEIGHT / 2;
 		float widthThird = MainActivity.CAMERA_WIDTH / 3;
 		IMenuItem startItem = new TextMenuItem(MENU_START, ResourceManager.getInstance().hudFont, activity.getString(R.string.start),

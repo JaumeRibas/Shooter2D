@@ -22,13 +22,23 @@ import org.escoladeltreball.shooter2d.ResourceManager;
  * @author Jaume Ribas
  *
  */
-public class SplashScreen extends Scene {
+public class SplashScreen extends Scene implements GameScene {
 	
 	private static final int SPLASH_DURATION = 3;
 	private static final float SPLASH_SCALE_FROM = 0.6f;
 	private boolean animationFinished = false;
+	private Engine engine;
 
 	public SplashScreen(Engine engine) {
+		this.engine = engine;
+	}
+
+	public boolean getAnimationFinished() {
+		return this.animationFinished;
+	}
+
+	@Override
+	public void populate() {
 		/* Crea y añaade la imagen a la scene. */
 		final Sprite splashimage = new Sprite(MainActivity.CAMERA_WIDTH/2, MainActivity.CAMERA_HEIGHT/2, ResourceManager.getInstance().splashTextureRegion, engine.getVertexBufferObjectManager());
 	
@@ -66,9 +76,5 @@ public class SplashScreen extends Scene {
 		splashimage.setScale(SPLASH_SCALE_FROM);
 		splashimage.registerEntityModifier(animation);		
 		this.attachChild(splashimage);
-	}
-
-	public boolean getAnimationFinished() {
-		return this.animationFinished;
 	}
 }

@@ -10,20 +10,17 @@ import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.WakeLockOptions;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.scene.background.Background;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.input.touch.controller.MultiTouch;
 import org.andengine.ui.activity.BaseGameActivity;
-import org.escoladeltreball.shooter2d.constants.NotificationConstants;
 import org.escoladeltreball.shooter2d.entities.Player;
-import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
 import org.escoladeltreball.shooter2d.physics.BodyFactory;
 import org.escoladeltreball.shooter2d.physics.GameContactListener;
+import org.escoladeltreball.shooter2d.scenes.FirstLevel;
+import org.escoladeltreball.shooter2d.scenes.GameScene;
 import org.escoladeltreball.shooter2d.scenes.MainMenuScene;
 import org.escoladeltreball.shooter2d.scenes.SplashScreen;
-import org.escoladeltreball.shooter2d.ui.GameObserver;
 import org.escoladeltreball.shooter2d.ui.UI;
-import org.escoladeltreball.shooter2d.weapons.WeaponFactory;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -32,9 +29,8 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 
-public class MainActivity extends BaseGameActivity implements GameObserver {
+public class MainActivity extends BaseGameActivity {
 	
 	public static MainActivity activity;
 	public BoundCamera camera;
@@ -47,11 +43,10 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 	/** se usa al crear el FixedStepPhysicsWorld */
 	private static final int POSITION_INTERACTIONS = 3;
 
-	public static FixedStepPhysicsWorld mPhysicsWorld;
-	public Body wallBody;
+	public FixedStepPhysicsWorld mPhysicsWorld;
 	private Player player;
 
-	private Scene gameScene;
+	private GameScene firstLevel;
 	private MainMenuScene menuScene;
 	private SplashScreen splashScreen;
 
@@ -95,8 +90,7 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 
 	@Override
 	public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) {
-		this.gameScene = new Scene();
-		gameScene.setBackground(new Background(0.09804f, 0.6274f, 0.8784f));
+		this.firstLevel = new FirstLevel();
 		this.menuScene = new MainMenuScene(this.camera, mEngine, this);
 		this.splashScreen = new SplashScreen(mEngine);
 		pOnCreateSceneCallback.onCreateSceneFinished(this.splashScreen);
@@ -106,30 +100,17 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 	public void onPopulateScene(Scene pScene,
 			OnPopulateSceneCallback pOnPopulateSceneCallback)
 			throws IOException {
-
-		mPhysicsWorld = new FixedStepPhysicsWorld(STEPS_PER_SECOND,
+		//populate splash
+		this.splashScreen.populate();
+		//populate menu
+		this.menuScene.populate(); 
+		this.mPhysicsWorld = new FixedStepPhysicsWorld(MainActivity.STEPS_PER_SECOND,
 				new Vector2(0f, 0), false, VELOCITY_INTERACTIONS,
 				POSITION_INTERACTIONS);
-
-		this.gameScene.registerUpdateHandler(mPhysicsWorld);
-		mPhysicsWorld.setContactListener(GameContactListener.getInstance());
-		BodyFactory.setPhysicsWorld(mPhysicsWorld);
-		// Muestra el mapa en la pantalla
-		gameScene.attachChild(MapCreator.getCurrentMap());
-		// crea el player
-		this.player = PlayerLoader.loadPlayer(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2, mEngine, gameScene);
-		this.player.setGun(WeaponFactory.getGun(gameScene, mEngine));
-		//crea los objetos del mapa
-		MapCreator.createMapObjects(gameScene, mEngine, MapCreator.getCurrentMap(), getVertexBufferObjectManager(), player);
-		// La camara sigue al jugador
-		this.camera.setChaseEntity(player);
-		gameScene.attachChild(player);
-		// Añade la UI
-		UI.getInstance().createUI(this.camera, this.getVertexBufferObjectManager());
-		// Se pone a la UI como observador del player 
-		this.player.addGameObserver(UI.getInstance());
-		// Se pone al MainActivity como observador del player 
-		this.player.addGameObserver(this);
+		this.mPhysicsWorld.setContactListener(GameContactListener.getInstance());
+		BodyFactory.setPhysicsWorld(this.mPhysicsWorld);
+		//populate primer nivel
+		this.firstLevel.populate();
 		//Cuando se termina de cargar se abre el menu principal
 		if (this.splashScreen.getAnimationFinished())
 			this.openMainMenu();
@@ -224,26 +205,10 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//loadGame();
-	}
-
-	@Override
-	public void notify(Object notifier, Object data) {
-		if (data instanceof Short) {
-			short notification = ((Short)data).shortValue();
-			if(notifier == PlayerLoader.getPlayer()) {
-				switch (notification) {
-				case NotificationConstants.CHANGE_HEALTH:
-					if (this.player.getHealthpoints() <= 0)  {
-						//cuando muere el player
-					}
-					break;
-				}
-			}
-		}
 	}	
 	
 	public void startGame() {
-		mEngine.setScene(this.gameScene);
+		mEngine.setScene((Scene) this.firstLevel);
 		this.camera.setHUD(UI.getHUD());
 	}
 	
