@@ -11,7 +11,6 @@ import org.andengine.extension.tmx.TMXObjectGroup;
 import org.andengine.extension.tmx.TMXProperty;
 import org.andengine.extension.tmx.TMXTiledMap;
 import org.andengine.extension.tmx.util.exception.TMXLoadException;
-import org.andengine.opengl.texture.TextureManager;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.debug.Debug;
@@ -20,7 +19,6 @@ import org.escoladeltreball.shooter2d.entities.Player;
 import org.escoladeltreball.shooter2d.physics.BodyFactory;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 
 public class MapCreator {
 
