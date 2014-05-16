@@ -24,15 +24,23 @@ public class MainMenuScene extends MenuScene implements
 		IOnMenuItemClickListener {
 
 	private static final int MENU_START = 0;
+	private static final int MENU_EXIT = 1;
 
 	public MainMenuScene(Camera camera, Engine engine, BaseActivity activity) {
 		super(camera);
 		setBackground(new Background(Color.BLACK));
-		IMenuItem startButton = new TextMenuItem(MENU_START, ResourceManager.getInstance().hudFont, activity.getString(R.string.start),
+		float centerY = MainActivity.CAMERA_HEIGHT / 2;
+		float widthThird = MainActivity.CAMERA_WIDTH / 3;
+		IMenuItem startItem = new TextMenuItem(MENU_START, ResourceManager.getInstance().hudFont, activity.getString(R.string.start),
 				engine.getVertexBufferObjectManager());
-		startButton.setOffsetCenter(0.5f, 0.5f);
-		startButton.setPosition(MainActivity.CAMERA_WIDTH / 2, MainActivity.CAMERA_HEIGHT / 2);
-		addMenuItem(startButton);
+		startItem.setOffsetCenter(0.5f, 0.5f);
+		IMenuItem exitItem = new TextMenuItem(MENU_EXIT, ResourceManager.getInstance().hudFont, activity.getString(R.string.exit),
+				engine.getVertexBufferObjectManager());
+		exitItem.setOffsetCenter(0.5f, 0.5f);
+		exitItem.setPosition(widthThird, centerY);
+		startItem.setPosition(widthThird * 2, centerY);
+		addMenuItem(startItem);
+		addMenuItem(exitItem);
 		setOnMenuItemClickListener(this);
 	}
 
@@ -42,6 +50,9 @@ public class MainMenuScene extends MenuScene implements
 		switch (arg1.getID()) {
 		case MENU_START:
 			MainActivity.getInstance().startGame();
+			return true;
+		case MENU_EXIT:
+			MainActivity.getInstance().finish();
 			return true;
 		default:
 			break;

@@ -116,11 +116,11 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 		BodyFactory.setPhysicsWorld(mPhysicsWorld);
 		// Muestra el mapa en la pantalla
 		gameScene.attachChild(MapCreator.getCurrentMap());
-		//crea los objetos del mapa
-		MapCreator.createMapObjects(getVertexBufferObjectManager());
 		// crea el player
 		this.player = PlayerLoader.loadPlayer(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2, mEngine, gameScene);
 		this.player.setGun(WeaponFactory.getGun(gameScene, mEngine));
+		//crea los objetos del mapa
+		MapCreator.createMapObjects(gameScene, mEngine, MapCreator.getCurrentMap(), getVertexBufferObjectManager(), player);
 		// La camara sigue al jugador
 		this.camera.setChaseEntity(player);
 		gameScene.attachChild(player);
@@ -166,7 +166,7 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 				ResourceManager.getInstance().musicIntro.pause();
 			}
 		}
-		saveGame();
+		//saveGame();
 	}
 
 	@Override
@@ -187,7 +187,7 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 	@Override
 	public void onBackPressed() {
 		moveTaskToBack(true);
-		saveGame();
+		//saveGame();
 		// Pausa la reproducción de la música en caso de estar reproduciendose
 		if (ResourceManager.getInstance().musicIntro != null
 				&& ResourceManager.getInstance().musicIntro.isPlaying()) {
@@ -259,3 +259,4 @@ public class MainActivity extends BaseGameActivity implements GameObserver {
 		return this.populateFinished;
 	}
 }
+

@@ -15,6 +15,7 @@ import org.andengine.opengl.texture.TextureManager;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.debug.Debug;
+import org.escoladeltreball.shooter2d.entities.ActorEntity;
 import org.escoladeltreball.shooter2d.entities.Player;
 import org.escoladeltreball.shooter2d.physics.BodyFactory;
 
@@ -52,12 +53,15 @@ public class MapCreator {
 	}
 
 	/**
-	 * Crea los rectangulos que no podrán ser atravesados y los añade a la scene
-	 * @param map
-	 * @param vbo 
-	 * @return
+	 * Crea los objetos de la escena, paredes y respawns.
+	 * 
+	 * @param scene a {@link Scene}
+	 * @param engine a {@link Engine}
+	 * @param map a {@link TMXTiledMap}
+	 * @param vbo a {@link VertexBufferObjectManager}
+	 * @param player a {@link ActorEntity} for the enemies to target.
 	 */
-	public static void createMapObjects(VertexBufferObjectManager vbo){
+	public static void createMapObjects(Scene scene, Engine engine, TMXTiledMap map, VertexBufferObjectManager vbo, ActorEntity player){
 		// Loop through the object groups
 		for(final TMXObjectGroup group: currentMap.getTMXObjectGroups()) {
 			if(group.getTMXObjectGroupProperties().containsTMXProperty("wall", "true")){
@@ -70,32 +74,57 @@ public class MapCreator {
 			}
 			
 			if(group.getTMXObjectGroupProperties().containsTMXProperty("respawn", "true")){
-				// This is our "wall" layer. Create the boxes from it
+				// Creamos cada respawn con sus características.
 				for(final TMXObject object : group.getTMXObjects()) {
-					long spawnMiliSeconds = 5000;
+					long spawnMiliSeconds = 10;
 					long spawnAcceleration = 0;
 					String unit = null;
-					int unitlimit = 0;
+					int unitlimit = 1;
+					ActorEntity target = player;
 					for(TMXProperty property : object.getTMXObjectProperties()){
 						String name = property.getName();
 						String value = property.getValue();
 						if(name.equals("spawntime")){
+							System.out.println("Spawntime: " + value);
 							spawnMiliSeconds = Long.parseLong(value);
 						} else if(name.equals("spawnacceleration")){
+							System.out.println("SpawnAcceleration: " + value);
 							spawnAcceleration = Long.parseLong(value);
 						} else if(name.equals("quantity")){
+							System.out.println("UnitLimit: " + value);
 							unitlimit = Integer.parseInt(value);
+							if(unitlimit < 0){
+								spawnMiliSeconds = 2000;
+							}
 						} else if(name.equals("type")){
+							System.out.println("Unit Type: " + value);
 							unit = value;
+						} else if(name.equals("target")){
+							System.out.println("Target: " + value);
+							if(value.equals("player")){
+								target = player;
+							} else if(value.equals("none")){
+								target = null;
+							}
 						}
 					}
-//					Respawn res = new Respawn(scene, object.getX(), map.getHeight()-object.getHeight()-object.getY(), object.getWidth() + 32, object.getHeight() + 32, tma , assets, vbo, player, spawnMiliSeconds, spawnAcceleration, unit, unitlimit);
-
+					
+					int posX = object.getX() + map.getTileWidth();
+					int posY = (int) (map.getHeight()-object.getHeight()-object.getY()) + map.getTileWidth(); 
+					int width = object.getWidth() + 32;
+					int heigh = object.getHeight() + 32;
+					
+					Respawn res = new Respawn(scene, posX, posY, width, heigh, engine, target, spawnMiliSeconds, spawnAcceleration, unit, unitlimit);
+					res.start();
 				}
 			}
 		}
 	}
-
+	/**
+	 * Devuelve el mapa.
+	 * 
+	 * @return un {@link TMXTiledMap}
+	 */
 	public static TMXTiledMap getCurrentMap() {
 		return currentMap;
 	}

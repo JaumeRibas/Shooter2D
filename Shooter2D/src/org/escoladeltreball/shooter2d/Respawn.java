@@ -3,7 +3,6 @@ package org.escoladeltreball.shooter2d;
 import org.andengine.engine.Engine;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
-import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.util.adt.color.Color;
 import org.escoladeltreball.shooter2d.entities.ActorEntity;
 import org.escoladeltreball.shooter2d.entities.GameEntity;
@@ -22,13 +21,13 @@ public class Respawn extends Thread {
 	private int unitlimit;
 	
 
-	public Respawn(Scene scene, int x, int y, int width, int heigth, Engine engine,
-			FixedStepPhysicsWorld mPhysicsWorld, ActorEntity player, long spawnMiliSeconds, long spawnAcceleration, String unit, int unitlimit) {
+	public Respawn(Scene scene, int x, int y, int width, int heigth, Engine engine, ActorEntity player, long spawnMiliSeconds, long spawnAcceleration, String unit, int unitlimit) {
 		this.scene = scene;
 		
 		this.area = new Rectangle(x, y, width, heigth, engine.getVertexBufferObjectManager());
 		this.area.setColor(Color.RED);
 		this.area.setAlpha(0.25f);
+		this.area.setVisible(false);
 		
 		this.engine = engine;
 		this.scene.attachChild(area);
@@ -57,27 +56,25 @@ public class Respawn extends Thread {
 
 	private int[] calculateRandomCoordinate(Rectangle area) {
 		int[] coordinate = new int[2];
-		int x = (int)(area.getX() + Math.random() * area.getWidth());
-		int y = (int)(area.getY() + Math.random() * area.getHeight());
+		int x = (int)(area.getX() + Math.random() * area.getWidth() - MapCreator.getCurrentMap().getTileWidth());
+		int y = (int)(area.getY() + Math.random() * area.getHeight() - MapCreator.getCurrentMap().getTileHeight());
 		coordinate[0] = x;
 		coordinate[1] = y;
 		return coordinate;
 	}
 
 	public void run() {
-		int zombiesSpawned = 0;
-		while(zombiesSpawned != unitlimit){
+		int unitsSpawned = 0;
+		while(unitsSpawned != unitlimit){
 			try {
-				long time = spawnMiliSeconds - (zombiesSpawned * spawnAcceleration);
+				long time = spawnMiliSeconds - (unitsSpawned * spawnAcceleration);
 				if(time < 500){
 					time = 500;
 				}
 				Thread.sleep(time);
 				spawn(this.unit);
-				zombiesSpawned++;
-				System.out.println("HAN POPEADO " + zombiesSpawned + " ZOMBIES!");
+				unitsSpawned++;
 			} catch (InterruptedException e) {
-				System.out.println("ALGO MALO HA PASADO...");
 				e.printStackTrace();
 			}	
 		}	

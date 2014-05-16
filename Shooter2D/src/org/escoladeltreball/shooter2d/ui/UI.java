@@ -110,9 +110,9 @@ public class UI implements GameObserver {
 		this.healthBar.setRotation(HEALTH_BAR_ANGLE);
 		getHUD().attachChild(this.healthBar);
 		// contador balas
-		this.ammoText = new Text(AMMO_TEXT_X, AMMO_TEXT_Y, ResourceManager.getInstance().hudFont, String.valueOf(PlayerLoader.getPlayer().getHealthpoints()), AMMO_TEXT_MAX_CHARACTER_COUNT, vertexBufferObjectManager);
-		this.ammoText.setOffsetCenter(AMMO_TEXT_OFFSET_CENTER_X, AMMO_TEXT_OFFSET_CENTER_Y);
-		getHUD().attachChild(this.ammoText);
+//		this.ammoText = new Text(AMMO_TEXT_X, AMMO_TEXT_Y, ResourceManager.getInstance().hudFont, String.valueOf(PlayerLoader.getPlayer().getHealthpoints()), AMMO_TEXT_MAX_CHARACTER_COUNT, vertexBufferObjectManager);
+//		this.ammoText.setOffsetCenter(AMMO_TEXT_OFFSET_CENTER_X, AMMO_TEXT_OFFSET_CENTER_Y);
+//		getHUD().attachChild(this.ammoText);
 	}
 
 
