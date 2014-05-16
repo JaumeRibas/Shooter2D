@@ -235,7 +235,6 @@ public class UI implements GameObserver {
 				switch (notification) {
 				case NotificationConstants.CHANGE_HEALTH:
 					this.healthBar.setValue(PlayerLoader.getPlayer().getHealthpoints());
-					this.ammoText.setText(String.valueOf(PlayerLoader.getPlayer().getHealthpoints()));
 					break;
 				}
 			}

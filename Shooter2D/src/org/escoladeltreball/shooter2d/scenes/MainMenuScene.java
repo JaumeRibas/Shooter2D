@@ -52,7 +52,7 @@ public class MainMenuScene extends MenuScene implements
 			MainActivity.getInstance().startGame();
 			return true;
 		case MENU_EXIT:
-			MainActivity.getInstance().finish();
+			android.os.Process.killProcess(android.os.Process.myPid());
 			return true;
 		default:
 			break;
