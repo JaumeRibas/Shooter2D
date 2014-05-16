@@ -2,7 +2,6 @@ package org.escoladeltreball.shooter2d.entities;
 
 import org.andengine.engine.Engine;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
-import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.escoladeltreball.shooter2d.constants.NotificationConstants;
 
 /**

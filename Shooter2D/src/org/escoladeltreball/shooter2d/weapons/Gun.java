@@ -2,18 +2,9 @@ package org.escoladeltreball.shooter2d.weapons;
 
 import org.andengine.engine.Engine;
 import org.andengine.entity.scene.Scene;
-import org.andengine.extension.physics.box2d.util.Vector2Pool;
-import org.escoladeltreball.shooter2d.MainActivity;
-import org.escoladeltreball.shooter2d.constants.HPConstants;
 import org.escoladeltreball.shooter2d.entities.ActorEntity;
 import org.escoladeltreball.shooter2d.entities.Bullet;
-import org.escoladeltreball.shooter2d.entities.Player;
 import org.escoladeltreball.shooter2d.entities.loader.BulletLoader;
-import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
-import org.escoladeltreball.shooter2d.entities.loader.ZombieLoader;
-
-import com.badlogic.gdx.math.Vector2;
-
 
 /**
  * La clase Gun es la encargada de posicionar las balas que disparan las ActorEntity.

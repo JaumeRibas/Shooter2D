@@ -24,7 +24,7 @@ public class Bullet extends ColisionableEntity {
 
 	private Cooldown bulletTime;
 
-	private boolean attached = true;
+//	private boolean attached = true;
 
 	/**
 	 * Constructor de la bala.

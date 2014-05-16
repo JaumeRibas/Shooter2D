@@ -1,16 +1,10 @@
 package org.escoladeltreball.shooter2d.entities.loader;
 
 import org.andengine.engine.Engine;
-import org.andengine.engine.camera.Camera;
-import org.andengine.opengl.texture.TextureManager;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
-import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.escoladeltreball.shooter2d.ResourceManager;
 import org.escoladeltreball.shooter2d.entities.ActorEntity;
-import org.escoladeltreball.shooter2d.entities.Player;
 import org.escoladeltreball.shooter2d.entities.Zombie;
-
-import android.content.res.AssetManager;
 
 /**
  * La clase ZombieLoader se encarga cargar los recursos del jugador y del propio jugador.
