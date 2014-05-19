@@ -6,6 +6,7 @@ import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.escoladeltreball.shooter2d.constants.NotificationConstants;
 import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
 import org.escoladeltreball.shooter2d.ui.GameObserver;
+import org.escoladeltreball.shooter2d.ui.UI;
 
 /**
  * Controla el flujo del juego
@@ -56,7 +57,7 @@ public class GameManager implements GameObserver, IOnMenuItemClickListener {
 				switch (notification) {
 				case NotificationConstants.CHANGE_HEALTH:
 					if (PlayerLoader.getPlayer().getHealthpoints() <= 0)  {
-						MainActivity.getInstance().currentLevel.setIgnoreUpdate(true);
+						showGameOver();
 					}
 					break;
 				}
@@ -64,12 +65,19 @@ public class GameManager implements GameObserver, IOnMenuItemClickListener {
 		}
 	}	
 	
+	private void showGameOver() {
+		MainActivity.getInstance().currentLevel.setIgnoreUpdate(true);
+		MainActivity.getInstance().setCurrentHUD(UI.getGameOverHUD());		
+	}
+
 	@Override
 	public boolean onMenuItemClicked(MenuScene arg0, IMenuItem arg1,
 			float arg2, float arg3) {
 		switch (arg1.getID()) {
-		case MENU_RESUME:
 		case MENU_START:
+			this.setStarted(true);
+			MainActivity.getInstance().setCurrentHUD(UI.getUIHUD());
+		case MENU_RESUME:
 			MainActivity.getInstance().openGame();
 			return true;
 		case MENU_EXIT:

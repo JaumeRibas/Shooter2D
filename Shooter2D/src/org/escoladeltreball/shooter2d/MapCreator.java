@@ -15,7 +15,6 @@ import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.debug.Debug;
 import org.escoladeltreball.shooter2d.entities.ActorEntity;
-import org.escoladeltreball.shooter2d.entities.Player;
 import org.escoladeltreball.shooter2d.physics.BodyFactory;
 
 import android.content.Context;
@@ -33,7 +32,7 @@ public class MapCreator {
 	 * @return el mapa cargado para ser añadido a la scene
 	 */
 
-	public static void loadMap(Engine engine, Context context, BoundCamera camera, Player player){
+	public static void loadMap(Engine engine, Context context, BoundCamera camera){
 
 		TMXTiledMap mTMXTiledMap = null;
 		try {
