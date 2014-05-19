@@ -40,9 +40,11 @@ import android.graphics.Color;
  */
 public class ResourceManager {
 
-	private static final int HUD_FONT_COLOR = Color.WHITE;
-	private static final float HUD_FONT_SIZE = 32f;
-	private static final String HUD_FONT = "Oswald-Stencbab.ttf";
+	private static final int MENU_FONT_TEXTURE_WIDTH = 300;
+	private static final int MENU_FONT_TEXTURE_HEIGHT = 300;
+	private static final int MENU_FONT_COLOR = Color.WHITE;
+	private static final float MENU_FONT_SIZE = 70f;
+	private static final String MENU_FONT = "Oswald-Stencbab.ttf";
 
 	/** la instancia unica de ResourceManager */
 	public static ResourceManager instance;
@@ -57,8 +59,10 @@ public class ResourceManager {
 	public TiledTextureRegion zombieTextureRegion;
 	/** la sprite de la bala */
 	public TiledTextureRegion bulletTextureRegion;
-	/** la funete de texto de la HUD */
-	public Font hudFont;
+	/** la fuente de texto de los menus */
+	public Font menuFont;
+	/** la fuente del texto de GAME OVER */
+	public Font gameOverFont;
 	
 	//musica
 	public Music musicIntro;
@@ -161,10 +165,12 @@ public class ResourceManager {
 	}
 	
 	public synchronized void loadFonts(Engine engine, Context context) {
-		//hud
-		this.hudFont = FontFactory.createFromAsset(engine.getFontManager(), engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR, context.getAssets(), "font/" + HUD_FONT, HUD_FONT_SIZE, true, HUD_FONT_COLOR);
-		this.hudFont.load();
-		this.hudFont.prepareLetters("1234567890".toCharArray());
+		//menu
+		this.menuFont = FontFactory.createFromAsset(engine.getFontManager(), engine.getTextureManager(), MENU_FONT_TEXTURE_WIDTH, MENU_FONT_TEXTURE_HEIGHT, TextureOptions.BILINEAR, context.getAssets(), "font/" + MENU_FONT, MENU_FONT_SIZE, true, MENU_FONT_COLOR);
+		this.menuFont.load();
+		//game over
+		this.gameOverFont = FontFactory.createFromAsset(engine.getFontManager(), engine.getTextureManager(), MENU_FONT_TEXTURE_WIDTH, MENU_FONT_TEXTURE_HEIGHT, TextureOptions.BILINEAR, context.getAssets(), "font/" + MENU_FONT, MENU_FONT_SIZE, true, MENU_FONT_COLOR);
+		this.menuFont.prepareLetters("ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray());
 	}
 	
 	/**
@@ -204,6 +210,6 @@ public class ResourceManager {
 	}
 	
 	public synchronized void unloadFonts() {
-		this.hudFont.unload();
+		this.menuFont.unload();
 	}
 }

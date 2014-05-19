@@ -39,7 +39,7 @@ public abstract class ColisionableEntity extends GameEntity {
 
 	public void setBody(Body body) {
 		this.body = body;
-		MainActivity.mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(this, this.body));
+		MainActivity.getInstance().mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(this, this.body));
 		this.body.setUserData(this);
 	}
 	
@@ -76,9 +76,9 @@ public abstract class ColisionableEntity extends GameEntity {
 	private void removeSelf() {
 		this.detachSelf();
 		this.clearUpdateHandlers();
-		MainActivity.mPhysicsWorld.unregisterPhysicsConnector(
-				MainActivity.mPhysicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(this));
-		MainActivity.mPhysicsWorld.destroyBody(this.getBody());
+		MainActivity.getInstance().mPhysicsWorld.unregisterPhysicsConnector(
+				MainActivity.getInstance().mPhysicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(this));
+		MainActivity.getInstance().mPhysicsWorld.destroyBody(this.getBody());
 	}
 	
 	/**

@@ -15,16 +15,30 @@ import org.escoladeltreball.shooter2d.MainActivity;
 import org.escoladeltreball.shooter2d.ResourceManager;
 
 /**
- * SplashScreenActivity
- * @author 
+ * La splash screen del inicio
+ *
+ * @author Carlos Serrano
+ * @author Elvis Puertas
+ * @author Jaume Ribas
  *
  */
-public class SplashScreen extends Scene {
+public class SplashScreen extends Scene implements GameScene {
 	
 	private static final int SPLASH_DURATION = 3;
 	private static final float SPLASH_SCALE_FROM = 0.6f;
+	private boolean animationFinished = false;
+	private Engine engine;
 
 	public SplashScreen(Engine engine) {
+		this.engine = engine;
+	}
+
+	public boolean getAnimationFinished() {
+		return this.animationFinished;
+	}
+
+	@Override
+	public void populate() {
 		/* Crea y añaade la imagen a la scene. */
 		final Sprite splashimage = new Sprite(MainActivity.CAMERA_WIDTH/2, MainActivity.CAMERA_HEIGHT/2, ResourceManager.getInstance().splashTextureRegion, engine.getVertexBufferObjectManager());
 	
@@ -47,12 +61,16 @@ public class SplashScreen extends Scene {
 
 			@Override
 			public void onModifierFinished(final IModifier<IEntity> pEntityModifier, final IEntity pEntity) {
-				MainActivity.getInstance().runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						MainActivity.getInstance().openMainMenu();
-					}
-				});
+				if (MainActivity.getInstance().getPopulateFinished()) {
+					MainActivity.getInstance().runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							if (MainActivity.getInstance().getPopulateFinished())
+								MainActivity.getInstance().openMainMenu();
+						}
+					});
+				}
+				SplashScreen.this.animationFinished = true;
 			}
 		});		
 		splashimage.setAlpha(0);
