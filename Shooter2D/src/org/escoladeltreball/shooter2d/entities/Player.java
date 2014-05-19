@@ -1,7 +1,6 @@
 package org.escoladeltreball.shooter2d.entities;
 
 import org.andengine.engine.Engine;
-import org.andengine.entity.scene.Scene;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.escoladeltreball.shooter2d.constants.HPConstants;
 import org.escoladeltreball.shooter2d.physics.BodyFactory;
@@ -34,7 +33,7 @@ public class Player extends ActorEntity {
 	 * @param scene 
 	 */
 	public Player(float pX, float pY, ITiledTextureRegion pTiledTextureRegion,
-			Engine engine, Scene scene) {
+			Engine engine) {
 		super(pX, pY, pTiledTextureRegion, engine);
 		Body body = BodyFactory.createHumanBody(pX, pY);
 		this.setBody(body);

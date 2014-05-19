@@ -5,6 +5,7 @@
     <string name="start">START</string>
     <string name="resume">RESUME</string>
     <string name="exit">EXIT</string>
+    <string name="gameover">GAME OVER</string>
     <string name="action_settings">Settings</string>
 
 </resources>
