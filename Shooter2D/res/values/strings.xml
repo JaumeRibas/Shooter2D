@@ -3,6 +3,7 @@
 
     <string name="app_name">Shooter2D</string>
     <string name="start">START</string>
+    <string name="resume">RESUME</string>
     <string name="exit">EXIT</string>
     <string name="action_settings">Settings</string>
 

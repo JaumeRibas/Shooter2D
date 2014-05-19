@@ -2,16 +2,15 @@ package org.escoladeltreball.shooter2d.scenes;
 
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
+import org.escoladeltreball.shooter2d.GameManager;
 import org.escoladeltreball.shooter2d.MainActivity;
 import org.escoladeltreball.shooter2d.MapCreator;
-import org.escoladeltreball.shooter2d.constants.NotificationConstants;
 import org.escoladeltreball.shooter2d.entities.Player;
 import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
-import org.escoladeltreball.shooter2d.ui.GameObserver;
 import org.escoladeltreball.shooter2d.ui.UI;
 import org.escoladeltreball.shooter2d.weapons.WeaponFactory;
 
-public class FirstLevel extends Scene implements GameScene, GameObserver {
+public class FirstLevel extends Scene implements GameScene {
 	
 	private Player player;
 
@@ -37,23 +36,7 @@ public class FirstLevel extends Scene implements GameScene, GameObserver {
 		// Se pone a la UI como observador del player 
 		this.player.addGameObserver(UI.getInstance());
 		// Se pone al MainActivity como observador del player 
-		this.player.addGameObserver(this);
+		this.player.addGameObserver(GameManager.getInstance());
 	}
-
-	@Override
-	public void notify(Object notifier, Object data) {
-		if (data instanceof Short) {
-			short notification = ((Short)data).shortValue();
-			if(notifier == PlayerLoader.getPlayer()) {
-				switch (notification) {
-				case NotificationConstants.CHANGE_HEALTH:
-					if (this.player.getHealthpoints() <= 0)  {
-						//cuando muere el player
-					}
-					break;
-				}
-			}
-		}
-	}	
 
 }

@@ -18,11 +18,14 @@ import org.escoladeltreball.shooter2d.physics.BodyFactory;
 import org.escoladeltreball.shooter2d.physics.GameContactListener;
 import org.escoladeltreball.shooter2d.scenes.FirstLevel;
 import org.escoladeltreball.shooter2d.scenes.GameScene;
-import org.escoladeltreball.shooter2d.scenes.MainMenuScene;
+import org.escoladeltreball.shooter2d.scenes.PauseMenuScene;
+import org.escoladeltreball.shooter2d.scenes.StartMenuScene;
 import org.escoladeltreball.shooter2d.scenes.SplashScreen;
 import org.escoladeltreball.shooter2d.ui.UI;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -47,11 +50,13 @@ public class MainActivity extends BaseGameActivity {
 	private Player player;
 
 	private GameScene firstLevel;
-	private MainMenuScene menuScene;
+	private StartMenuScene startMenuScene;
 	private SplashScreen splashScreen;
 
 	private boolean isGameSaved;
 	private boolean populateFinished = false;
+	public Scene currentLevel;
+	private PauseMenuScene pauseMenuScene;
 
 	@Override
 	public Engine onCreateEngine(final EngineOptions pEngineOptions) {
@@ -61,7 +66,6 @@ public class MainActivity extends BaseGameActivity {
 
 	@Override
 	public EngineOptions onCreateEngineOptions() {
-		checkCompatibilityMultiTouch();
 		camera = new BoundCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
 		EngineOptions engineOptions = new EngineOptions(true,
 				ScreenOrientation.LANDSCAPE_FIXED, new RatioResolutionPolicy(
@@ -91,7 +95,9 @@ public class MainActivity extends BaseGameActivity {
 	@Override
 	public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) {
 		this.firstLevel = new FirstLevel();
-		this.menuScene = new MainMenuScene(this.camera, mEngine, this);
+		this.currentLevel = (Scene) this.firstLevel;
+		this.startMenuScene = new StartMenuScene(this.camera, mEngine, this, GameManager.getInstance());
+		this.pauseMenuScene = new PauseMenuScene(this.camera, mEngine, this, GameManager.getInstance());
 		this.splashScreen = new SplashScreen(mEngine);
 		pOnCreateSceneCallback.onCreateSceneFinished(this.splashScreen);
 	}
@@ -102,8 +108,8 @@ public class MainActivity extends BaseGameActivity {
 			throws IOException {
 		//populate splash
 		this.splashScreen.populate();
-		//populate menu
-		this.menuScene.populate(); 
+		//populate menu de inicio
+		this.startMenuScene.populate(); 
 		this.mPhysicsWorld = new FixedStepPhysicsWorld(MainActivity.STEPS_PER_SECOND,
 				new Vector2(0f, 0), false, VELOCITY_INTERACTIONS,
 				POSITION_INTERACTIONS);
@@ -111,29 +117,13 @@ public class MainActivity extends BaseGameActivity {
 		BodyFactory.setPhysicsWorld(this.mPhysicsWorld);
 		//populate primer nivel
 		this.firstLevel.populate();
+		//populate menu de pausa
+		this.pauseMenuScene.populate();
 		//Cuando se termina de cargar se abre el menu principal
 		if (this.splashScreen.getAnimationFinished())
 			this.openMainMenu();
 		this.populateFinished = true;
 		pOnPopulateSceneCallback.onPopulateSceneFinished();
-	}
-
-	/**
-	 * Comprueba si existe compatibilidad con multitouch
-	 */
-	public void checkCompatibilityMultiTouch() {
-		if (MultiTouch.isSupported(this)) {
-			if (!MultiTouch.isSupportedDistinct(this)) {
-				Toast.makeText(
-						this,
-						"MultiTouch detected, but your device has problems distinguishing between fingers.",
-						Toast.LENGTH_LONG).show();
-			}
-		} else {
-			Toast.makeText(this,
-					"Sorry your device does NOT support MultiTouch!",
-					Toast.LENGTH_LONG).show();
-		}
 	}
 
 	@Override
@@ -167,13 +157,11 @@ public class MainActivity extends BaseGameActivity {
 	 */
 	@Override
 	public void onBackPressed() {
-		moveTaskToBack(true);
-		//saveGame();
-		// Pausa la reproducción de la música en caso de estar reproduciendose
-		if (ResourceManager.getInstance().musicIntro != null
-				&& ResourceManager.getInstance().musicIntro.isPlaying()) {
-			ResourceManager.getInstance().musicIntro.pause();
-		}
+		if (mEngine.getScene() != this.startMenuScene) {
+			openMainMenu();
+		} else {
+			closeActivity();
+		}		
 	}
 
 	public void saveGame() {
@@ -207,9 +195,10 @@ public class MainActivity extends BaseGameActivity {
 		//loadGame();
 	}	
 	
-	public void startGame() {
-		mEngine.setScene((Scene) this.firstLevel);
+	public void openGame() {
+		mEngine.setScene((Scene) this.currentLevel);
 		this.camera.setHUD(UI.getHUD());
+		GameManager.getInstance().setStarted(true);
 	}
 	
 	public static MainActivity getInstance() {
@@ -217,11 +206,21 @@ public class MainActivity extends BaseGameActivity {
 	}
 
 	public void openMainMenu() {
-		mEngine.setScene(this.menuScene);		
+		if (GameManager.getInstance().isStarted()) {
+			//quitamos el hud
+			this.camera.setHUD(null);
+			mEngine.setScene(pauseMenuScene);
+		} else {
+			mEngine.setScene(this.startMenuScene);
+		}
 	}
 
 	public boolean getPopulateFinished() {
 		return this.populateFinished;
+	}
+
+	public void closeActivity() {
+		android.os.Process.killProcess(android.os.Process.myPid());		
 	}
 }
 
