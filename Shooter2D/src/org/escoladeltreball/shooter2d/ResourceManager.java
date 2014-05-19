@@ -109,7 +109,7 @@ public class ResourceManager {
 			
 			//zombie
 			//cambiar en caso de que el zombie sea una sprite diferente al jugador
-			this.zombieTextureRegion = this.playerTextureRegion;
+			this.zombieTextureRegion =  loadTiledTextureRegion(engine.getTextureManager(), context.getAssets(), SpriteConstants.ZOMBIE_SPRITE, SpriteConstants.ZOMBIE_SPRITE_COLUMNS, SpriteConstants.ZOMBIE_SPRITE_ROWS);
 			
 			//bala
 			this.bulletTextureRegion = loadTiledTextureRegion(engine.getTextureManager(), context.getAssets(), SpriteConstants.BULLET_SPRITE, SpriteConstants.BULLET_SPRITE_COLUMNS, SpriteConstants.BULLET_SPRITE_ROWS);
