@@ -102,7 +102,6 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 		if (this.attackCooldown.cooldownReady()) {
 			ActorEntity actorEntity = (ActorEntity) super.getTarget();
 			actorEntity.hurt(HPConstants.ZOMBIE_STRENGH);
-			super.getTarget().setColor(Color.RED);
 		}
 	}
 
