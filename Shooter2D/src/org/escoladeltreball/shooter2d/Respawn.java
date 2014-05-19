@@ -5,6 +5,7 @@ import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.util.adt.color.Color;
 import org.escoladeltreball.shooter2d.entities.ActorEntity;
+import org.escoladeltreball.shooter2d.entities.ZombieSprinter;
 import org.escoladeltreball.shooter2d.entities.GameEntity;
 import org.escoladeltreball.shooter2d.entities.Zombie;
 import org.escoladeltreball.shooter2d.entities.loader.ZombieLoader;
@@ -46,6 +47,8 @@ public class Respawn extends Thread {
 		GameEntity entity = null;
 		if(monster_name.equals(Zombie.RESPAWN_NAME)){
 			entity = ZombieLoader.loadZombie(spawn[0], spawn[1], engine, player);	
+		} else if(monster_name.equals(ZombieSprinter.RESPAWN_NAME)){
+			entity = ZombieLoader.loadZombieSprinter(spawn[0], spawn[1], engine, player);
 		} else {
 			System.out.println("Monstruo invalido");
 			this.unitlimit = 0;

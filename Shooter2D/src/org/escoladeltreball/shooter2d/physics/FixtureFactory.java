@@ -15,9 +15,9 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 public class FixtureFactory {
 
 	// flesh
-	private static final float FLESH_DENSITY = 0;
-	private static final float FLESH_ELASTICITY = 0;
-	private static final float FLESH_FRICTION = 0;
+	private static final float FLESH_DENSITY = 100;
+	private static final float FLESH_ELASTICITY = 0.05f;
+	private static final float FLESH_FRICTION = 0.00f;
 	
 	// wall
 	private static final float WALL_DENSITY = 0;

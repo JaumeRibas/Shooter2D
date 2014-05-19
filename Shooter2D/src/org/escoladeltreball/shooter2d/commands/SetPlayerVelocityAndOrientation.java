@@ -1,6 +1,7 @@
 package org.escoladeltreball.shooter2d.commands;
 
 import org.escoladeltreball.shooter2d.commands.interfaces.AnalogChangeCommand;
+import org.escoladeltreball.shooter2d.constants.HPConstants;
 import org.escoladeltreball.shooter2d.entities.Player;
 import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
 
@@ -13,7 +14,6 @@ import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
  */
 public class SetPlayerVelocityAndOrientation implements AnalogChangeCommand {
 
-	public float SPEED = 2;
 	private boolean isWalking = false;
 	
 	@Override
@@ -26,7 +26,7 @@ public class SetPlayerVelocityAndOrientation implements AnalogChangeCommand {
 				this.isWalking = true;
 			}			
 			player.getBody().setTransform(player.getBody().getPosition(), (float)Math.atan2(-pValueX, pValueY));
-			player.getBody().setLinearVelocity(pValueX * SPEED, pValueY * SPEED);
+			player.getBody().setLinearVelocity(pValueX * HPConstants.HUMAN_WALK_SPEED, pValueY * HPConstants.HUMAN_WALK_SPEED);
 
 		} else {
 			player.stopAnimation();
