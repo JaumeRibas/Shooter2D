@@ -4,6 +4,7 @@ import org.andengine.engine.Engine;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.adt.color.Color;
+import org.escoladeltreball.shooter2d.ResourceManager;
 import org.escoladeltreball.shooter2d.constants.HPConstants;
 import org.escoladeltreball.shooter2d.entities.interfaces.Attacking;
 import org.escoladeltreball.shooter2d.entities.interfaces.Targeting;
@@ -102,6 +103,7 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 		if (this.attackCooldown.cooldownReady()) {
 			ActorEntity actorEntity = (ActorEntity) super.getTarget();
 			actorEntity.hurt(HPConstants.ZOMBIE_STRENGH);
+			ResourceManager.getInstance().soundZombie.play();
 		}
 	}
 
