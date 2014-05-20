@@ -151,9 +151,9 @@ public class ResourceManager {
 	public synchronized void loadSounds(Engine engine, Context context){
 		SoundFactory.setAssetBasePath("sfx/");
 		try {
-			this.soundZombie = SoundFactory.createSoundFromAsset(engine.getSoundManager(), context, "soundZombie.mp3");
-			this.soundShootGun = SoundFactory.createSoundFromAsset(engine.getSoundManager(), context, "soundShootGun.mp3");
-			this.soundPlayerDead = SoundFactory.createSoundFromAsset(engine.getSoundManager(), context, "soundPlayerDead.mp3");
+			this.soundZombie = SoundFactory.createSoundFromAsset(engine.getSoundManager(), context, "soundZombie.wav");
+			this.soundShootGun = SoundFactory.createSoundFromAsset(engine.getSoundManager(), context, "soundShootGun.wav");
+			this.soundPlayerDead = SoundFactory.createSoundFromAsset(engine.getSoundManager(), context, "soundPlayerDead.wav");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
