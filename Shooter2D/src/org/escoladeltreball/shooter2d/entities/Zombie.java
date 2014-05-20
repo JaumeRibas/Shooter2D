@@ -23,9 +23,11 @@ import com.badlogic.gdx.physics.box2d.Body;
  */
 public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 
-	private float speed = HPConstants.ZOMBIE_WALK_SPEED;
+	protected float speed = HPConstants.ZOMBIE_WALK_SPEED;
 	private static final float zombie_attack_timer = HPConstants.ZOMBIE_ATTACK_TIMER;
 	private Cooldown attackCooldown;
+	
+	protected int vision_radius = HPConstants.ZOMBIE_SIGHT_RADIUS;
 
 	private boolean isWalking = false;
 
@@ -46,7 +48,7 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 		super(pX, pY, pTiledTextureRegion, engine);
 		super.setTarget(actorEntity);
 		this.attackCooldown = new Cooldown(zombie_attack_timer);
-		Body body = BodyFactory.createHumanBody(pX, pY);
+		Body body = BodyFactory.createZombieBody(pX, pY);
 		this.setBody(body);
 		this.setColor(Color.GREEN);
 		this.setMaxHealthPoints(HPConstants.ZOMBIE_HEALTH);
@@ -58,8 +60,8 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 	 */
 	public void walk() {
 		// Comprueba si puede perseguir al jugador.
-		boolean canStartChase = this.getTarget() != null && this.getTarget().getDistance(this) < HPConstants.ZOMBIE_SIGHT_RADIUS;
-		boolean isChasing = this.isWalking && this.getTarget().getDistance(this) < HPConstants.ZOMBIE_SIGHT_RADIUS + HPConstants.ZOMBIE_SIGHT_RADIUS / 5;
+		boolean canStartChase = this.getTarget() != null && this.getTarget().getDistance(this) < vision_radius;
+		boolean isChasing = this.isWalking && this.getTarget().getDistance(this) < vision_radius * (6 / 5);
 		// Persigue al jugador si esta a las distancias
 		if (canStartChase || isChasing) {
 			// Inicia la animación si no ha empezado.
@@ -100,7 +102,6 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 		if (this.attackCooldown.cooldownReady()) {
 			ActorEntity actorEntity = (ActorEntity) super.getTarget();
 			actorEntity.hurt(HPConstants.ZOMBIE_STRENGH);
-			super.getTarget().setColor(Color.RED);
 		}
 	}
 
@@ -156,14 +157,14 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 
 	@Override
 	public void endsContactWith(Body otherBody) {
-		// TODO Auto-generated method stub
-
+		this.speed = HPConstants.ZOMBIE_WALK_SPEED;
 	}
 
 	@Override
 	public void isContactingWith(Body otherBody) {
 		Object userData = otherBody.getUserData();
 		if (userData == super.getTarget()) {
+			this.speed = HPConstants.ZOMBIE_WALK_SPEED / 6;
 			this.attack();
 		}
 	}

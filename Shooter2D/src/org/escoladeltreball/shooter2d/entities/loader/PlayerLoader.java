@@ -27,14 +27,14 @@ public class PlayerLoader {
 	 * @param textureManger a {@link TextureManager}
 	 * @param assets a {@link AssetManager}
 	 * @param vertexBufferObjectManager un {@link VertexBufferObjectManager}
-	 * @param scene a {@link Scene}, la escena donde disparará el player
 	 * @return a {@link Player}
 	 */
-	public static Player loadPlayer(float x, float y, Engine engine, Scene scene) {
+	public static Player loadPlayer(float x, float y, Engine engine) {
 		if (player == null) {
 			TiledTextureRegion pTiledTextureRegion;
 			pTiledTextureRegion = ResourceManager.getInstance().playerTextureRegion;
-			player = new Player(x, y, pTiledTextureRegion, engine, scene);		}
+			player = new Player(x, y, pTiledTextureRegion, engine);		
+		}
 		return player;
 
 	}

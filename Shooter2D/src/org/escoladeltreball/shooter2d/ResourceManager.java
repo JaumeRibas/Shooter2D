@@ -45,6 +45,13 @@ public class ResourceManager {
 	private static final int MENU_FONT_COLOR = Color.WHITE;
 	private static final float MENU_FONT_SIZE = 70f;
 	private static final String MENU_FONT = "Oswald-Stencbab.ttf";
+	
+	private static final int GAME_OVER_FONT_TEXTURE_WIDTH = 500;
+	private static final int GAME_OVER_FONT_TEXTURE_HEIGHT = 300;
+	private static final int GAME_OVER_FONT_COLOR = Color.RED;
+	private static final float GAME_OVER_FONT_SIZE = 100f;
+	private static final String GAME_OVER_FONT = MENU_FONT;
+	
 
 	/** la instancia unica de ResourceManager */
 	public static ResourceManager instance;
@@ -111,7 +118,7 @@ public class ResourceManager {
 			
 			//zombie
 			//cambiar en caso de que el zombie sea una sprite diferente al jugador
-			this.zombieTextureRegion = this.playerTextureRegion;
+			this.zombieTextureRegion =  loadTiledTextureRegion(engine.getTextureManager(), context.getAssets(), SpriteConstants.ZOMBIE_SPRITE, SpriteConstants.ZOMBIE_SPRITE_COLUMNS, SpriteConstants.ZOMBIE_SPRITE_ROWS);
 			
 			//bala
 			this.bulletTextureRegion = loadTiledTextureRegion(engine.getTextureManager(), context.getAssets(), SpriteConstants.BULLET_SPRITE, SpriteConstants.BULLET_SPRITE_COLUMNS, SpriteConstants.BULLET_SPRITE_ROWS);
@@ -171,10 +178,12 @@ public class ResourceManager {
 	public synchronized void loadFonts(Engine engine, Context context) {
 		//menu
 		this.menuFont = FontFactory.createFromAsset(engine.getFontManager(), engine.getTextureManager(), MENU_FONT_TEXTURE_WIDTH, MENU_FONT_TEXTURE_HEIGHT, TextureOptions.BILINEAR, context.getAssets(), "font/" + MENU_FONT, MENU_FONT_SIZE, true, MENU_FONT_COLOR);
+		this.menuFont.prepareLetters("ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".toCharArray());
 		this.menuFont.load();
 		//game over
-		this.gameOverFont = FontFactory.createFromAsset(engine.getFontManager(), engine.getTextureManager(), MENU_FONT_TEXTURE_WIDTH, MENU_FONT_TEXTURE_HEIGHT, TextureOptions.BILINEAR, context.getAssets(), "font/" + MENU_FONT, MENU_FONT_SIZE, true, MENU_FONT_COLOR);
-		this.menuFont.prepareLetters("ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray());
+		this.gameOverFont = FontFactory.createFromAsset(engine.getFontManager(), engine.getTextureManager(), GAME_OVER_FONT_TEXTURE_WIDTH, GAME_OVER_FONT_TEXTURE_HEIGHT, TextureOptions.BILINEAR, context.getAssets(), "font/" + GAME_OVER_FONT, GAME_OVER_FONT_SIZE, true, GAME_OVER_FONT_COLOR);
+		this.gameOverFont.prepareLetters("GAMEOVR".toCharArray());
+		this.gameOverFont.load();
 	}
 	
 	/**

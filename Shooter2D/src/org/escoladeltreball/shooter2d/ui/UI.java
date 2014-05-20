@@ -7,6 +7,7 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.escoladeltreball.shooter2d.MainActivity;
+import org.escoladeltreball.shooter2d.R;
 import org.escoladeltreball.shooter2d.ResourceManager;
 import org.escoladeltreball.shooter2d.commands.CommandFactory;
 import org.escoladeltreball.shooter2d.commands.interfaces.AnalogChangeCommand;
@@ -15,6 +16,7 @@ import org.escoladeltreball.shooter2d.constants.HPConstants;
 import org.escoladeltreball.shooter2d.constants.NotificationConstants;
 import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
 
+import android.content.Context;
 import android.graphics.Color;
 
 /**
@@ -46,24 +48,29 @@ public class UI implements GameObserver {
 	private static final float RIGHT_ANALOG_OFFSET_CENTER_X = 1;
 	private static final float RIGHT_ANALOG_OFFSET_CENTER_Y = 0;
 	
-	private static final float AMMO_TEXT_X = MainActivity.CAMERA_WIDTH -20;
-	private static final float AMMO_TEXT_Y = MainActivity.CAMERA_HEIGHT - 40;
-	private static final int AMMO_TEXT_MAX_CHARACTER_COUNT = 1000;
-	private static final float AMMO_TEXT_OFFSET_CENTER_X = 1;
-	private static final float AMMO_TEXT_OFFSET_CENTER_Y = 1;
+	private static final int GAME_OVER_TEXT_MAX_CHARACTER_COUNT = 20;
+	private static final float GAME_OVER_TEXT_X = (float)(MainActivity.CAMERA_WIDTH / 2.0);
+	private static final float GAME_OVER_TEXT_Y = (float)(MainActivity.CAMERA_HEIGHT / 2.0);
+	
+//	private static final float AMMO_TEXT_X = MainActivity.CAMERA_WIDTH -20;
+//	private static final float AMMO_TEXT_Y = MainActivity.CAMERA_HEIGHT - 40;
+//	private static final int AMMO_TEXT_MAX_CHARACTER_COUNT = 1000;
+//	private static final float AMMO_TEXT_OFFSET_CENTER_X = 1;
+//	private static final float AMMO_TEXT_OFFSET_CENTER_Y = 1;
 
 	
 
 	/** instancia unica */
 	private static UI instance;
 	
-	/** instancia unica de HUD */
-	private static HUD hud;
+	/** instancia unica de IU HUD */
+	private static HUD uiHUD;
+	/** instancia unica de game over HUD */
+	private static HUD gameOverHUD;
 
 	private AnalogOnScreenControl leftAnalogControl;
 	private AnalogOnScreenControl rightAnalogControl;
 	private HUDBar healthBar;
-	private Text ammoText;
 	
 	private UI(){}
 	
@@ -81,36 +88,51 @@ public class UI implements GameObserver {
 	}
 	
 	/**
-	 * Devuelve la unica instancia de {@link HUD}.
+	 * Devuelve la unica instancia de la IU {@link HUD}.
 	 * Si no existe la crea.
 	 * 
 	 * @return la unica instancia de {@link HUD}
 	 */
-	public static HUD getHUD() {
-		if (hud == null) {
-			hud = new HUD();
+	public static HUD getUIHUD() {
+		if (uiHUD == null) {
+			uiHUD = new HUD();
 		}
-		return hud;
+		return uiHUD;
+	}
+	
+	/**
+	 * Devuelve la unica instancia del game over {@link HUD}.
+	 * Si no existe la crea.
+	 * 
+	 * @return la unica instancia de {@link HUD}
+	 */
+	public static HUD getGameOverHUD() {
+		if (gameOverHUD == null) {
+			gameOverHUD = new HUD();
+		}
+		return gameOverHUD;
 	}
 	
 	/**
 	 * Crea los componentes de la interfaz de usuario y los une al HUD.
+	 * @param context 
 	 */
-	public void createUI(Camera camera, VertexBufferObjectManager vertexBufferObjectManager) {
+	public void createUI(Camera camera, VertexBufferObjectManager vertexBufferObjectManager, Context context) {
 		//Control analogico izquierda 
 		this.leftAnalogControl = createAnalogControl(camera, LEFT_ANALOG_X, LEFT_ANALOG_Y, LEFT_ANALOG_OFFSET_CENTER_X, LEFT_ANALOG_OFFSET_CENTER_Y, CommandFactory.getSetPlayerVelocityAndOrientation(), CommandFactory.getDoNothingCommand(), vertexBufferObjectManager);
 		// Control analogico derecha
 		this.rightAnalogControl = createAnalogControl(camera, RIGHT_ANALOG_X, RIGHT_ANALOG_Y, RIGHT_ANALOG_OFFSET_CENTER_X, RIGHT_ANALOG_OFFSET_CENTER_Y, CommandFactory.getSetPlayerOrientationAndShoot(), CommandFactory.getDoNothingCommand(), vertexBufferObjectManager);
 		this.leftAnalogControl.setChildScene(this.rightAnalogControl);
-		getHUD().setChildScene(this.leftAnalogControl);
+		getUIHUD().setChildScene(this.leftAnalogControl);
 		// Barra vida
 		this.healthBar = new HUDBar(HEALTH_BAR_X, HEALTH_BAR_Y, HEALTH_BAR_WIDTH, HEALTH_BAR_HEIGHT, HPConstants.HUMAN_HEALTH, HPConstants.HUMAN_HEALTH, 2f, Color.GREEN, Color.GRAY, Color.BLACK, vertexBufferObjectManager);
 		this.healthBar.setOffsetCenter(0, 0);
 		this.healthBar.setRotationCenter(0, 0);
 		this.healthBar.setRotation(HEALTH_BAR_ANGLE);
-		getHUD().attachChild(this.healthBar);
-		// contador balas
-//		this.ammoText = new Text(AMMO_TEXT_X, AMMO_TEXT_Y, ResourceManager.getInstance().hudFont, String.valueOf(PlayerLoader.getPlayer().getHealthpoints()), AMMO_TEXT_MAX_CHARACTER_COUNT, vertexBufferObjectManager);
+		getUIHUD().attachChild(this.healthBar);
+		// game over text
+		Text gameOverText = new Text(GAME_OVER_TEXT_X, GAME_OVER_TEXT_Y, ResourceManager.getInstance().gameOverFont, context.getString(R.string.gameover), GAME_OVER_TEXT_MAX_CHARACTER_COUNT, vertexBufferObjectManager);
+		getGameOverHUD().attachChild(gameOverText);
 //		this.ammoText.setOffsetCenter(AMMO_TEXT_OFFSET_CENTER_X, AMMO_TEXT_OFFSET_CENTER_Y);
 //		getHUD().attachChild(this.ammoText);
 	}
