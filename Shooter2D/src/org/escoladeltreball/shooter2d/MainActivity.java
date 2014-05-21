@@ -85,6 +85,7 @@ public class MainActivity extends BaseGameActivity {
 			throws IOException {
 		ResourceManager.getInstance().loadGameTextures(mEngine, this);
 		ResourceManager.getInstance().loadMusic(mEngine, this);
+		ResourceManager.getInstance().loadSounds(mEngine, this);
 		ResourceManager.getInstance().musicIntro.play();
 		ResourceManager.getInstance().loadFonts(mEngine, this);
 		MapCreator.loadMap(mEngine, this, this.camera);
