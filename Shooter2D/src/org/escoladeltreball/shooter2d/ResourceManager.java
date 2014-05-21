@@ -75,7 +75,9 @@ public class ResourceManager {
 	public Music musicIntro;
 	
 	//efectos sonido
-	public Sound sound;
+	public Sound soundZombie;
+	public Sound soundPlayerDead;
+	public Sound soundShootGun;
 	
 	//splash screen
 	public TextureRegion splashTextureRegion;
@@ -149,7 +151,9 @@ public class ResourceManager {
 	public synchronized void loadSounds(Engine engine, Context context){
 		SoundFactory.setAssetBasePath("sfx/");
 		try {
-			this.sound = SoundFactory.createSoundFromAsset(engine.getSoundManager(), context, "sound.mp3");
+			this.soundZombie = SoundFactory.createSoundFromAsset(engine.getSoundManager(), context, "soundZombie.wav");
+			this.soundShootGun = SoundFactory.createSoundFromAsset(engine.getSoundManager(), context, "soundShootGun.wav");
+			this.soundPlayerDead = SoundFactory.createSoundFromAsset(engine.getSoundManager(), context, "soundPlayerDead.wav");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

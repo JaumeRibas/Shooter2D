@@ -2,6 +2,7 @@ package org.escoladeltreball.shooter2d.entities;
 
 import org.andengine.engine.Engine;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
+import org.escoladeltreball.shooter2d.ResourceManager;
 import org.escoladeltreball.shooter2d.constants.HPConstants;
 import org.escoladeltreball.shooter2d.physics.BodyFactory;
 import org.escoladeltreball.shooter2d.weapons.Gun;
@@ -52,6 +53,7 @@ public class Player extends ActorEntity {
 		// TODO Efectos de sonido del player herido
 		// TODO Animación y particulas de player herido
 		System.out.println("PLAYER HEALTH: " + getHealthpoints() + "/" + getMaxHealthPoints());
+		ResourceManager.getInstance().soundPlayerDead.play();
 	}
 	
 	/**
