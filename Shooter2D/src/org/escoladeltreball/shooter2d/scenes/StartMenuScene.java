@@ -28,12 +28,13 @@ import org.andengine.engine.camera.Camera;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.item.TextMenuItem;
-import org.andengine.ui.activity.BaseActivity;
 import org.andengine.util.adt.color.Color;
 import org.escoladeltreball.shooter2d.GameManager;
 import org.escoladeltreball.shooter2d.MainActivity;
 import org.escoladeltreball.shooter2d.R;
 import org.escoladeltreball.shooter2d.ResourceManager;
+
+import android.content.Context;
 
 /**
  * El menu principal
@@ -45,13 +46,13 @@ import org.escoladeltreball.shooter2d.ResourceManager;
 public class StartMenuScene extends MenuScene implements GameScene {
 
 	private Engine engine;
-	private BaseActivity activity;
+	private Context context;
 
-	public StartMenuScene(Camera camera, Engine engine, BaseActivity activity, IOnMenuItemClickListener listener) {
+	public StartMenuScene(Camera camera, Engine engine, Context context, IOnMenuItemClickListener listener) {
 		super(camera);
 		setBackground(new Background(Color.BLACK));
 		this.engine = engine;
-		this.activity = activity;
+		this.context = context;
 		setOnMenuItemClickListener(listener);
 	}
 
@@ -61,12 +62,12 @@ public class StartMenuScene extends MenuScene implements GameScene {
 		float widthThird = MainActivity.CAMERA_WIDTH / 3;
 		TextMenuItem startItem = new TextMenuItem(GameManager.MENU_START,
 				ResourceManager.getInstance().menuFont,
-				activity.getString(R.string.start),
+				context.getString(R.string.start),
 				engine.getVertexBufferObjectManager());
 		startItem.setOffsetCenter(0.5f, 0.5f);
 		TextMenuItem exitItem = new TextMenuItem(GameManager.MENU_EXIT,
 				ResourceManager.getInstance().menuFont,
-				activity.getString(R.string.exit),
+				context.getString(R.string.exit),
 				engine.getVertexBufferObjectManager());
 		exitItem.setOffsetCenter(0.5f, 0.5f);
 		exitItem.setPosition(widthThird, centerY);

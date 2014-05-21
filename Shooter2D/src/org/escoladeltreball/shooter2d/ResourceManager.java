@@ -191,7 +191,7 @@ public class ResourceManager {
 	public synchronized void loadMusic(Engine engine, Context context){
 		MusicFactory.setAssetBasePath("sfx/");
 		try {
-			this.musicIntro = MusicFactory.createMusicFromAsset(engine.getMusicManager(), context, "intro.mp3");
+			this.musicIntro = MusicFactory.createMusicFromAsset(engine.getMusicManager(), context, "music.mp3");
 			this.musicIntro.setVolume(0.3f);
 		} catch (IOException e) {
 			e.printStackTrace();

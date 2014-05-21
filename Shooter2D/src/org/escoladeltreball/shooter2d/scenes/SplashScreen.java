@@ -88,8 +88,7 @@ public class SplashScreen extends Scene implements GameScene {
 					MainActivity.getInstance().runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
-							if (MainActivity.getInstance().getPopulateFinished())
-								MainActivity.getInstance().openMainMenu();
+							MainActivity.getInstance().openMenu();
 						}
 					});
 				}
