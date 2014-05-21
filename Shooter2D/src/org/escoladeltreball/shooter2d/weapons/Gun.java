@@ -2,6 +2,7 @@ package org.escoladeltreball.shooter2d.weapons;
 
 import org.andengine.engine.Engine;
 import org.andengine.entity.scene.Scene;
+import org.escoladeltreball.shooter2d.ResourceManager;
 import org.escoladeltreball.shooter2d.entities.ActorEntity;
 import org.escoladeltreball.shooter2d.entities.Bullet;
 import org.escoladeltreball.shooter2d.entities.loader.BulletLoader;
@@ -40,6 +41,7 @@ public class Gun {
 	 */
 	public synchronized void shoot(){
 		if (this.gunCooldown.cooldownReady()) {
+			ResourceManager.getInstance().soundShootGun.play();
 			double hypo = Math.sqrt(Math.pow(BULLET_OFFSET_X,2) + Math.pow(BULLET_OFFSET_Y, 2));
 			double bulletOffsetAngle = Math.atan2(BULLET_OFFSET_X, BULLET_OFFSET_Y);
 			double shooterAngle = -Math.toRadians(this.shooter.getRotation());
