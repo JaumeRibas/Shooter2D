@@ -1,5 +1,28 @@
 package org.escoladeltreball.shooter2d;
 
+/*
+ * This file is part of shooter2d, a cenital shooter 2D game.
+ *
+ * Copyright (C) 2014	
+ * 						Elvis Puertas <epuertas@gmail.com>
+ *						Jaume Ribas <r.ribas.jaume@gmail.com>
+ *						Carlos Serrano <arquak@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.MenuScene.IOnMenuItemClickListener;
 import org.andengine.entity.scene.menu.item.IMenuItem;
@@ -16,16 +39,16 @@ import org.escoladeltreball.shooter2d.ui.UI;
  * @author Jaume Ribas
  */
 public class GameManager implements GameObserver, IOnMenuItemClickListener {
-	
+
 	public static final int MENU_START = 0;
 	public static final int MENU_EXIT = 1;
 	public static final int MENU_RESUME = 2;
-	
+
 	/** instancia unica */
 	private static GameManager instance;
-	
+
 	private boolean started = false;
-	
+
 	public void setStarted(boolean started) {
 		this.started = started;
 	}
@@ -34,11 +57,12 @@ public class GameManager implements GameObserver, IOnMenuItemClickListener {
 		return started;
 	}
 
-	private GameManager() {}
-	
+	private GameManager() {
+	}
+
 	/**
-	 * Este metodo devuelve la instancia unica de GameManager.
-	 * Si no existe, la crea.
+	 * Este metodo devuelve la instancia unica de GameManager. Si no existe, la
+	 * crea.
 	 * 
 	 * @return la instancia unica de GameManager
 	 */
@@ -48,26 +72,26 @@ public class GameManager implements GameObserver, IOnMenuItemClickListener {
 		}
 		return instance;
 	}
-	
+
 	@Override
 	public void notify(Object notifier, Object data) {
 		if (data instanceof Short) {
-			short notification = ((Short)data).shortValue();
-			if(notifier == PlayerLoader.getPlayer()) {
+			short notification = ((Short) data).shortValue();
+			if (notifier == PlayerLoader.getPlayer()) {
 				switch (notification) {
 				case NotificationConstants.CHANGE_HEALTH:
-					if (PlayerLoader.getPlayer().getHealthpoints() <= 0)  {
+					if (PlayerLoader.getPlayer().getHealthpoints() <= 0) {
 						showGameOver();
 					}
 					break;
 				}
 			}
 		}
-	}	
-	
+	}
+
 	private void showGameOver() {
 		MainActivity.getInstance().currentLevel.setIgnoreUpdate(true);
-		MainActivity.getInstance().setCurrentHUD(UI.getGameOverHUD());		
+		MainActivity.getInstance().setCurrentHUD(UI.getGameOverHUD());
 	}
 
 	@Override
