@@ -20,11 +20,13 @@ public class GameManager implements GameObserver, IOnMenuItemClickListener {
 	public static final int MENU_START = 0;
 	public static final int MENU_EXIT = 1;
 	public static final int MENU_RESUME = 2;
+	public static final int MENU_RETRY = 3;
 	
 	/** instancia unica */
 	private static GameManager instance;
 	
 	private boolean started = false;
+	private boolean finished = false;
 	
 	public void setStarted(boolean started) {
 		this.started = started;
@@ -57,6 +59,7 @@ public class GameManager implements GameObserver, IOnMenuItemClickListener {
 				switch (notification) {
 				case NotificationConstants.CHANGE_HEALTH:
 					if (PlayerLoader.getPlayer().getHealthpoints() <= 0)  {
+						this.finished  = true;
 						showGameOver();
 					}
 					break;
@@ -87,5 +90,9 @@ public class GameManager implements GameObserver, IOnMenuItemClickListener {
 			break;
 		}
 		return false;
+	}
+
+	public boolean isFinished() {
+		return this.finished;
 	}
 }
