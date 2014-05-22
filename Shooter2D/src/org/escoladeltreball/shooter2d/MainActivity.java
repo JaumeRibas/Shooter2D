@@ -177,7 +177,6 @@ public class MainActivity extends BaseGameActivity {
 				ResourceManager.getInstance().musicIntro.pause();
 			}
 		}
-		//saveGame();
 	}
 
 	@Override
@@ -195,7 +194,6 @@ public class MainActivity extends BaseGameActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//loadGame();
 	}	
 	
 	public void openGame() {
