@@ -192,31 +192,6 @@ public class MainActivity extends BaseGameActivity {
 		}
 	}
 
-//	public void saveGame() {
-//		// Prepara el archivo sharedPreferences
-//		SharedPreferences settings = getSharedPreferences("dbJuego",
-//				Context.MODE_PRIVATE);
-//		// Escribe datos
-//		Editor edit = settings.edit();
-//		edit.putFloat("posXPlayer", player.getX());
-//		edit.putFloat("posYPlayer", player.getY());
-//		edit.apply();
-//		this.isGameSaved = true;
-//	}
-//
-//	public void loadGame() {
-//		// Prepara el archivo sharedPreferences
-//		SharedPreferences settings = getSharedPreferences("dbJuego",
-//				Context.MODE_PRIVATE);
-//		// Lee datos
-//		float x = settings.getFloat("posXPlayer", 50);
-//		float y = settings.getFloat("posYPlayer", 50);
-//		if (!(x >= 0 || y >= 0)) {
-//			player.setX(x);
-//			player.setY(y);
-//		}
-//	}
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
