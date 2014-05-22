@@ -3,6 +3,7 @@ package org.escoladeltreball.shooter2d.entities;
 import org.andengine.engine.Engine;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.escoladeltreball.shooter2d.ResourceManager;
 import org.escoladeltreball.shooter2d.physics.BodyFactory;
 import org.escoladeltreball.shooter2d.weapons.Cooldown;
 
