@@ -95,8 +95,8 @@ public class GameManager implements GameObserver, IOnMenuItemClickListener {
 	}
 
 	private void showGameOver() {
-		MainActivity.getInstance().currentLevel.setIgnoreUpdate(true);
-		MainActivity.getInstance().setCurrentHUD(UI.getGameOverHUD());
+		MainActivity.getInstance().getCurrentLevel().getScene().setIgnoreUpdate(true);
+		MainActivity.getInstance().setCurrentHUD(UI.getGameOverHUD());		
 	}
 
 	@Override
@@ -111,6 +111,10 @@ public class GameManager implements GameObserver, IOnMenuItemClickListener {
 			return true;
 		case MENU_EXIT:
 			MainActivity.getInstance().closeActivity();
+			return true;
+		case MENU_RETRY:
+			MainActivity.getInstance().getCurrentLevel().restart();
+			MainActivity.getInstance().openGame();
 			return true;
 		default:
 			break;

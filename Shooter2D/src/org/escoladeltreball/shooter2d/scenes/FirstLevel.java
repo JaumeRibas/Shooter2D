@@ -23,39 +23,98 @@ package org.escoladeltreball.shooter2d.scenes;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+import org.andengine.entity.IEntity;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.escoladeltreball.shooter2d.MainActivity;
 import org.escoladeltreball.shooter2d.MapCreator;
+import org.escoladeltreball.shooter2d.entities.ColisionableEntity;
 import org.escoladeltreball.shooter2d.entities.Player;
 import org.escoladeltreball.shooter2d.weapons.WeaponFactory;
 
-public class FirstLevel extends Scene implements GameScene {
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+
+/**
+ * El primer nivel
+ * 
+ * @author Carlos Serrano
+ * @author Elvis Puertas
+ * @author Jaume Ribas
+ */
+public class FirstLevel extends Level implements GameScene {
 	
 	private Player player;
+	
+	private static final float START_PLAYER_X = (float)(MainActivity.CAMERA_WIDTH / 2.0);
+	private static final float START_PLAYER_Y = (float)(MainActivity.CAMERA_HEIGHT / 2.0);
+	private static final float START_PLAYER_ANGLE = 0;
+	
+	public static final String MAP_PATH = "tmx/base.tmx";
 
 	public FirstLevel() {
-		setBackground(new Background(0.09804f, 0.6274f, 0.8784f));
+		
 	}
+	
+	@Override
+	public void createScene() {
+		Scene scene = new Scene();
+		scene.setBackground(new Background(0.09804f, 0.6274f, 0.8784f));
+		setScene(scene);
+	}	
 	
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
 
-
-
 	@Override
 	public void populate() {
-		registerUpdateHandler(MainActivity.getInstance().mPhysicsWorld);
+		getScene().registerUpdateHandler(MainActivity.getInstance().mPhysicsWorld);
 		// Muestra el mapa en la pantalla
-		attachChild(MapCreator.getCurrentMap());
-		//el jugador tendra una pistola
-		this.player.setGun(WeaponFactory.getGun(this, MainActivity.getInstance().getEngine()));
-		//crea los objetos del mapa
-		MapCreator.createMapObjects(this, MainActivity.getInstance().getEngine(), MapCreator.getCurrentMap(), MainActivity.getInstance().getVertexBufferObjectManager(), player);
+		getScene().attachChild(getMap());
 		// La camara sigue al jugador
 		MainActivity.getInstance().camera.setChaseEntity(player);
-		attachChild(player);
+		//ponemos al jugador en su posicion inicial
+//		this.player.getBody().setTransform(START_PLAYER_X, START_PLAYER_Y, START_PLAYER_ANGLE);
+		//el jugador tendra una pistola
+		this.player.setGun(WeaponFactory.getGun(getScene(), MainActivity.getInstance().getEngine()));
+		//metemos al player
+		getScene().attachChild(player);
+		//crea los objetos del mapa
+		MapCreator.createMapObjects(getMap(), getScene(), MainActivity.getInstance().getEngine(), MainActivity.getInstance().getVertexBufferObjectManager(), player);
+		
+//		this.player.getBody().setTransform(MainActivity.CAMERA_WIDTH / 2.0f, MainActivity.CAMERA_HEIGHT / 2.0f, START_PLAYER_ANGLE);		
 	}
 
+	@Override
+	public void restart() {
+//		int childCount = getScene().getChildCount();
+//		for (int i = 0; i < childCount; i++) {
+//			final IEntity iEntity = getScene().getChildByIndex(i);
+//			if (iEntity instanceof ColisionableEntity) {
+//				((ColisionableEntity) iEntity).remove();
+//			}
+//		}
+//		try {
+//			Thread.sleep(2000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+//		setMap(MapCreator.loadMap(FirstLevel.MAP_PATH, MainActivity.getInstance().getEngine(), MainActivity.getInstance(), MainActivity.getInstance().camera));
+//		createScene();
+//		getScene().registerUpdateHandler(MainActivity.getInstance().mPhysicsWorld);
+//		// Muestra el mapa en la pantalla
+//		getScene().attachChild(getMap());
+//		getScene().attachChild(player);
+//		//crea los objetos del mapa
+//		MapCreator.createMapObjects(getMap(), getScene(), MainActivity.getInstance().getEngine(), MainActivity.getInstance().getVertexBufferObjectManager(), player);
+		Intent mStartActivity = new Intent(MainActivity.getInstance(), MainActivity.class);
+		int mPendingIntentId = 123456;
+		PendingIntent mPendingIntent = PendingIntent.getActivity(MainActivity.getInstance(), mPendingIntentId,    mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+		AlarmManager mgr = (AlarmManager)MainActivity.getInstance().getSystemService(Context.ALARM_SERVICE);
+		mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+		System.exit(0);
+	}
 }

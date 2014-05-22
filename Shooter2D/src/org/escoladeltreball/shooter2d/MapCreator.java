@@ -45,7 +45,6 @@ import android.content.Context;
 public class MapCreator {
 
 	private static final int TILE_SIZE = 32;
-	private static TMXTiledMap currentMap;
 
 	/**
 	 * Devuelve el mapa preparado para ser mostrado en la pantalla
@@ -55,12 +54,12 @@ public class MapCreator {
 	 * @return el mapa cargado para ser añadido a la scene
 	 */
 
-	public static void loadMap(Engine engine, Context context, BoundCamera camera){
+	public static TMXTiledMap loadMap(String mapPath, Engine engine, Context context, BoundCamera camera){
 
 		TMXTiledMap mTMXTiledMap = null;
 		try {
 			final TMXLoader tmxLoader = new TMXLoader(context.getAssets(), engine.getTextureManager(), TextureOptions.BILINEAR_PREMULTIPLYALPHA, engine.getVertexBufferObjectManager());
-			mTMXTiledMap = tmxLoader.loadFromAsset("tmx/base.tmx");
+			mTMXTiledMap = tmxLoader.loadFromAsset(mapPath);
 			mTMXTiledMap.setOffsetCenter(0, 0);
 		} catch (final TMXLoadException e) {
 			Debug.e(e);
@@ -69,7 +68,7 @@ public class MapCreator {
 		final TMXLayer tmxLayer = mTMXTiledMap.getTMXLayers().get(0);
 		camera.setBounds(0, 0, tmxLayer.getWidth(), tmxLayer.getHeight());
 		camera.setBoundsEnabled(true);
-		currentMap = mTMXTiledMap;
+		return mTMXTiledMap;
 	}
 
 	/**
@@ -81,13 +80,13 @@ public class MapCreator {
 	 * @param vbo a {@link VertexBufferObjectManager}
 	 * @param player a {@link ActorEntity} for the enemies to target.
 	 */
-	public static void createMapObjects(Scene scene, Engine engine, TMXTiledMap map, VertexBufferObjectManager vbo, ActorEntity player){
+	public static void createMapObjects(TMXTiledMap map, Scene scene, Engine engine, VertexBufferObjectManager vbo, ActorEntity player){
 		// Loop through the object groups
-		for(final TMXObjectGroup group: currentMap.getTMXObjectGroups()) {
+		for(final TMXObjectGroup group: map.getTMXObjectGroups()) {
 			if(group.getTMXObjectGroupProperties().containsTMXProperty("wall", "true")){
 				// This is our "wall" layer. Create the boxes from it
 				for(final TMXObject object : group.getTMXObjects()) {
-					Rectangle rect = new Rectangle(object.getX(), currentMap.getHeight()-object.getHeight()-object.getY(), object.getWidth()+TILE_SIZE, object.getHeight()+TILE_SIZE, vbo);
+					Rectangle rect = new Rectangle(object.getX(), map.getHeight()-object.getHeight()-object.getY(), object.getWidth()+TILE_SIZE, object.getHeight()+TILE_SIZE, vbo);
 					rect.setOffsetCenter(0, 0);
 					BodyFactory.createRectangleWallBody(rect);
 				}
@@ -134,18 +133,10 @@ public class MapCreator {
 					int width = object.getWidth() + 32;
 					int heigh = object.getHeight() + 32;
 					
-					Respawn res = new Respawn(scene, posX, posY, width, heigh, engine, target, spawnMiliSeconds, spawnAcceleration, unit, unitlimit);
+					Respawn res = new Respawn(scene, posX, posY, width, heigh, engine, map, target, spawnMiliSeconds, spawnAcceleration, unit, unitlimit);
 					res.start();
 				}
 			}
 		}
-	}
-	/**
-	 * Devuelve el mapa.
-	 * 
-	 * @return un {@link TMXTiledMap}
-	 */
-	public static TMXTiledMap getCurrentMap() {
-		return currentMap;
 	}
 }
