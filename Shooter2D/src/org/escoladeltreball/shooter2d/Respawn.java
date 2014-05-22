@@ -3,6 +3,7 @@ package org.escoladeltreball.shooter2d;
 import org.andengine.engine.Engine;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
+import org.andengine.extension.tmx.TMXTiledMap;
 import org.andengine.util.adt.color.Color;
 import org.escoladeltreball.shooter2d.entities.ActorEntity;
 import org.escoladeltreball.shooter2d.entities.ZombieSprinter;
@@ -20,9 +21,10 @@ public class Respawn extends Thread {
 	private Rectangle area;
 	private String unit;
 	private int unitlimit;
+	private TMXTiledMap map;
 	
 
-	public Respawn(Scene scene, int x, int y, int width, int heigth, Engine engine, ActorEntity player, long spawnMiliSeconds, long spawnAcceleration, String unit, int unitlimit) {
+	public Respawn(Scene scene, int x, int y, int width, int heigth, Engine engine, TMXTiledMap map, ActorEntity player, long spawnMiliSeconds, long spawnAcceleration, String unit, int unitlimit) {
 		this.scene = scene;
 		
 		this.area = new Rectangle(x, y, width, heigth, engine.getVertexBufferObjectManager());
@@ -34,7 +36,7 @@ public class Respawn extends Thread {
 		this.scene.attachChild(area);
 		
 		this.player = player;
-		
+		this.map = map;
 		this.spawnMiliSeconds = spawnMiliSeconds;		
 		this.spawnAcceleration = spawnAcceleration;
 		this.unit = unit;
@@ -59,8 +61,8 @@ public class Respawn extends Thread {
 
 	private int[] calculateRandomCoordinate(Rectangle area) {
 		int[] coordinate = new int[2];
-		int x = (int)(area.getX() + Math.random() * area.getWidth() - MapCreator.getCurrentMap().getTileWidth());
-		int y = (int)(area.getY() + Math.random() * area.getHeight() - MapCreator.getCurrentMap().getTileHeight());
+		int x = (int)(area.getX() + Math.random() * area.getWidth() - getMap().getTileWidth());
+		int y = (int)(area.getY() + Math.random() * area.getHeight() - getMap().getTileHeight());
 		coordinate[0] = x;
 		coordinate[1] = y;
 		return coordinate;
@@ -81,5 +83,13 @@ public class Respawn extends Thread {
 				e.printStackTrace();
 			}	
 		}	
+	}
+
+	public TMXTiledMap getMap() {
+		return map;
+	}
+
+	public void setMap(TMXTiledMap map) {
+		this.map = map;
 	}
 }

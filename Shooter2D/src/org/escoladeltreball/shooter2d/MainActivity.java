@@ -18,6 +18,7 @@ import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
 import org.escoladeltreball.shooter2d.physics.BodyFactory;
 import org.escoladeltreball.shooter2d.physics.GameContactListener;
 import org.escoladeltreball.shooter2d.scenes.FirstLevel;
+import org.escoladeltreball.shooter2d.scenes.Level;
 import org.escoladeltreball.shooter2d.scenes.PauseMenuScene;
 import org.escoladeltreball.shooter2d.scenes.RetryMenuScene;
 import org.escoladeltreball.shooter2d.scenes.SplashScreen;
@@ -53,7 +54,7 @@ public class MainActivity extends BaseGameActivity {
 
 	private boolean isGameSaved;
 	private boolean populateFinished = false;
-	public Scene currentLevel;
+	private Level currentLevel;
 	private HUD currentHUD;
 	
 
@@ -83,19 +84,20 @@ public class MainActivity extends BaseGameActivity {
 	public void onCreateResources(
 			OnCreateResourcesCallback pOnCreateResourcesCallback)
 			throws IOException {
+		this.firstLevel = new FirstLevel();
+		this.currentLevel = this.firstLevel;
 		ResourceManager.getInstance().loadGameTextures(mEngine, this);
 		ResourceManager.getInstance().loadMusic(mEngine, this);
 		ResourceManager.getInstance().loadSounds(mEngine, this);
 		ResourceManager.getInstance().musicIntro.play();
 		ResourceManager.getInstance().loadFonts(mEngine, this);
-		MapCreator.loadMap(mEngine, this, this.camera);
+		this.firstLevel.setMap(MapCreator.loadMap(FirstLevel.MAP_PATH, mEngine, this, this.camera));
 		pOnCreateResourcesCallback.onCreateResourcesFinished();
 	}
 
 	@Override
 	public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) {
-		this.firstLevel = new FirstLevel();
-		this.currentLevel = (Scene) this.firstLevel;
+		this.firstLevel.createScene();
 		this.startMenuScene = new StartMenuScene(this.camera, mEngine, this, GameManager.getInstance());
 		this.pauseMenuScene = new PauseMenuScene(this.camera, mEngine, this, GameManager.getInstance());
 		this.retryMenuScene = new RetryMenuScene(this.camera, mEngine, this, GameManager.getInstance());
@@ -118,7 +120,7 @@ public class MainActivity extends BaseGameActivity {
 		BodyFactory.setPhysicsWorld(this.mPhysicsWorld);
 		// Añade la UI
 		UI.getInstance().createUI(MainActivity.getInstance().camera, getVertexBufferObjectManager(), this);
-		//crea el player
+		//crea el player TIENE QUE ESTAR EN ESTA POSICIÓN SI NO PETA AUN NO SE PORQUE
 		this.player = PlayerLoader.loadPlayer((float)(MainActivity.CAMERA_WIDTH / 2.0), (float)(MainActivity.CAMERA_HEIGHT / 2.0), mEngine);
 		// Se pone a la UI como observador del player 
 		this.player.addGameObserver(UI.getInstance());
@@ -196,7 +198,7 @@ public class MainActivity extends BaseGameActivity {
 	}	
 	
 	public void openGame() {
-		mEngine.setScene((Scene) this.currentLevel);
+		mEngine.setScene(this.currentLevel.getScene());
 		this.camera.setHUD(this.currentHUD);
 	}
 	
@@ -209,15 +211,12 @@ public class MainActivity extends BaseGameActivity {
 			mEngine.setScene(this.retryMenuScene);
 			//quitamos el hud
 			this.camera.setHUD(null);
-			System.out.println("#################\nopening retrymenu");
 		} else if (GameManager.getInstance().isStarted()) {
 			mEngine.setScene(this.pauseMenuScene);
 			//quitamos el hud
 			this.camera.setHUD(null);
-			System.out.println("#################\nopening pausemenu");
 		} else {
 			mEngine.setScene(this.startMenuScene);
-			System.out.println("#################\nopening startmenu");
 		}
 	}
 
@@ -231,14 +230,14 @@ public class MainActivity extends BaseGameActivity {
 
 	public void setCurrentHUD(HUD hud) {
 		this.currentHUD = hud;		
-		if (mEngine.getScene() == this.currentLevel) {
+		if (mEngine.getScene() == this.currentLevel.getScene()) {
 			this.camera.setHUD(this.currentHUD);
 		}
 	}
 	
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 	    if (keyCode == KeyEvent.KEYCODE_MENU) {
-	    	if (mEngine.getScene() == this.currentLevel) {
+	    	if (mEngine.getScene() == this.currentLevel.getScene()) {
 				openMenu();
 			}		
 	        return true;
@@ -252,6 +251,14 @@ public class MainActivity extends BaseGameActivity {
 	@Override
 	public void onBackPressed() {
 		moveTaskToBack (true);
-	}	
+	}
+
+	public Level getCurrentLevel() {
+		return currentLevel;
+	}
+
+	public void setCurrentLevel(Level currentLevel) {
+		this.currentLevel = currentLevel;
+	}
 }
 
