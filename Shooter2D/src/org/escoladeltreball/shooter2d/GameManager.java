@@ -28,6 +28,7 @@ import org.andengine.entity.scene.menu.MenuScene.IOnMenuItemClickListener;
 import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.escoladeltreball.shooter2d.constants.NotificationConstants;
 import org.escoladeltreball.shooter2d.entities.loader.PlayerLoader;
+import org.escoladeltreball.shooter2d.scenes.Level;
 import org.escoladeltreball.shooter2d.ui.GameObserver;
 import org.escoladeltreball.shooter2d.ui.UI;
 
@@ -49,16 +50,18 @@ public class GameManager implements GameObserver, IOnMenuItemClickListener {
 	/** instancia unica */
 	private static GameManager instance;
 
-	private boolean started = false;
+	private boolean gameStarted = false;
 
-	private boolean finished = false;
+	private boolean gameLost = false;
+	
+	private boolean gameWon = false;
 	
 	public void setStarted(boolean started) {
-		this.started = started;
+		this.gameStarted = started;
 	}
 
 	public boolean isStarted() {
-		return started;
+		return gameStarted;
 	}
 
 	private GameManager() {
@@ -85,9 +88,16 @@ public class GameManager implements GameObserver, IOnMenuItemClickListener {
 				switch (notification) {
 				case NotificationConstants.CHANGE_HEALTH:
 					if (PlayerLoader.getPlayer().getHealthpoints() <= 0)  {
-						this.finished  = true;
+						this.gameLost  = true;
 						showGameOver();
 					}
+					break;
+				}
+			} else if (notifier instanceof Level) {
+				switch (notification) {
+				case NotificationConstants.LEVEL_WON:
+					this.gameWon = true;
+					MainActivity.getInstance().openMenu();
 					break;
 				}
 			}
@@ -122,7 +132,11 @@ public class GameManager implements GameObserver, IOnMenuItemClickListener {
 		return false;
 	}
 
-	public boolean isFinished() {
-		return this.finished;
+	public boolean isGameLost() {
+		return this.gameLost;
+	}
+
+	public boolean isGameWon() {
+		return this.gameWon;
 	}
 }
