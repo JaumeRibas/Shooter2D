@@ -21,18 +21,18 @@ import android.content.Context;
  * @author Elvis Puertas
  * @author Jaume Ribas
  */
-public class RetryMenuScene extends MenuScene implements GameScene {
+public class WinnerMenuScene extends MenuScene implements GameScene {
 	
-	private static final int GAME_OVER_TEXT_MAX_CHARACTER_COUNT = 20;
-	public static final float GAME_OVER_TEXT_X = (float)(MainActivity.CAMERA_WIDTH / 2.0);
-	public static final float GAME_OVER_TEXT_Y = (float)(MainActivity.CAMERA_HEIGHT / 2.0 + 50);
+	private static final int WINNER_TEXT_MAX_CHARACTER_COUNT = 20;
+	public static final float WINNER_TEXT_X = (float)(MainActivity.CAMERA_WIDTH / 2.0);
+	public static final float WINNER_TEXT_Y = (float)(MainActivity.CAMERA_HEIGHT / 2.0 + 50);
 	
 	private static final float EXIT_ITEM_Y = (float)(MainActivity.CAMERA_HEIGHT / 2.0 - 50);
 	private static final float RESUME_ITEM_Y = EXIT_ITEM_Y;
 	private Engine engine;
 	private Context context;
 
-	public RetryMenuScene(Camera camera, Engine engine, Context context, IOnMenuItemClickListener listener) {
+	public WinnerMenuScene(Camera camera, Engine engine, Context context, IOnMenuItemClickListener listener) {
 		super(camera);
 		setBackground(new Background(Color.BLACK));
 		this.engine = engine;
@@ -43,11 +43,11 @@ public class RetryMenuScene extends MenuScene implements GameScene {
 	@Override
 	public void populate() {
 		//titulo game over
-		Text gameOverText = new Text(GAME_OVER_TEXT_X, GAME_OVER_TEXT_Y, ResourceManager.getInstance().gameOverFont, context.getString(R.string.gameover), GAME_OVER_TEXT_MAX_CHARACTER_COUNT, engine.getVertexBufferObjectManager());
+		Text gameOverText = new Text(WINNER_TEXT_X, WINNER_TEXT_Y, ResourceManager.getInstance().gameOverFont, context.getString(R.string.you_sourvived), WINNER_TEXT_MAX_CHARACTER_COUNT, engine.getVertexBufferObjectManager());
 		float widthThird = MainActivity.CAMERA_WIDTH / 3;
 		TextMenuItem retryItem = new TextMenuItem(GameManager.MENU_RETRY,
 				ResourceManager.getInstance().menuFont,
-				context.getString(R.string.retry),
+				context.getString(R.string.restart),
 				engine.getVertexBufferObjectManager());
 		retryItem.setOffsetCenter(0.5f, 0.5f);
 		TextMenuItem exitItem = new TextMenuItem(GameManager.MENU_EXIT,

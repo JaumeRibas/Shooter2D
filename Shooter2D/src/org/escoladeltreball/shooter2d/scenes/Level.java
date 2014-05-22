@@ -2,6 +2,7 @@ package org.escoladeltreball.shooter2d.scenes;
 
 import org.andengine.entity.scene.Scene;
 import org.andengine.extension.tmx.TMXTiledMap;
+import org.escoladeltreball.shooter2d.ui.GameObserver;
 
 /**
  * Los niveles del juego
@@ -12,6 +13,20 @@ import org.andengine.extension.tmx.TMXTiledMap;
  */
 public abstract class Level {
 	
+	private GameObserver observer;
+	
+	public Level(GameObserver observer) {
+		this.observer = observer;
+	}
+	
+	public GameObserver getGameObserver() {
+		return observer;
+	}
+
+	public void setGameObserver(GameObserver observer) {
+		this.observer = observer;
+	}
+
 	/** La escena del nivel */
 	private Scene scene;
 	
@@ -42,5 +57,15 @@ public abstract class Level {
 	
 	public void setMap(TMXTiledMap map) {
 		this.map = map;
+	}
+	
+	/**
+	 * Nofica un evento a su {@link GameObserver}
+	 * 
+	 * @param data
+	 */
+	public void notify(Object data) {
+		int i = 0;
+		this.observer.notify(this, data);
 	}
 }

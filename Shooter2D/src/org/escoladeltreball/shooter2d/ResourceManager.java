@@ -75,6 +75,12 @@ public class ResourceManager {
 	private static final float GAME_OVER_FONT_SIZE = 100f;
 	private static final String GAME_OVER_FONT = MENU_FONT;
 	
+	private static final int WINNER_FONT_TEXTURE_WIDTH = 500;
+	private static final int WINNER_FONT_TEXTURE_HEIGHT = 300;
+	private static final int WINNER_FONT_COLOR = Color.GREEN;
+	private static final float WINNER_FONT_SIZE = 100f;
+	private static final String WINNER_FONT = MENU_FONT;
+	
 
 	/** la instancia unica de ResourceManager */
 	public static ResourceManager instance;
@@ -205,7 +211,11 @@ public class ResourceManager {
 		this.menuFont.load();
 		//game over
 		this.gameOverFont = FontFactory.createFromAsset(engine.getFontManager(), engine.getTextureManager(), GAME_OVER_FONT_TEXTURE_WIDTH, GAME_OVER_FONT_TEXTURE_HEIGHT, TextureOptions.BILINEAR, context.getAssets(), "font/" + GAME_OVER_FONT, GAME_OVER_FONT_SIZE, true, GAME_OVER_FONT_COLOR);
-		this.gameOverFont.prepareLetters("GAMEOVR".toCharArray());
+		this.gameOverFont.prepareLetters("ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".toCharArray());
+		this.gameOverFont.load();
+		//winner font
+		this.gameOverFont = FontFactory.createFromAsset(engine.getFontManager(), engine.getTextureManager(), WINNER_FONT_TEXTURE_WIDTH, WINNER_FONT_TEXTURE_HEIGHT, TextureOptions.BILINEAR, context.getAssets(), "font/" + WINNER_FONT, WINNER_FONT_SIZE, true, WINNER_FONT_COLOR);
+		this.gameOverFont.prepareLetters("ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".toCharArray());
 		this.gameOverFont.load();
 	}
 	

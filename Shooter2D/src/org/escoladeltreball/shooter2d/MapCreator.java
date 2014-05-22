@@ -25,6 +25,7 @@ package org.escoladeltreball.shooter2d;
 
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.BoundCamera;
+import org.andengine.engine.camera.Camera;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.extension.tmx.TMXLayer;
@@ -70,72 +71,21 @@ public class MapCreator {
 		camera.setBoundsEnabled(true);
 		return mTMXTiledMap;
 	}
-
+	
 	/**
-	 * Crea los objetos de la escena, paredes y respawns.
+	 * Crea las paredes de un mapa
 	 * 
-	 * @param scene a {@link Scene}
-	 * @param engine a {@link Engine}
-	 * @param map a {@link TMXTiledMap}
-	 * @param vbo a {@link VertexBufferObjectManager}
-	 * @param player a {@link ActorEntity} for the enemies to target.
+	 * @param wallsGroup
+	 * @param map
+	 * @param vbo
 	 */
-	public static void createMapObjects(TMXTiledMap map, Scene scene, Engine engine, VertexBufferObjectManager vbo, ActorEntity player){
-		// Loop through the object groups
-		for(final TMXObjectGroup group: map.getTMXObjectGroups()) {
-			if(group.getTMXObjectGroupProperties().containsTMXProperty("wall", "true")){
-				// This is our "wall" layer. Create the boxes from it
-				for(final TMXObject object : group.getTMXObjects()) {
-					Rectangle rect = new Rectangle(object.getX(), map.getHeight()-object.getHeight()-object.getY(), object.getWidth()+TILE_SIZE, object.getHeight()+TILE_SIZE, vbo);
-					rect.setOffsetCenter(0, 0);
-					BodyFactory.createRectangleWallBody(rect);
-				}
-			}
-			
-			if(group.getTMXObjectGroupProperties().containsTMXProperty("respawn", "true")){
-				// Creamos cada respawn con sus características.
-				for(final TMXObject object : group.getTMXObjects()) {
-					long spawnMiliSeconds = 10;
-					long spawnAcceleration = 0;
-					String unit = null;
-					int unitlimit = 1;
-					ActorEntity target = player;
-					for(TMXProperty property : object.getTMXObjectProperties()){
-						String name = property.getName();
-						String value = property.getValue();
-						if(name.equals("spawntime")){
-							System.out.println("Spawntime: " + value);
-							spawnMiliSeconds = Long.parseLong(value);
-						} else if(name.equals("spawnacceleration")){
-							System.out.println("SpawnAcceleration: " + value);
-							spawnAcceleration = Long.parseLong(value);
-						} else if(name.equals("quantity")){
-							System.out.println("UnitLimit: " + value);
-							unitlimit = Integer.parseInt(value);
-							if(unitlimit < 0){
-								spawnMiliSeconds = 2000;
-							}
-						} else if(name.equals("type")){
-							System.out.println("Unit Type: " + value);
-							unit = value;
-						} else if(name.equals("target")){
-							System.out.println("Target: " + value);
-							if(value.equals("player")){
-								target = player;
-							} else if(value.equals("none")){
-								target = null;
-							}
-						}
-					}
-					
-					int posX = object.getX() + map.getTileWidth();
-					int posY = (int) (map.getHeight()-object.getHeight()-object.getY()) + map.getTileWidth(); 
-					int width = object.getWidth() + 32;
-					int heigh = object.getHeight() + 32;
-					
-					Respawn res = new Respawn(scene, posX, posY, width, heigh, engine, map, target, spawnMiliSeconds, spawnAcceleration, unit, unitlimit);
-					res.start();
-				}
+	public static void createWalls(TMXObjectGroup wallsGroup, TMXTiledMap map, VertexBufferObjectManager vbo) {
+		if(wallsGroup.getTMXObjectGroupProperties().containsTMXProperty("wall", "true")){
+			// This is our "wall" layer. Create the boxes from it
+			for(final TMXObject object : wallsGroup.getTMXObjects()) {
+				Rectangle rect = new Rectangle(object.getX(), map.getHeight()-object.getHeight()-object.getY(), object.getWidth()+TILE_SIZE, object.getHeight()+TILE_SIZE, vbo);
+				rect.setOffsetCenter(0, 0);
+				BodyFactory.createRectangleWallBody(rect);
 			}
 		}
 	}

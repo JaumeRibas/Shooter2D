@@ -43,9 +43,10 @@ import org.escoladeltreball.shooter2d.physics.GameContactListener;
 import org.escoladeltreball.shooter2d.scenes.FirstLevel;
 import org.escoladeltreball.shooter2d.scenes.Level;
 import org.escoladeltreball.shooter2d.scenes.PauseMenuScene;
-import org.escoladeltreball.shooter2d.scenes.RetryMenuScene;
+import org.escoladeltreball.shooter2d.scenes.GameOverMenuScene;
 import org.escoladeltreball.shooter2d.scenes.SplashScreen;
 import org.escoladeltreball.shooter2d.scenes.StartMenuScene;
+import org.escoladeltreball.shooter2d.scenes.WinnerMenuScene;
 import org.escoladeltreball.shooter2d.ui.UI;
 
 import android.os.Bundle;
@@ -73,8 +74,9 @@ public class MainActivity extends BaseGameActivity {
 	private FirstLevel firstLevel;
 	private StartMenuScene startMenuScene;
 	private PauseMenuScene pauseMenuScene;
-	private RetryMenuScene retryMenuScene;
+	private GameOverMenuScene retryMenuScene;
 	private SplashScreen splashScreen;
+	private WinnerMenuScene winnerMenuScene;
 
 	private boolean isGameSaved;
 	private boolean populateFinished = false;
@@ -109,7 +111,7 @@ public class MainActivity extends BaseGameActivity {
 	public void onCreateResources(
 			OnCreateResourcesCallback pOnCreateResourcesCallback)
 			throws IOException {
-		this.firstLevel = new FirstLevel();
+		this.firstLevel = new FirstLevel(GameManager.getInstance());
 		this.currentLevel = this.firstLevel;
 		ResourceManager.getInstance().loadGameTextures(mEngine, this);
 		ResourceManager.getInstance().loadMusic(mEngine, this);
@@ -123,11 +125,12 @@ public class MainActivity extends BaseGameActivity {
 
 	@Override
 	public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) {
-		this.firstLevel.createScene();
-		this.startMenuScene = new StartMenuScene(this.camera, mEngine, this, GameManager.getInstance());
-		this.pauseMenuScene = new PauseMenuScene(this.camera, mEngine, this, GameManager.getInstance());
-		this.retryMenuScene = new RetryMenuScene(this.camera, mEngine, this, GameManager.getInstance());
 		this.splashScreen = new SplashScreen(mEngine);
+		this.startMenuScene = new StartMenuScene(this.camera, mEngine, this, GameManager.getInstance());
+		this.firstLevel.createScene();
+		this.pauseMenuScene = new PauseMenuScene(this.camera, mEngine, this, GameManager.getInstance());
+		this.retryMenuScene = new GameOverMenuScene(this.camera, mEngine, this, GameManager.getInstance());
+		this.winnerMenuScene = new WinnerMenuScene(this.camera, mEngine, this, GameManager.getInstance());
 		pOnCreateSceneCallback.onCreateSceneFinished(this.splashScreen);
 	}
 
@@ -157,6 +160,8 @@ public class MainActivity extends BaseGameActivity {
 		this.firstLevel.populate();
 		//populate menu de pausa
 		this.pauseMenuScene.populate();
+		//populate el menu de victoria
+		this.winnerMenuScene.populate();
 		//populate menu de reinicio
 		this.retryMenuScene.populate();
 		//Cuando se termina de cargar se abre el menu principal
@@ -177,7 +182,6 @@ public class MainActivity extends BaseGameActivity {
 				ResourceManager.getInstance().musicIntro.pause();
 			}
 		}
-		//saveGame();
 	}
 
 	@Override
@@ -192,35 +196,9 @@ public class MainActivity extends BaseGameActivity {
 		}
 	}
 
-//	public void saveGame() {
-//		// Prepara el archivo sharedPreferences
-//		SharedPreferences settings = getSharedPreferences("dbJuego",
-//				Context.MODE_PRIVATE);
-//		// Escribe datos
-//		Editor edit = settings.edit();
-//		edit.putFloat("posXPlayer", player.getX());
-//		edit.putFloat("posYPlayer", player.getY());
-//		edit.apply();
-//		this.isGameSaved = true;
-//	}
-//
-//	public void loadGame() {
-//		// Prepara el archivo sharedPreferences
-//		SharedPreferences settings = getSharedPreferences("dbJuego",
-//				Context.MODE_PRIVATE);
-//		// Lee datos
-//		float x = settings.getFloat("posXPlayer", 50);
-//		float y = settings.getFloat("posYPlayer", 50);
-//		if (!(x >= 0 || y >= 0)) {
-//			player.setX(x);
-//			player.setY(y);
-//		}
-//	}
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//loadGame();
 	}	
 	
 	public void openGame() {
@@ -233,8 +211,12 @@ public class MainActivity extends BaseGameActivity {
 	}
 
 	public void openMenu() {
-		if (GameManager.getInstance().isFinished()) {
+		if (GameManager.getInstance().isGameLost()) {
 			mEngine.setScene(this.retryMenuScene);
+			//quitamos el hud
+			this.camera.setHUD(null);
+		} else if (GameManager.getInstance().isGameWon()) {
+			mEngine.setScene(this.winnerMenuScene);
 			//quitamos el hud
 			this.camera.setHUD(null);
 		} else if (GameManager.getInstance().isStarted()) {
@@ -285,6 +267,10 @@ public class MainActivity extends BaseGameActivity {
 
 	public void setCurrentLevel(Level currentLevel) {
 		this.currentLevel = currentLevel;
+	}
+
+	public FirstLevel getFirstLevel() {
+		return firstLevel;
 	}
 }
 

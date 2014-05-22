@@ -28,11 +28,14 @@ import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.extension.tmx.TMXTiledMap;
 import org.andengine.util.adt.color.Color;
+import org.escoladeltreball.shooter2d.commands.CommandFactory;
+import org.escoladeltreball.shooter2d.commands.interfaces.Command;
 import org.escoladeltreball.shooter2d.entities.ActorEntity;
 import org.escoladeltreball.shooter2d.entities.ZombieSprinter;
 import org.escoladeltreball.shooter2d.entities.GameEntity;
 import org.escoladeltreball.shooter2d.entities.Zombie;
 import org.escoladeltreball.shooter2d.entities.loader.ZombieLoader;
+import org.escoladeltreball.shooter2d.ui.GameObserver;
 
 public class Respawn extends Thread {
 	
@@ -45,9 +48,11 @@ public class Respawn extends Thread {
 	private String unit;
 	private int unitlimit;
 	private TMXTiledMap map;
+	private Command spawnCommand;
+	private GameObserver[] unitObservers;
 	
 
-	public Respawn(Scene scene, int x, int y, int width, int heigth, Engine engine, TMXTiledMap map, ActorEntity player, long spawnMiliSeconds, long spawnAcceleration, String unit, int unitlimit) {
+	public Respawn(Scene scene, int x, int y, int width, int heigth, Engine engine, TMXTiledMap map, ActorEntity player, long spawnMiliSeconds, long spawnAcceleration, String unit, int unitlimit, GameObserver[] unitObservers, Command spawnCommand) {
 		this.scene = scene;
 		
 		this.area = new Rectangle(x, y, width, heigth, engine.getVertexBufferObjectManager());
@@ -64,6 +69,12 @@ public class Respawn extends Thread {
 		this.spawnAcceleration = spawnAcceleration;
 		this.unit = unit;
 		this.unitlimit = unitlimit;
+		this.unitObservers = unitObservers;
+		this.spawnCommand = spawnCommand;
+	}
+	
+	public Respawn(Scene scene, int x, int y, int width, int heigth, Engine engine, TMXTiledMap map, ActorEntity player, long spawnMiliSeconds, long spawnAcceleration, String unit, int unitlimit) {
+		this(scene, x, y, width, heigth, engine, map, player, spawnMiliSeconds, spawnAcceleration, unit, unitlimit, new GameObserver[0], CommandFactory.getDoNothingCommand());
 	}
 
 	public void spawn(String monster_name) {
@@ -78,7 +89,9 @@ public class Respawn extends Thread {
 			System.out.println("Monstruo invalido");
 			this.unitlimit = 0;
 		}
-		
+		for (GameObserver observer: this.unitObservers) {
+			entity.addGameObserver(observer);
+		}
 		scene.attachChild(entity);
 	}
 
@@ -102,6 +115,7 @@ public class Respawn extends Thread {
 				Thread.sleep(time);
 				spawn(this.unit);
 				unitsSpawned++;
+				this.spawnCommand.execute();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}	
