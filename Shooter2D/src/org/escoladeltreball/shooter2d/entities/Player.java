@@ -2,10 +2,13 @@ package org.escoladeltreball.shooter2d.entities;
 
 import org.andengine.engine.Engine;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
+import org.escoladeltreball.shooter2d.MainActivity;
 import org.escoladeltreball.shooter2d.ResourceManager;
 import org.escoladeltreball.shooter2d.constants.HPConstants;
 import org.escoladeltreball.shooter2d.physics.BodyFactory;
 import org.escoladeltreball.shooter2d.weapons.Gun;
+
+import android.os.Vibrator;
 
 import com.badlogic.gdx.physics.box2d.Body;
 
@@ -54,6 +57,7 @@ public class Player extends ActorEntity {
 		// TODO Animación y particulas de player herido
 		System.out.println("PLAYER HEALTH: " + getHealthpoints() + "/" + getMaxHealthPoints());
 		ResourceManager.getInstance().soundPlayerDead.play();
+		MainActivity.vibrator.vibrate(500);
 	}
 	
 	/**

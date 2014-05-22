@@ -25,6 +25,7 @@ import org.escoladeltreball.shooter2d.scenes.StartMenuScene;
 import org.escoladeltreball.shooter2d.ui.UI;
 
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.KeyEvent;
 
 import com.badlogic.gdx.math.Vector2;
@@ -55,7 +56,8 @@ public class MainActivity extends BaseGameActivity {
 	private boolean populateFinished = false;
 	public Scene currentLevel;
 	private HUD currentHUD;
-	
+	public static Vibrator vibrator;
+
 
 	@Override
 	public Engine onCreateEngine(final EngineOptions pEngineOptions) {
@@ -89,6 +91,7 @@ public class MainActivity extends BaseGameActivity {
 		ResourceManager.getInstance().musicIntro.play();
 		ResourceManager.getInstance().loadFonts(mEngine, this);
 		MapCreator.loadMap(mEngine, this, this.camera);
+		this.vibrator = (Vibrator) this.getSystemService(this.VIBRATOR_SERVICE);
 		pOnCreateResourcesCallback.onCreateResourcesFinished();
 	}
 
