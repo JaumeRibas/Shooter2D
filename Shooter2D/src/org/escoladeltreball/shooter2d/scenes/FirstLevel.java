@@ -23,12 +23,19 @@ package org.escoladeltreball.shooter2d.scenes;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+import org.andengine.entity.IEntity;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.escoladeltreball.shooter2d.MainActivity;
 import org.escoladeltreball.shooter2d.MapCreator;
+import org.escoladeltreball.shooter2d.entities.ColisionableEntity;
 import org.escoladeltreball.shooter2d.entities.Player;
 import org.escoladeltreball.shooter2d.weapons.WeaponFactory;
+
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 
 /**
  * El primer nivel
@@ -83,7 +90,31 @@ public class FirstLevel extends Level implements GameScene {
 
 	@Override
 	public void restart() {
-		getScene().reset();
-		populate();
+//		int childCount = getScene().getChildCount();
+//		for (int i = 0; i < childCount; i++) {
+//			final IEntity iEntity = getScene().getChildByIndex(i);
+//			if (iEntity instanceof ColisionableEntity) {
+//				((ColisionableEntity) iEntity).remove();
+//			}
+//		}
+//		try {
+//			Thread.sleep(2000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+//		setMap(MapCreator.loadMap(FirstLevel.MAP_PATH, MainActivity.getInstance().getEngine(), MainActivity.getInstance(), MainActivity.getInstance().camera));
+//		createScene();
+//		getScene().registerUpdateHandler(MainActivity.getInstance().mPhysicsWorld);
+//		// Muestra el mapa en la pantalla
+//		getScene().attachChild(getMap());
+//		getScene().attachChild(player);
+//		//crea los objetos del mapa
+//		MapCreator.createMapObjects(getMap(), getScene(), MainActivity.getInstance().getEngine(), MainActivity.getInstance().getVertexBufferObjectManager(), player);
+		Intent mStartActivity = new Intent(MainActivity.getInstance(), MainActivity.class);
+		int mPendingIntentId = 123456;
+		PendingIntent mPendingIntent = PendingIntent.getActivity(MainActivity.getInstance(), mPendingIntentId,    mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+		AlarmManager mgr = (AlarmManager)MainActivity.getInstance().getSystemService(Context.ALARM_SERVICE);
+		mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+		System.exit(0);
 	}
 }
