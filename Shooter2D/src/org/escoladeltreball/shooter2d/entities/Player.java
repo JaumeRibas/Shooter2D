@@ -76,7 +76,6 @@ public class Player extends ActorEntity {
 	@Override
 	public void hurt(int strengh){
 		super.hurt(strengh);
-		// TODO Efectos de sonido del player herido
 		// TODO Animación y particulas de player herido
 		ResourceManager.getInstance().soundPlayerDead.play();
 		MainActivity.vibrator.vibrate(500);

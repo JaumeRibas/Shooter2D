@@ -47,8 +47,6 @@ public class SetPlayerOrientationAndShoot implements AnalogChangeCommand {
 			if(player.getGun() != null){
 				player.getGun().shoot();
 			}
-		} else {
-			
 		}
 	}
 

@@ -259,6 +259,7 @@ public class MainActivity extends BaseGameActivity {
 	@Override
 	public void onBackPressed() {
 		moveTaskToBack (true);
+		openMenu();
 	}
 
 	public Level getCurrentLevel() {
