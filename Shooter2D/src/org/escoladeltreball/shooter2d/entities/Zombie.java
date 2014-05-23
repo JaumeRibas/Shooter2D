@@ -74,7 +74,7 @@ public class Zombie extends IAEntity implements Walking, Attacking, Targeting {
 		this.attackCooldown = new Cooldown(zombie_attack_timer);
 		Body body = BodyFactory.createZombieBody(pX, pY);
 		this.setBody(body);
-		this.setColor(Color.GREEN);
+//		this.setColor(Color.GREEN);
 		this.setMaxHealthPoints(HPConstants.ZOMBIE_HEALTH);
 		this.setHealthpoints(HPConstants.ZOMBIE_HEALTH);
 	}
