@@ -124,7 +124,7 @@ public class ResourceManager {
 	 * 
 	 * @return la unica instancia de ResourceManager
 	 */
-	public static ResourceManager getInstance() {
+	public static synchronized ResourceManager getInstance() {
 		if (instance == null) {
 			instance = new ResourceManager();
 		}
@@ -254,7 +254,7 @@ public class ResourceManager {
 		this.bulletTextureRegion.getTexture().unload();
 
 		//llamamos al garbage collector
-		System.gc();
+//		System.gc();
 	}
 	
 	public synchronized void unloadFonts() {

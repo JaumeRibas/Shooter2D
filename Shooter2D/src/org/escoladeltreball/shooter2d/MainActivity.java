@@ -187,7 +187,7 @@ public class MainActivity extends BaseGameActivity {
 	@Override
 	public synchronized void onResumeGame() {
 		super.onResumeGame();
-		System.gc();
+//		System.gc();
 		if (this.isGameLoaded()) {
 			// Reanuda la reproducción de la música
 			if (ResourceManager.getInstance().musicIntro != null) {

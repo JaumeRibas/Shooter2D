@@ -66,8 +66,10 @@ public class MapCreator {
 			Debug.e(e);
 		}
 		// La camara no execede el tamaño del mapa
-		final TMXLayer tmxLayer = mTMXTiledMap.getTMXLayers().get(0);
-		camera.setBounds(0, 0, tmxLayer.getWidth(), tmxLayer.getHeight());
+		if(mTMXTiledMap != null && mTMXTiledMap.getTMXLayers().size() > 0){
+			final TMXLayer tmxLayer = mTMXTiledMap.getTMXLayers().get(0);
+			camera.setBounds(0, 0, tmxLayer.getWidth(), tmxLayer.getHeight());
+		}
 		camera.setBoundsEnabled(true);
 		return mTMXTiledMap;
 	}
