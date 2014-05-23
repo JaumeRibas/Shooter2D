@@ -78,7 +78,6 @@ public class Player extends ActorEntity {
 		super.hurt(strengh);
 		// TODO Efectos de sonido del player herido
 		// TODO Animación y particulas de player herido
-		System.out.println("PLAYER HEALTH: " + getHealthpoints() + "/" + getMaxHealthPoints());
 		ResourceManager.getInstance().soundPlayerDead.play();
 		MainActivity.vibrator.vibrate(500);
 	}

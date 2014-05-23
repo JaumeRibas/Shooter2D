@@ -43,7 +43,7 @@ public class WinnerMenuScene extends MenuScene implements GameScene {
 	@Override
 	public void populate() {
 		//titulo game over
-		Text gameOverText = new Text(WINNER_TEXT_X, WINNER_TEXT_Y, ResourceManager.getInstance().gameOverFont, context.getString(R.string.you_sourvived), WINNER_TEXT_MAX_CHARACTER_COUNT, engine.getVertexBufferObjectManager());
+		Text gameOverText = new Text(WINNER_TEXT_X, WINNER_TEXT_Y, ResourceManager.getInstance().winnerFont, context.getString(R.string.you_sourvived), WINNER_TEXT_MAX_CHARACTER_COUNT, engine.getVertexBufferObjectManager());
 		float widthThird = MainActivity.CAMERA_WIDTH / 3;
 		TextMenuItem retryItem = new TextMenuItem(GameManager.MENU_RETRY,
 				ResourceManager.getInstance().menuFont,

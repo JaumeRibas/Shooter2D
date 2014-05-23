@@ -99,6 +99,8 @@ public class ResourceManager {
 	public Font menuFont;
 	/** la fuente del texto de GAME OVER */
 	public Font gameOverFont;
+	/** la fuente del texto de GAME OVER */
+	public Font winnerFont;
 	
 	//musica
 	public Music musicIntro;
@@ -214,9 +216,9 @@ public class ResourceManager {
 		this.gameOverFont.prepareLetters("ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".toCharArray());
 		this.gameOverFont.load();
 		//winner font
-		this.gameOverFont = FontFactory.createFromAsset(engine.getFontManager(), engine.getTextureManager(), WINNER_FONT_TEXTURE_WIDTH, WINNER_FONT_TEXTURE_HEIGHT, TextureOptions.BILINEAR, context.getAssets(), "font/" + WINNER_FONT, WINNER_FONT_SIZE, true, WINNER_FONT_COLOR);
-		this.gameOverFont.prepareLetters("ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".toCharArray());
-		this.gameOverFont.load();
+		this.winnerFont = FontFactory.createFromAsset(engine.getFontManager(), engine.getTextureManager(), WINNER_FONT_TEXTURE_WIDTH, WINNER_FONT_TEXTURE_HEIGHT, TextureOptions.BILINEAR, context.getAssets(), "font/" + WINNER_FONT, WINNER_FONT_SIZE, true, WINNER_FONT_COLOR);
+		this.winnerFont.prepareLetters("ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".toCharArray());
+		this.winnerFont.load();
 	}
 	
 	/**
