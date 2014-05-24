@@ -1,0 +1,832 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.6" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" name="org.escoladeltreball.shooter2d.entities.IAEntity" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/entities/IAEntity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="117" width="246" x="3318" y="2695"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="org.escoladeltreball.shooter2d.commands.SetPlayerOrientationAndShoot" 
+    project="Shooter2D" file="/Shooter2D/src/org/escoladeltreball/shooter2d/commands/SetPlayerOrientationAndShoot.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="197" x="1187" y="1350"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="3" language="java" name="org.escoladeltreball.shooter2d.ui.GameObserver" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/ui/GameObserver.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="81" width="149" x="4453" y="2093"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="4" language="java" name="org.escoladeltreball.shooter2d.scenes.SplashScreen" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/scenes/SplashScreen.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="189" width="177" x="2490" y="694"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="org.escoladeltreball.shooter2d.ResourceManager" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/ResourceManager.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="729" width="448" x="-133" y="-85"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="org.escoladeltreball.shooter2d.physics.GameContactListener" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/physics/GameContactListener.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="207" width="264" x="365" y="-85"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="7" language="java" name="org.escoladeltreball.shooter2d.entities.interfaces.Attacking" 
+    project="Shooter2D" file="/Shooter2D/src/org/escoladeltreball/shooter2d/entities/interfaces/Attacking.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="81" width="212" x="2521" y="3207"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="8" language="java" name="org.escoladeltreball.shooter2d.scenes.StartMenuScene" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/scenes/StartMenuScene.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="351" x="2707" y="694"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="org.escoladeltreball.shooter2d.entities.ActorEntity" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/entities/ActorEntity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="207" width="263" x="2502" y="2448"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="org.escoladeltreball.shooter2d.physics.BodyFactory" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/physics/BodyFactory.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="315" width="279" x="679" y="-85"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="org.escoladeltreball.shooter2d.ui.GameOverHUD" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/ui/GameOverHUD.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="282" x="998" y="-85"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="org.escoladeltreball.shooter2d.Respawn" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/Respawn.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="333" width="548" x="2523" y="1350"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="org.escoladeltreball.shooter2d.ui.UI" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/ui/UI.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="693" width="696" x="3726" y="1350"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="org.escoladeltreball.shooter2d.scenes.Level" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/scenes/Level.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="279" width="220" x="4339" y="694"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="15" language="java" name="org.escoladeltreball.shooter2d.scenes.GameScene" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/scenes/GameScene.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="81" width="167" x="3111" y="1350"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="16" language="java" name="org.escoladeltreball.shooter2d.weapons.Gun" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/weapons/Gun.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="243" width="173" x="2308" y="2093"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="org.escoladeltreball.shooter2d.physics.FixtureFactory" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/physics/FixtureFactory.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="351" width="180" x="1320" y="-85"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="org.escoladeltreball.shooter2d.entities.loader.ZombieLoader" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/entities/loader/ZombieLoader.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="117" width="339" x="1540" y="-85"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="19" language="java" name="org.escoladeltreball.shooter2d.entities.interfaces.Walking" 
+    project="Shooter2D" file="/Shooter2D/src/org/escoladeltreball/shooter2d/entities/interfaces/Walking.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="81" width="212" x="2773" y="3207"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="20" language="java" name="org.escoladeltreball.shooter2d.entities.Bullet" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/entities/Bullet.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="207" width="274" x="2805" y="2448"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="21" language="java" name="org.escoladeltreball.shooter2d.weapons.Cooldown" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/weapons/Cooldown.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="173" x="2308" y="3207"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="22" language="java" name="org.escoladeltreball.shooter2d.GameManager" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/GameManager.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="351" width="321" x="4514" y="1350"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" name="org.escoladeltreball.shooter2d.entities.Player" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/entities/Player.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="189" width="240" x="2243" y="1350"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="24" language="java" name="org.escoladeltreball.shooter2d.scenes.WinnerMenuScene" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/scenes/WinnerMenuScene.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="225" width="362" x="3098" y="694"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="25" language="java" name="org.escoladeltreball.shooter2d.commands.CommandFactory" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/commands/CommandFactory.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="153" width="326" x="1424" y="1013"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="26" language="java" name="org.escoladeltreball.shooter2d.ui.ConfigurableAnalogControlListener" 
+    project="Shooter2D" file="/Shooter2D/src/org/escoladeltreball/shooter2d/ui/ConfigurableAnalogControlListener.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="189" width="308" x="1895" y="1350"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="27" language="java" name="org.escoladeltreball.shooter2d.scenes.GameOverMenuScene" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/scenes/GameOverMenuScene.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="225" width="380" x="3500" y="694"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="28" language="java" name="org.escoladeltreball.shooter2d.entities.Zombie" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/entities/Zombie.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="315" width="301" x="2892" y="2852"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="29" language="java" name="org.escoladeltreball.shooter2d.scenes.FirstLevel" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/scenes/FirstLevel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="297" width="173" x="4280" y="1013"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="30" language="java" name="org.escoladeltreball.shooter2d.commands.interfaces.AnalogChangeCommand" 
+    project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/commands/interfaces/AnalogChangeCommand.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="81" width="228" x="1545" y="2093"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="31" language="java" name="org.escoladeltreball.shooter2d.entities.ZombieSprinter" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/entities/ZombieSprinter.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="117" width="339" x="3025" y="3207"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="32" language="java" name="org.escoladeltreball.shooter2d.entities.interfaces.Targeting" 
+    project="Shooter2D" file="/Shooter2D/src/org/escoladeltreball/shooter2d/entities/interfaces/Targeting.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="212" x="3404" y="3207"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="33" language="java" name="org.escoladeltreball.shooter2d.scenes.PauseMenuScene" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/scenes/PauseMenuScene.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="358" x="3920" y="694"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="34" language="java" name="org.escoladeltreball.shooter2d.commands.DoNothing" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/commands/DoNothing.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="117" width="183" x="1672" y="1350"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="35" language="java" name="org.escoladeltreball.shooter2d.ui.HUDBar" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/ui/HUDBar.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="315" width="418" x="3726" y="2093"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="36" language="java" name="org.escoladeltreball.shooter2d.MapCreator" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/MapCreator.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="401" x="1919" y="-85"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="37" language="java" name="org.escoladeltreball.shooter2d.entities.loader.PlayerLoader" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/entities/loader/PlayerLoader.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="117" width="197" x="2283" y="1013"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="38" language="java" name="org.escoladeltreball.shooter2d.commands.SetPlayerVelocityAndOrientation" 
+    project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/commands/SetPlayerVelocityAndOrientation.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="117" width="208" x="1424" y="1350"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="39" language="java" name="org.escoladeltreball.shooter2d.MainActivity" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/MainActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="621" width="301" x="3500" y="-85"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="40" language="java" name="org.escoladeltreball.shooter2d.constants.HPConstants" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/constants/HPConstants.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="207" width="178" x="2578" y="-85"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="41" language="java" name="org.escoladeltreball.shooter2d.constants.NotificationConstants" 
+    project="Shooter2D" file="/Shooter2D/src/org/escoladeltreball/shooter2d/constants/NotificationConstants.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="117" width="178" x="2360" y="-85"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="42" language="java" name="org.escoladeltreball.shooter2d.weapons.WeaponFactory" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/weapons/WeaponFactory.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="173" x="2796" y="-85"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="43" language="java" name="org.escoladeltreball.shooter2d.commands.interfaces.Command" 
+    project="Shooter2D" file="/Shooter2D/src/org/escoladeltreball/shooter2d/commands/interfaces/Command.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="81" width="228" x="1895" y="2093"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="44" language="java" name="org.escoladeltreball.shooter2d.entities.loader.BulletLoader" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/entities/loader/BulletLoader.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="117" width="227" x="3009" y="-85"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="45" language="java" name="org.escoladeltreball.shooter2d.constants.SpriteConstants" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/constants/SpriteConstants.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="315" width="184" x="3276" y="-85"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="46" language="java" name="org.escoladeltreball.shooter2d.entities.ColisionableEntity" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/entities/ColisionableEntity.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="279" width="293" x="2805" y="2093"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="47" language="java" name="org.escoladeltreball.shooter2d.entities.GameEntity" project="Shooter2D" 
+    file="/Shooter2D/src/org/escoladeltreball/shooter2d/entities/GameEntity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="368" x="3318" y="1350"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="48">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="49" name="instance"/>      
+      <multiplicity id="50" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="51">    
+    <bendpoint x="2511" y="2093"/>    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
+  <realization id="52">    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="15"/>  
+  </realization>  
+  <association id="53">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="54" name="analogChangeCommand"/>      
+      <multiplicity id="55" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="30" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="56">    
+    <end type="SOURCE" refId="39" navigable="false">      
+      <attribute id="57" name="startMenuScene"/>      
+      <multiplicity id="58" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="59">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="46"/>  
+  </generalization>  
+  <generalization id="60">    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <generalization id="61">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
+  <association id="62">    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="63" name="doNothingInstance"/>      
+      <multiplicity id="64" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="34" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="65">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="46"/>  
+  </generalization>  
+  <association id="66">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="67" name="instance"/>      
+      <multiplicity id="68" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="69">    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="43"/>  
+  </realization>  
+  <realization id="70">    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="32"/>  
+  </realization>  
+  <association id="71">    
+    <end type="SOURCE" refId="23" navigable="false">      
+      <attribute id="72" name="gun"/>      
+      <multiplicity id="73" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="74">    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="75" name="setPlayerOrientationAndShoot"/>      
+      <multiplicity id="76" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="77">    
+    <bendpoint x="2809" y="1013"/>    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="15"/>  
+  </realization>  
+  <realization id="78">    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="30"/>  
+  </realization>  
+  <realization id="79">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="30"/>  
+  </realization>  
+  <association id="80">    
+    <end type="SOURCE" refId="29" navigable="false">      
+      <attribute id="81" name="player"/>      
+      <multiplicity id="82" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="23" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="83">    
+    <end type="SOURCE" refId="31"/>    
+    <end type="TARGET" refId="28"/>  
+  </generalization>  
+  <association id="84">    
+    <bendpoint x="3327" y="2448"/>    
+    <bendpoint x="3327" y="2093"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="85" name="target"/>      
+      <multiplicity id="86" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="47" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="87">    
+    <end type="SOURCE" refId="39" navigable="false">      
+      <attribute id="88" name="currentLevel"/>      
+      <multiplicity id="89" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="90">    
+    <end type="SOURCE" refId="39" navigable="false">      
+      <attribute id="91" name="winnerMenuScene"/>      
+      <multiplicity id="92" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="93">    
+    <bendpoint x="2317" y="2448"/>    
+    <bendpoint x="2317" y="2695"/>    
+    <bendpoint x="2317" y="2852"/>    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="94" name="gunCooldown"/>      
+      <multiplicity id="95" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="96">    
+    <end type="SOURCE" refId="46"/>    
+    <end type="TARGET" refId="47"/>  
+  </generalization>  
+  <realization id="97">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="3"/>  
+  </realization>  
+  <association id="98">    
+    <end type="SOURCE" refId="22" navigable="false">      
+      <attribute id="99" name="instance"/>      
+      <multiplicity id="100" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="22" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="101">    
+    <bendpoint x="2532" y="2093"/>    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="102" name="player"/>      
+      <multiplicity id="103" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="104">    
+    <bendpoint x="3370" y="2852"/>    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="32"/>  
+  </realization>  
+  <realization id="105">    
+    <bendpoint x="3314" y="1013"/>    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="15"/>  
+  </realization>  
+  <realization id="106">    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="19"/>  
+  </realization>  
+  <association id="107">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="108" name="healthBar"/>      
+      <multiplicity id="109" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="35" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="110">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="3"/>  
+  </realization>  
+  <association id="111">    
+    <end type="SOURCE" refId="47" navigable="false">      
+      <attribute id="112" name="observers"/>      
+      <multiplicity id="113" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="114">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="115" name="shooter"/>      
+      <multiplicity id="116" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="117">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="118" name="spawnCommand"/>      
+      <multiplicity id="119" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="43" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="120">    
+    <bendpoint x="4483" y="1013"/>    
+    <bendpoint x="4483" y="1350"/>    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="121" name="observer"/>      
+      <multiplicity id="122" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="123">    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="7"/>  
+  </realization>  
+  <association id="124">    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="125" name="attackCooldown"/>      
+      <multiplicity id="126" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="127">    
+    <end type="SOURCE" refId="39" navigable="false">      
+      <attribute id="128" name="splashScreen"/>      
+      <multiplicity id="129" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="130">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="131" name="analogClickCommand"/>      
+      <multiplicity id="132" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="43" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="133">    
+    <bendpoint x="4462" y="1350"/>    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="3"/>  
+  </realization>  
+  <generalization id="134">    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="14"/>  
+  </generalization>  
+  <realization id="135">    
+    <end type="SOURCE" refId="38"/>    
+    <end type="TARGET" refId="30"/>  
+  </realization>  
+  <realization id="136">    
+    <bendpoint x="3524" y="1013"/>    
+    <end type="SOURCE" refId="33"/>    
+    <end type="TARGET" refId="15"/>  
+  </realization>  
+  <realization id="137">    
+    <bendpoint x="2918" y="1013"/>    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="15"/>  
+  </realization>  
+  <realization id="138">    
+    <bendpoint x="3113" y="1013"/>    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="15"/>  
+  </realization>  
+  <association id="139">    
+    <end type="SOURCE" refId="39" navigable="false">      
+      <attribute id="140" name="activity"/>      
+      <multiplicity id="141" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="142">    
+    <bendpoint x="4308" y="694"/>    
+    <end type="SOURCE" refId="39" navigable="false">      
+      <attribute id="143" name="firstLevel"/>      
+      <multiplicity id="144" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="29" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="145">    
+    <bendpoint x="2566" y="2695"/>    
+    <bendpoint x="2566" y="2852"/>    
+    <end type="SOURCE" refId="20" navigable="false">      
+      <attribute id="146" name="bulletTime"/>      
+      <multiplicity id="147" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="148">    
+    <end type="SOURCE" refId="39" navigable="false">      
+      <attribute id="149" name="retryMenuScene"/>      
+      <multiplicity id="150" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="151">    
+    <end type="SOURCE" refId="39" navigable="false">      
+      <attribute id="152" name="pauseMenuScene"/>      
+      <multiplicity id="153" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="33" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="154">    
+    <end type="SOURCE" refId="37" navigable="false">      
+      <attribute id="155" name="player"/>      
+      <multiplicity id="156" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="23" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="157">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="158" name="unitObservers"/>      
+      <multiplicity id="159" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="160">    
+    <bendpoint x="2252" y="694"/>    
+    <bendpoint x="2252" y="1013"/>    
+    <end type="SOURCE" refId="39" navigable="false">      
+      <attribute id="161" name="player"/>      
+      <multiplicity id="162" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="23" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="163">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="164" name="instance"/>      
+      <multiplicity id="165" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="166">    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="167" name="setPlayerVelocityInstance"/>      
+      <multiplicity id="168" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="38" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
