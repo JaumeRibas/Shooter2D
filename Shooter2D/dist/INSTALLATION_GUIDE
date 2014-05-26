@@ -1,0 +1,12 @@
+INSTALACIÓN (Probado en Android 4.3):
+
+1. Conectar el dispositivo movil al PC.
+
+2. Pasar la aplicación del PC a la memoria externa del movil, con esto la aplicación ya estará en el movil,
+   así que ya se puede desconectar el dispositivo movil del PC.
+
+3. En 'Ajustes', acceder a 'Seguridad', buscar la opción de permitir ejecutar apps de
+   'Fuentes desconocidas' y marcarla.
+
+4. Acceder a la aplicación dentro de la carpeta donde ha sido depositada y ejecutarla.
+   Aparecerán los permisos que pide la aplicación. Aceptar que se instale la aplicación y fin.
