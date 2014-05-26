@@ -104,6 +104,9 @@ public class GameManager implements GameObserver, IOnMenuItemClickListener {
 		}
 	}
 
+	/**
+	 * Muestra la pantalla de GameOver al llegar a 0 la vida del jugador
+	 */
 	private void showGameOver() {
 		MainActivity.getInstance().getCurrentLevel().getScene().setIgnoreUpdate(true);
 		MainActivity.getInstance().setCurrentHUD(UI.getGameOverHUD());		
@@ -132,6 +135,7 @@ public class GameManager implements GameObserver, IOnMenuItemClickListener {
 		return false;
 	}
 
+	// Getters y setters
 	public boolean isGameLost() {
 		return this.gameLost;
 	}

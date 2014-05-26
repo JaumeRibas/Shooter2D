@@ -78,6 +78,7 @@ public class MainActivity extends BaseGameActivity {
 	private SplashScreen splashScreen;
 	private WinnerMenuScene winnerMenuScene;
 
+	@SuppressWarnings("unused")
 	private boolean isGameSaved;
 	private boolean populateFinished = false;
 	private Level currentLevel;
@@ -201,6 +202,9 @@ public class MainActivity extends BaseGameActivity {
 		super.onCreate(savedInstanceState);
 	}	
 	
+	/**
+	 * Muestra la scene del juego
+	 */
 	public void openGame() {
 		mEngine.setScene(this.currentLevel.getScene());
 		this.camera.setHUD(this.currentHUD);
@@ -210,6 +214,9 @@ public class MainActivity extends BaseGameActivity {
 		return activity;
 	}
 
+	/**
+	 * Muestra la scene del menú, el juego es pausado en segundo plando
+	 */
 	public void openMenu() {
 		if (GameManager.getInstance().isGameLost()) {
 			mEngine.setScene(this.retryMenuScene);
@@ -232,10 +239,17 @@ public class MainActivity extends BaseGameActivity {
 		return this.populateFinished;
 	}
 
+	/**
+	 * Cierra la aplicación
+	 */
 	public void closeActivity() {
 		android.os.Process.killProcess(android.os.Process.myPid());		
 	}
 
+	/**
+	 * Muestra el HUD del juego
+	 * @param hud el hud el cuál será mostrado
+	 */
 	public void setCurrentHUD(HUD hud) {
 		this.currentHUD = hud;		
 		if (mEngine.getScene() == this.currentLevel.getScene()) {
@@ -261,6 +275,8 @@ public class MainActivity extends BaseGameActivity {
 		moveTaskToBack (true);
 		openMenu();
 	}
+	
+	// Getters y setters
 
 	public Level getCurrentLevel() {
 		return currentLevel;

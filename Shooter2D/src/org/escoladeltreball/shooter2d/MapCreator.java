@@ -54,7 +54,6 @@ public class MapCreator {
 	 * @param vbo
 	 * @return el mapa cargado para ser añadido a la scene
 	 */
-
 	public static TMXTiledMap loadMap(String mapPath, Engine engine, Context context, BoundCamera camera){
 
 		TMXTiledMap mTMXTiledMap = null;

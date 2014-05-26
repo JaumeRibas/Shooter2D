@@ -95,6 +95,11 @@ public class Respawn extends Thread {
 		scene.attachChild(entity);
 	}
 
+	/**
+	 * Calcula una coordenada aleatoria dentro de un área
+	 * @param area del rectangulo
+	 * @return array int con posición x,y
+	 */
 	private int[] calculateRandomCoordinate(Rectangle area) {
 		int[] coordinate = new int[2];
 		int x = (int)(area.getX() + Math.random() * area.getWidth() - getMap().getTileWidth());
@@ -122,6 +127,7 @@ public class Respawn extends Thread {
 		}	
 	}
 
+	// Getters y setters
 	public TMXTiledMap getMap() {
 		return map;
 	}
