@@ -90,11 +90,12 @@ public class BodyFactory {
 	 * 
 	 * @param positionX
 	 * @param positionY
+	 * @param angle en radianes
 	 * @return el {@link Body}
 	 */
-	public static Body createBulletBody(float positionX, float positionY) {
+	public static Body createBulletBody(float positionX, float positionY, float angle) {
 		Body bulletBody = PhysicsFactory.createCircleBody(physicsWorld,
-				positionX, positionY, BULLET_BODY_RADIUS, BodyType.DynamicBody,
+				positionX, positionY, BULLET_BODY_RADIUS, angle, BodyType.DynamicBody,
 				FixtureFactory.getLeadFixture());
 		return bulletBody;
 	}
