@@ -70,11 +70,12 @@ public class Bullet extends ColisionableEntity {
 	public Bullet(float pX, float pY, ITiledTextureRegion pTiledTextureRegion,
 			Engine engine, float angle, int strengh) {
 		super(pX, pY, pTiledTextureRegion, engine);
-		Body body = BodyFactory.createBulletBody(pX, pY);
-		body.setTransform(body.getPosition(), angle);
+		super.setRotation((float) Math.toDegrees(-angle));
+		Body body = BodyFactory.createBulletBody(pX, pY, 0);
+		this.setBody(body);
+		this.getBody().setTransform(this.getBody().getPosition(), angle);
 		this.strengh = strengh;
 		this.setCurrentTileIndex(0);
-		this.setBody(body);
 		this.setScale(1.0f);
 		this.animate(100);
 		this.bulletTime = new Cooldown(BULLET_LIFE_TIME);
