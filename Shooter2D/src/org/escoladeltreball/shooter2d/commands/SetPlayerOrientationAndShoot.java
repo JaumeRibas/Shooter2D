@@ -39,15 +39,7 @@ public class SetPlayerOrientationAndShoot implements AnalogChangeCommand {
 	@Override
 	public void execute(float pValueX, float pValueY) {
 		Player player = PlayerLoader.getPlayer();
-		//cambiar orientacion del personaje
-		if(pValueX != 0 && pValueY != 0){
-			double angle = Math.atan2(-pValueX, pValueY);
-			player.setRotation((float) Math.toDegrees(-angle));
-			player.getBody().setTransform(player.getBody().getPosition(), (float)angle);
-			if(player.getGun() != null){
-				player.getGun().shoot();
-			}
-		}
+		player.shoot(pValueX, pValueY);
 	}
 
 }
