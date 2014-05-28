@@ -71,8 +71,8 @@ public class FirstLevel extends Level implements GameScene, GameObserver {
 
 	private int enemyCount = 0;
 	
-	private static final float START_PLAYER_X = (float)(MainActivity.CAMERA_WIDTH / 2.0);
-	private static final float START_PLAYER_Y = (float)(MainActivity.CAMERA_HEIGHT / 2.0);
+	private static final float START_PLAYER_X = 3000;
+	private static final float START_PLAYER_Y = 0;
 	private static final float START_PLAYER_ANGLE = 0;
 	
 	public static final String MAP_PATH = "tmx/base.tmx";
@@ -96,13 +96,15 @@ public class FirstLevel extends Level implements GameScene, GameObserver {
 		// La camara sigue al jugador
 		MainActivity.getInstance().camera.setChaseEntity(player);
 		//ponemos al jugador en su posicion inicial SI SE MUEVE PETA AUN NO SE PORQUE
+//		this.player.setPosition(START_PLAYER_X, START_PLAYER_Y);
+//		this.player.setRotation(START_PLAYER_ANGLE);
 //		this.player.getBody().setTransform(START_PLAYER_X, START_PLAYER_Y, START_PLAYER_ANGLE);
 		//el jugador tendra una pistola
 		this.player.setGun(WeaponFactory.getGun(getScene(), MainActivity.getInstance().getEngine()));
-		//metemos al player
-		getScene().attachChild(player);
 		//crea los objetos del mapa
-		createMapObjects();		
+		createMapObjects();	
+		//metemos al player
+		getScene().attachChild(player);	
 	}
 
 	@Override

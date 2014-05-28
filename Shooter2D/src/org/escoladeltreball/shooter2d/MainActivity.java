@@ -152,6 +152,7 @@ public class MainActivity extends BaseGameActivity {
 		UI.getInstance().createUI(MainActivity.getInstance().camera, getVertexBufferObjectManager(), this);
 		//crea el player TIENE QUE ESTAR EN ESTA POSICIÓN SI NO PETA AUN NO SE PORQUE
 		this.player = PlayerLoader.loadPlayer((float)(MainActivity.CAMERA_WIDTH / 2.0), (float)(MainActivity.CAMERA_HEIGHT / 2.0), mEngine);
+		//this.player = PlayerLoader.loadPlayer(0, 0, mEngine);
 		// Se pone a la UI como observador del player 
 		this.player.addGameObserver(UI.getInstance());
 		// Se pone al GameManager como observador del player 
