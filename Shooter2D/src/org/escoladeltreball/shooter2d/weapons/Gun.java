@@ -42,7 +42,7 @@ public class Gun {
 	/** La diferencia en x de la posicion inicial de la bala en relacion al shooter (en coordenadas locales del shooter) */
 	private static final float BULLET_OFFSET_X = 0;
 	/** La diferencia en y de la posicion inicial de la bala en relacion al shooter (en coordenadas locales del shooter) */
-	private static final float BULLET_OFFSET_Y = 50;
+	private static final float BULLET_OFFSET_Y = 70;
 	private static final float GUN_COOLDOWN_TIME = 0.35f;
 	private Cooldown gunCooldown;
 	private Scene scene;
